@@ -60,9 +60,7 @@
       text-align: center;
       margin-bottom: 8px;
     }
-    h1 span {
-      color: #A28A70;
-    }
+    h1 span { color: #A28A70; }
     .formation-code {
       font-size: 16px;
       color: rgba(255,255,255,0.45);
@@ -77,6 +75,7 @@
       margin-bottom: 36px;
       box-shadow: 0 0 0 8px rgba(162,138,112,0.15);
     }
+    .qr-wrapper img { display: block; width: 300px; height: 300px; }
     .instruction {
       font-size: 22px;
       color: rgba(255,255,255,0.85);
@@ -95,28 +94,13 @@
     <div class="logo-badge">RC</div>
     <div class="logo-text">Real Conseil</div>
   </div>
-
   <div class="tag">Test de positionnement</div>
   <h1>Formateur Professionnel<br><span>d'Adultes</span></h1>
   <div class="formation-code">FPA</div>
-
   <div class="qr-wrapper">
-    <div id="qrcode"></div>
+    <img src="data:image/png;base64,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" alt="QR Code FPA">
   </div>
-
   <p class="instruction">Scannez pour accéder au test</p>
-  <p class="url">nicepowpowloko.github.io/test-positionnement/positionement_fpa.html</p>
-
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
-  <script>
-    new QRCode(document.getElementById("qrcode"), {
-      text: "https://nicepowpowloko.github.io/test-positionnement/positionement_fpa.html",
-      width: 300,
-      height: 300,
-      colorDark: "#2D4279",
-      colorLight: "#ffffff",
-      correctLevel: QRCode.CorrectLevel.H
-    });
-  </script>
+  <p class="url">https://nicepowpowloko.github.io/test-positionnement/positionement_fpa.html</p>
 </body>
 </html>

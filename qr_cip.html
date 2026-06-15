@@ -60,9 +60,7 @@
       text-align: center;
       margin-bottom: 8px;
     }
-    h1 span {
-      color: #A28A70;
-    }
+    h1 span { color: #A28A70; }
     .formation-code {
       font-size: 16px;
       color: rgba(255,255,255,0.45);
@@ -77,6 +75,7 @@
       margin-bottom: 36px;
       box-shadow: 0 0 0 8px rgba(162,138,112,0.15);
     }
+    .qr-wrapper img { display: block; width: 300px; height: 300px; }
     .instruction {
       font-size: 22px;
       color: rgba(255,255,255,0.85);
@@ -95,28 +94,13 @@
     <div class="logo-badge">RC</div>
     <div class="logo-text">Real Conseil</div>
   </div>
-
   <div class="tag">Test de positionnement</div>
   <h1>Conseiller en Insertion<br><span>Professionnelle</span></h1>
   <div class="formation-code">CIP</div>
-
   <div class="qr-wrapper">
-    <div id="qrcode"></div>
+    <img src="data:image/png;base64,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" alt="QR Code CIP">
   </div>
-
   <p class="instruction">Scannez pour accéder au test</p>
-  <p class="url">nicepowpowloko.github.io/test-positionnement/positionement_cip.html</p>
-
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
-  <script>
-    new QRCode(document.getElementById("qrcode"), {
-      text: "https://nicepowpowloko.github.io/test-positionnement/positionement_cip.html",
-      width: 300,
-      height: 300,
-      colorDark: "#2D4279",
-      colorLight: "#ffffff",
-      correctLevel: QRCode.CorrectLevel.H
-    });
-  </script>
+  <p class="url">https://nicepowpowloko.github.io/test-positionnement/positionement_cip.html</p>
 </body>
 </html>
