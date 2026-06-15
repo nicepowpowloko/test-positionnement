@@ -1,0 +1,1490 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Test de Positionnement – FPA | Real Conseil</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+<style>
+:root {
+  --navy: #0d1b35;
+  --navy-mid: #152444;
+  --navy-card: #1a2d52;
+  --navy-light: #22376a;
+  --gold: #c9a227;
+  --gold-light: #e8c055;
+  --gold-pale: rgba(201,162,39,0.12);
+  --text: #e4eaf5;
+  --text-muted: #7a90b8;
+  --text-dim: #4a5f8a;
+  --white: #ffffff;
+  --success: #2ecc71;
+  --error: #e74c3c;
+  --border: rgba(201,162,39,0.2);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--navy);
+  color: var(--text);
+  min-height: 100vh;
+  background-image: 
+    radial-gradient(ellipse at 20% 0%, rgba(201,162,39,0.06) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 100%, rgba(21,36,68,0.8) 0%, transparent 50%);
+}
+
+/* ── STICKY HEADER ── */
+.header {
+  position: sticky; top: 0; z-index: 100;
+  background: rgba(13,27,53,0.95);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+  padding: 0 32px;
+}
+.header-inner {
+  max-width: 860px; margin: 0 auto;
+  display: flex; align-items: center; justify-content: space-between;
+  height: 64px;
+}
+.header-brand { display: flex; align-items: center; gap: 12px; }
+.brand-badge {
+  width: 36px; height: 36px; border-radius: 8px;
+  background: var(--gold); display: flex; align-items: center; justify-content: center;
+  font-family: 'Playfair Display', serif;
+  font-weight: 700; color: var(--navy); font-size: 14px;
+}
+.brand-name { font-size: 13px; font-weight: 600; color: var(--gold); letter-spacing: 0.08em; text-transform: uppercase; }
+.header-progress { display: flex; align-items: center; gap: 14px; }
+.progress-label { font-size: 12px; color: var(--text-muted); font-weight: 500; }
+.progress-track {
+  width: 160px; height: 4px; background: var(--navy-light);
+  border-radius: 2px; overflow: hidden;
+}
+.progress-fill {
+  height: 100%; background: linear-gradient(90deg, var(--gold), var(--gold-light));
+  border-radius: 2px; transition: width 0.4s ease;
+  width: 0%;
+}
+.progress-pct { font-size: 12px; font-weight: 600; color: var(--gold); min-width: 32px; }
+
+/* ── HERO ── */
+.hero {
+  max-width: 860px; margin: 0 auto;
+  padding: 60px 32px 0;
+  display: flex; flex-direction: column; align-items: flex-start;
+}
+.hero-tag {
+  display: inline-block; padding: 4px 14px; border-radius: 20px;
+  background: var(--gold-pale); border: 1px solid var(--border);
+  font-size: 11px; font-weight: 600; color: var(--gold);
+  letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 20px;
+}
+.hero h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: 42px; line-height: 1.15; color: var(--white);
+  margin-bottom: 12px;
+}
+.hero h1 span { color: var(--gold); }
+.hero-sub { font-size: 15px; color: var(--text-muted); font-weight: 300; max-width: 520px; line-height: 1.6; margin-bottom: 32px; }
+.hero-divider {
+  width: 100%; height: 1px;
+  background: linear-gradient(90deg, var(--gold), transparent);
+  margin-bottom: 48px;
+}
+
+/* ── MAIN CONTENT ── */
+.main { max-width: 860px; margin: 0 auto; padding: 0 32px 80px; }
+
+/* ── CANDIDATE CARD ── */
+.card {
+  background: var(--navy-card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 28px 32px;
+  margin-bottom: 28px;
+}
+.card-header {
+  display: flex; align-items: center; gap: 12px;
+  margin-bottom: 24px;
+}
+.section-num {
+  width: 28px; height: 28px; border-radius: 50%;
+  background: var(--gold); color: var(--navy);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 12px; font-weight: 700; flex-shrink: 0;
+}
+.card-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 18px; color: var(--white);
+}
+.card-subtitle { font-size: 12px; color: var(--text-muted); margin-top: 2px; }
+
+.row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.row-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+
+.field { display: flex; flex-direction: column; gap: 6px; }
+.field label { font-size: 12px; font-weight: 600; color: var(--gold); letter-spacing: 0.05em; text-transform: uppercase; }
+.field input, .field textarea, .field select {
+  background: rgba(13,27,53,0.8);
+  border: 1px solid var(--navy-light);
+  border-radius: 8px;
+  color: var(--text);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px;
+  padding: 10px 14px;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  outline: none;
+  resize: vertical;
+}
+.field input:focus, .field textarea:focus {
+  border-color: var(--gold);
+  box-shadow: 0 0 0 3px rgba(201,162,39,0.1);
+}
+.field textarea { min-height: 90px; }
+.field textarea.large { min-height: 130px; }
+
+/* ── PART SEPARATOR ── */
+.part-separator {
+  display: flex; align-items: center; gap: 16px;
+  margin: 40px 0 28px;
+}
+.part-label {
+  font-family: 'Playfair Display', serif;
+  font-size: 13px; font-weight: 700;
+  color: var(--gold); text-transform: uppercase; letter-spacing: 0.15em;
+  white-space: nowrap;
+}
+.part-line { flex: 1; height: 1px; background: var(--border); }
+.part-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 22px; color: var(--white); margin-bottom: 6px;
+}
+.part-desc { font-size: 13px; color: var(--text-muted); line-height: 1.5; }
+
+/* ── TEXT PASSAGE ── */
+.passage {
+  background: rgba(13,27,53,0.6);
+  border-left: 3px solid var(--gold);
+  border-radius: 0 12px 12px 0;
+  padding: 20px 24px;
+  margin-bottom: 28px;
+}
+.passage-title {
+  font-size: 13px; font-weight: 700; color: var(--gold);
+  text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 12px;
+}
+.passage p {
+  font-size: 13.5px; color: var(--text-muted); line-height: 1.7; margin-bottom: 10px;
+}
+.passage p:last-child { margin-bottom: 0; }
+.passage-source {
+  font-size: 11.5px; color: var(--text-dim); margin-top: 14px;
+  padding-top: 10px; border-top: 1px solid var(--border);
+  font-style: italic;
+}
+
+/* ── QUESTION ── */
+.question {
+  margin-bottom: 22px;
+}
+.q-label {
+  display: flex; align-items: flex-start; gap: 10px;
+  margin-bottom: 8px;
+}
+.q-num {
+  min-width: 26px; height: 26px;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  color: var(--gold); font-size: 12px; font-weight: 700;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0; margin-top: 1px;
+}
+.q-text { font-size: 14px; color: var(--text); line-height: 1.55; font-weight: 400; }
+.q-badge {
+  font-size: 10px; padding: 2px 8px; border-radius: 10px; font-weight: 600;
+  letter-spacing: 0.05em; margin-left: auto; flex-shrink: 0; margin-top: 2px;
+}
+.badge-open { background: rgba(122,144,184,0.15); color: var(--text-muted); }
+.badge-scored { background: rgba(201,162,39,0.15); color: var(--gold); }
+
+/* ── RADIO OPTIONS ── */
+.radio-group { display: flex; flex-wrap: wrap; gap: 10px; }
+.radio-option {
+  display: flex; align-items: center; gap: 8px;
+  background: rgba(13,27,53,0.7);
+  border: 1px solid var(--navy-light);
+  border-radius: 8px; padding: 9px 16px;
+  cursor: pointer; transition: all 0.2s; user-select: none;
+  font-size: 13.5px;
+}
+.radio-option:hover { border-color: var(--gold); background: var(--gold-pale); }
+.radio-option input { display: none; }
+.radio-option.selected {
+  border-color: var(--gold);
+  background: var(--gold-pale);
+  color: var(--gold-light);
+}
+.radio-dot {
+  width: 14px; height: 14px; border-radius: 50%;
+  border: 2px solid var(--text-dim);
+  transition: all 0.2s;
+}
+.radio-option.selected .radio-dot {
+  border-color: var(--gold);
+  background: var(--gold);
+}
+
+/* ── INLINE INPUTS ── */
+.inline-row { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
+.seq-prefix { font-size: 14px; color: var(--text-muted); font-weight: 500; white-space: nowrap; }
+.seq-input {
+  background: rgba(13,27,53,0.8);
+  border: 1px solid var(--navy-light);
+  border-radius: 8px; color: var(--text);
+  font-family: 'DM Sans', sans-serif; font-size: 16px; font-weight: 600;
+  padding: 8px 16px; width: 100px; outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s; text-align: center;
+}
+.seq-input:focus { border-color: var(--gold); box-shadow: 0 0 0 3px rgba(201,162,39,0.1); }
+
+/* ── SCORED SUBSECTION ── */
+.scored-group {
+  background: rgba(201,162,39,0.05);
+  border: 1px solid rgba(201,162,39,0.15);
+  border-radius: 10px; padding: 16px 18px; margin-bottom: 14px;
+}
+.scored-group-label { font-size: 11px; font-weight: 600; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 12px; }
+
+/* ── SUBMIT ── */
+.submit-zone {
+  margin-top: 40px;
+  display: flex; flex-direction: column; align-items: center; gap: 12px;
+}
+.btn-submit {
+  display: flex; align-items: center; gap: 10px;
+  background: linear-gradient(135deg, var(--gold), var(--gold-light));
+  color: var(--navy); border: none; border-radius: 12px;
+  padding: 16px 40px; font-family: 'DM Sans', sans-serif;
+  font-size: 15px; font-weight: 700; cursor: pointer; letter-spacing: 0.02em;
+  transition: all 0.2s; box-shadow: 0 4px 20px rgba(201,162,39,0.3);
+}
+.btn-submit:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(201,162,39,0.45); }
+.btn-submit svg { width: 18px; height: 18px; }
+.submit-note { font-size: 12px; color: var(--text-dim); text-align: center; }
+
+/* ── RESULTS OVERLAY ── */
+.overlay {
+  position: fixed; inset: 0; z-index: 500;
+  background: rgba(13,27,53,0.97);
+  backdrop-filter: blur(8px);
+  display: none; overflow-y: auto;
+  padding: 40px 20px;
+}
+.overlay.active { display: block; }
+.results-box {
+  max-width: 720px; margin: 0 auto;
+  animation: slideUp 0.4s ease;
+}
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.results-header {
+  text-align: center; margin-bottom: 40px;
+}
+.results-tag {
+  display: inline-block; padding: 4px 14px; border-radius: 20px;
+  background: var(--gold-pale); border: 1px solid var(--border);
+  font-size: 11px; font-weight: 600; color: var(--gold);
+  letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 16px;
+}
+.results-header h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: 32px; color: var(--white); margin-bottom: 8px;
+}
+.results-header p { font-size: 14px; color: var(--text-muted); }
+
+/* Score circles */
+.score-area {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 20px;
+  margin-bottom: 32px;
+}
+.score-card {
+  background: var(--navy-card); border: 1px solid var(--border);
+  border-radius: 16px; padding: 24px; text-align: center;
+}
+.score-circle-wrap { display: flex; justify-content: center; margin-bottom: 12px; }
+.score-circle {
+  width: 100px; height: 100px;
+  border-radius: 50%;
+  background: conic-gradient(var(--gold) 0deg, var(--navy) 0deg);
+  display: flex; align-items: center; justify-content: center;
+  position: relative;
+}
+.score-circle-inner {
+  width: 78px; height: 78px; border-radius: 50%;
+  background: var(--navy-card);
+  display: flex; align-items: center; justify-content: center;
+  flex-direction: column;
+}
+.score-pct { font-size: 22px; font-weight: 700; color: var(--white); line-height: 1; }
+.score-pct-sub { font-size: 11px; color: var(--text-muted); }
+.score-card-title { font-size: 12px; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 4px; }
+.score-card-detail { font-size: 13px; color: var(--text-dim); }
+
+/* Answer list */
+.answers-section { margin-bottom: 28px; }
+.answers-section-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 16px; color: var(--gold);
+  margin-bottom: 16px; padding-bottom: 8px;
+  border-bottom: 1px solid var(--border);
+  display: flex; align-items: center; gap: 10px;
+}
+.answer-item {
+  background: rgba(13,27,53,0.6); border: 1px solid var(--navy-light);
+  border-radius: 10px; padding: 14px 16px; margin-bottom: 10px;
+}
+.answer-item.correct { border-color: rgba(46,204,113,0.3); background: rgba(46,204,113,0.04); }
+.answer-item.incorrect { border-color: rgba(231,76,60,0.3); background: rgba(231,76,60,0.04); }
+.answer-row { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; }
+.answer-q { font-size: 12px; color: var(--text-dim); margin-bottom: 6px; font-weight: 500; }
+.answer-val { font-size: 13.5px; color: var(--text); line-height: 1.5; }
+.answer-val.empty { color: var(--text-dim); font-style: italic; }
+.answer-correct-val { font-size: 12px; color: var(--success); margin-top: 4px; }
+.answer-model {
+  margin-top: 10px; padding: 10px 12px;
+  background: rgba(201,162,39,0.07); border-left: 2px solid var(--gold);
+  border-radius: 0 6px 6px 0;
+}
+.answer-model-label { font-size: 10px; font-weight: 700; color: var(--gold); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 4px; }
+.answer-model-text { font-size: 12px; color: var(--text-muted); line-height: 1.55; white-space: pre-line; }
+.answer-badge-icon {
+  width: 22px; height: 22px; border-radius: 50%; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center; font-size: 12px;
+}
+.badge-ok { background: rgba(46,204,113,0.2); color: var(--success); }
+.badge-ko { background: rgba(231,76,60,0.2); color: var(--error); }
+.badge-na { background: rgba(122,144,184,0.15); color: var(--text-dim); }
+.badge-kw { background: rgba(201,162,39,0.2); color: var(--gold); font-size: 11px; font-weight: 700; }
+
+/* Keyword bars */
+.answer-kw-bar { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 8px; align-items: center; }
+.kw-label { font-size: 10px; font-weight: 700; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.05em; margin-right: 4px; white-space: nowrap; }
+.kw-found { font-size: 11px; padding: 2px 8px; border-radius: 10px; background: rgba(46,204,113,0.15); color: var(--success); font-weight: 600; }
+.kw-missing { font-size: 11px; padding: 2px 8px; border-radius: 10px; background: rgba(122,144,184,0.1); color: var(--text-dim); font-weight: 500; }
+
+/* Email config */
+.config-card {
+  background: var(--gold-pale); border: 1px solid var(--border);
+  border-radius: 12px; padding: 20px 24px; margin-bottom: 28px;
+}
+.config-card h3 { font-size: 14px; font-weight: 700; color: var(--gold); margin-bottom: 4px; }
+.config-card p { font-size: 12.5px; color: var(--text-muted); margin-bottom: 16px; line-height: 1.5; }
+.config-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 14px; }
+.config-field { display: flex; flex-direction: column; gap: 5px; }
+.config-field label { font-size: 11px; font-weight: 600; color: var(--gold); text-transform: uppercase; letter-spacing: 0.06em; }
+.config-field input {
+  background: rgba(13,27,53,0.8); border: 1px solid var(--navy-light);
+  border-radius: 8px; color: var(--text); font-family: 'DM Sans', sans-serif;
+  font-size: 13px; padding: 8px 12px; outline: none;
+  transition: border-color 0.2s;
+}
+.config-field input:focus { border-color: var(--gold); }
+.config-field input.full { grid-column: 1/-1; }
+
+.action-row { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-top: 8px; }
+.btn-primary {
+  display: flex; align-items: center; gap: 8px;
+  background: linear-gradient(135deg, var(--gold), var(--gold-light));
+  color: var(--navy); border: none; border-radius: 10px;
+  padding: 12px 28px; font-family: 'DM Sans', sans-serif;
+  font-size: 14px; font-weight: 700; cursor: pointer;
+  transition: all 0.2s; box-shadow: 0 4px 16px rgba(201,162,39,0.3);
+}
+.btn-primary:hover { transform: translateY(-1px); }
+.btn-primary:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+.btn-secondary {
+  display: flex; align-items: center; gap: 8px;
+  background: transparent; color: var(--text-muted); border: 1px solid var(--border);
+  border-radius: 10px; padding: 12px 28px; font-family: 'DM Sans', sans-serif;
+  font-size: 14px; font-weight: 600; cursor: pointer; transition: all 0.2s;
+}
+.btn-secondary:hover { border-color: var(--text-muted); color: var(--text); }
+
+.toast {
+  position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%);
+  background: var(--navy-card); border: 1px solid var(--border);
+  border-radius: 10px; padding: 12px 24px;
+  font-size: 13.5px; font-weight: 500;
+  display: none; z-index: 9999; gap: 8px; align-items: center;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.4);
+}
+.toast.show { display: flex; }
+.toast.success { border-color: var(--success); color: var(--success); }
+.toast.error { border-color: var(--error); color: var(--error); }
+
+/* ── SETUP MODAL ── */
+.setup-banner {
+  background: rgba(201,162,39,0.07); border: 1px solid var(--border);
+  border-radius: 12px; padding: 16px 20px; margin-bottom: 24px;
+  display: flex; align-items: flex-start; gap: 14px;
+}
+.setup-icon { font-size: 20px; flex-shrink: 0; margin-top: 1px; }
+.setup-text h4 { font-size: 13px; font-weight: 700; color: var(--gold); margin-bottom: 4px; }
+.setup-text p { font-size: 12px; color: var(--text-muted); line-height: 1.5; }
+.setup-text a { color: var(--gold); }
+.btn-mini {
+  font-size: 11px; padding: 5px 14px; border-radius: 6px;
+  background: var(--gold-pale); color: var(--gold); border: 1px solid var(--border);
+  cursor: pointer; font-family: 'DM Sans', sans-serif; font-weight: 600;
+  margin-top: 8px; display: inline-block;
+}
+
+/* ── TIMER ── */
+.timer-wrap {
+  position: fixed; bottom: 24px; right: 24px; z-index: 300;
+  background: var(--navy-card); border: 1px solid var(--border);
+  border-radius: 12px; padding: 10px 18px;
+  display: flex; align-items: center; gap: 10px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+}
+.timer-icon { font-size: 16px; }
+.timer-text { font-size: 16px; font-weight: 700; color: var(--gold-light); font-variant-numeric: tabular-nums; }
+.timer-label { font-size: 9px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; }
+
+@media (max-width: 600px) {
+  .hero h1 { font-size: 28px; }
+  .main { padding: 0 16px 60px; }
+  .row, .score-area { grid-template-columns: 1fr; }
+  .card { padding: 20px 18px; }
+  .timer-wrap { bottom: 16px; right: 16px; }
+}
+/* ── MODALE PDF ATTACH ── */
+#pdfAttachModal {
+  display: none; position: fixed; inset: 0; z-index: 10000;
+  background: rgba(13,27,53,0.92); align-items: center; justify-content: center;
+}
+.pdf-modal-box {
+  background: #1a2d52; border: 2px solid var(--gold); border-radius: 18px;
+  padding: 40px 36px; max-width: 480px; width: 90%; text-align: center;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+}
+.pdf-modal-icon { font-size: 52px; margin-bottom: 16px; }
+.pdf-modal-title { font-size: 20px; font-weight: 700; color: var(--gold); margin-bottom: 12px; }
+.pdf-modal-text { font-size: 15px; color: var(--text); line-height: 1.6; margin-bottom: 24px; }
+.pdf-modal-text strong { color: var(--gold-light); }
+.pdf-modal-steps { text-align: left; background: rgba(201,162,39,0.08); border-radius: 10px; padding: 14px 18px; margin-bottom: 24px; }
+.pdf-modal-steps li { color: var(--text); font-size: 14px; margin-bottom: 8px; padding-left: 4px; }
+.pdf-modal-steps li:last-child { margin-bottom: 0; }
+.btn-confirm-attach {
+  background: linear-gradient(135deg, var(--gold), var(--gold-light)); color: #0d1b35;
+  border: none; border-radius: 10px; padding: 14px 28px; font-size: 15px;
+  font-weight: 700; cursor: pointer; width: 100%; transition: opacity 0.2s;
+}
+.btn-confirm-attach:hover { opacity: 0.9; }
+</style>
+</head>
+<body>
+
+<!-- STICKY HEADER -->
+<div class="header">
+  <div class="header-inner">
+    <div class="header-brand">
+      <div class="brand-badge">RC</div>
+      <div>
+        <div class="brand-name">Real Conseil</div>
+      </div>
+    </div>
+    <div class="header-progress">
+      <span class="progress-label">Progression</span>
+      <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+      <span class="progress-pct" id="progressPct">0%</span>
+    </div>
+  </div>
+</div>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-tag">Test de Positionnement</div>
+  <h1>Formateur Professionnel<br><span>d'Adultes</span></h1>
+  <p class="hero-sub">Ce test permet d'évaluer votre niveau de connaissances et de compétences avant l'entrée en formation. Répondez avec sincérité, il n'y a pas de mauvaises réponses aux questions ouvertes.</p>
+  <div class="hero-divider"></div>
+</div>
+
+<!-- MAIN FORM -->
+<div class="main" id="formSection">
+
+  <!-- ── INFOS CANDIDAT ── -->
+  <div class="card" id="card-info">
+    <div class="card-header">
+      <div class="section-num">i</div>
+      <div>
+        <div class="card-title">Informations du candidat</div>
+        <div class="card-subtitle">À compléter avant de commencer le test</div>
+      </div>
+    </div>
+    <div class="row" style="margin-bottom:14px">
+      <div class="field"><label>Nom</label><input type="text" id="f-nom" placeholder="Nom de famille"></div>
+      <div class="field"><label>Prénom</label><input type="text" id="f-prenom" placeholder="Prénom"></div>
+    </div>
+    <div class="row">
+      <div class="field"><label>Date</label><input type="date" id="f-date"></div>
+      <div class="field"><label>Ville</label><input type="text" id="f-ville" placeholder="Ville de la session"></div>
+    </div>
+  </div>
+
+  <!-- ════════════ PARTIE 1 ════════════ -->
+  <div class="part-separator">
+    <span class="part-line"></span>
+    <span class="part-label">Première Partie</span>
+    <span class="part-line"></span>
+  </div>
+  <p class="part-title" style="margin-bottom:6px">Focus Métier</p>
+  <p class="part-desc" style="margin-bottom:28px">Étude d'un texte de référence et questions ouvertes sur le métier de formateur.</p>
+
+  <!-- 1A : ÉTUDE DE TEXTE -->
+  <div class="card">
+    <div class="card-header">
+      <div class="section-num">A</div>
+      <div>
+        <div class="card-title">Étude de texte</div>
+        <div class="card-subtitle">Lisez attentivement le texte puis répondez aux questions.</div>
+      </div>
+    </div>
+
+    <div class="passage">
+      <div class="passage-title">La loi de juillet 1971 sur la formation des adultes et ses orientations</div>
+      <p>L'accord interprofessionnel de juillet 1970 et la loi de juillet 1971 sur la « formation professionnelle continue dans le cadre de l'éducation permanente » constituent une étape décisive dans la formation des adultes en France. On peut dire qu'ils orienteront l'éducation permanente des adultes vers la formation professionnelle continue et contribueront nettement à son développement notamment dans le service public d'enseignement.</p>
+      <p>L'orientation de l'éducation permanente vers la formation professionnelle se caractérisera aussi par le passage d'une logique de qualification à une logique de compétence, soutenue par le Medef lors des journées internationales de la formation à Deauville en 1998.</p>
+      <p>Cette centration sur la compétence alimentera la recherche sur la professionnalisation et le lien entre formation professionnelle et construction identitaire. Enfin, la mise en place de la VAE et son fondement théorique apparaissent dans ce paysage comme une conséquence de la logique de compétence et son couronnement.</p>
+      <div class="passage-source">Source : <em>La formation continue des adultes en France : des repères</em> — Michel Sonntag. In Les Sciences de l'éducation - Pour l'Ère nouvelle 2019/2 (Vol. 52), pages 101 à 122.</div>
+    </div>
+
+    <div class="question">
+      <div class="q-label">
+        <div class="q-num">1</div>
+        <div class="q-text">Quel est le sujet traité dans le texte ?</div>
+        <span class="q-badge badge-open">Ouverte</span>
+      </div>
+      <div class="field"><textarea class="large" id="p1a-q1" placeholder="Votre réponse…"></textarea></div>
+    </div>
+
+    <div class="question">
+      <div class="q-label">
+        <div class="q-num">2</div>
+        <div class="q-text">De quelle évolution parle-t-on ?</div>
+        <span class="q-badge badge-open">Ouverte</span>
+      </div>
+      <div class="field"><textarea class="large" id="p1a-q2" placeholder="Votre réponse…"></textarea></div>
+    </div>
+
+    <div class="question">
+      <div class="q-label">
+        <div class="q-num">3</div>
+        <div class="q-text">Qui soutient cette évolution ?</div>
+        <span class="q-badge badge-open">Ouverte</span>
+      </div>
+      <div class="field"><textarea id="p1a-q3" placeholder="Votre réponse…"></textarea></div>
+    </div>
+
+    <div class="question">
+      <div class="q-label">
+        <div class="q-num">4</div>
+        <div class="q-text">Quel public est concerné ?</div>
+        <span class="q-badge badge-open">Ouverte</span>
+      </div>
+      <div class="field"><textarea id="p1a-q4" placeholder="Votre réponse…"></textarea></div>
+    </div>
+
+    <div class="question">
+      <div class="q-label">
+        <div class="q-num">5</div>
+        <div class="q-text">D'après vous, qu'est-ce qu'une compétence professionnelle ?</div>
+        <span class="q-badge badge-open">Ouverte</span>
+      </div>
+      <div class="field"><textarea class="large" id="p1a-q5" placeholder="Votre réponse…"></textarea></div>
+    </div>
+  </div>
+
+  <!-- 1B : QUESTIONS OUVERTES -->
+  <div class="card">
+    <div class="card-header">
+      <div class="section-num">B</div>
+      <div>
+        <div class="card-title">Questions ouvertes</div>
+        <div class="card-subtitle">Questions sur vos pratiques et connaissances du métier.</div>
+      </div>
+    </div>
+
+    <div class="question">
+      <div class="q-label">
+        <div class="q-num">1</div>
+        <div class="q-text">Comment identifieriez-vous les besoins pédagogiques d'une formation ?</div>
+        <span class="q-badge badge-open">Ouverte</span>
+      </div>
+      <div class="field"><textarea class="large" id="p1b-q1" placeholder="Votre réponse…"></textarea></div>
+    </div>
+
+    <div class="question">
+      <div class="q-label">
+        <div class="q-num">2</div>
+        <div class="q-text">Quelles méthodes pédagogiques privilégiez-vous pour favoriser l'engagement des apprenants ?</div>
+        <span class="q-badge badge-open">Ouverte</span>
+      </div>
+      <div class="field"><textarea class="large" id="p1b-q2" placeholder="Votre réponse…"></textarea></div>
+    </div>
+
+    <div class="question">
+      <div class="q-label">
+        <div class="q-num">3</div>
+        <div class="q-text">Comment évalueriez-vous les compétences acquises par un apprenant durant une formation ?</div>
+        <span class="q-badge badge-open">Ouverte</span>
+      </div>
+      <div class="field"><textarea class="large" id="p1b-q3" placeholder="Votre réponse…"></textarea></div>
+    </div>
+
+    <div class="question">
+      <div class="q-label">
+        <div class="q-num">4</div>
+        <div class="q-text">Expliquez comment vous gérez la diversité des profils dans un groupe d'adultes en formation.</div>
+        <span class="q-badge badge-open">Ouverte</span>
+      </div>
+      <div class="field"><textarea class="large" id="p1b-q4" placeholder="Votre réponse…"></textarea></div>
+    </div>
+
+    <div class="question">
+      <div class="q-label">
+        <div class="q-num">5</div>
+        <div class="q-text">Quelles stratégies adopteriez-vous pour maintenir une dynamique de groupe et éviter les conflits lors d'une session de formation ?</div>
+        <span class="q-badge badge-open">Ouverte</span>
+      </div>
+      <div class="field"><textarea class="large" id="p1b-q5" placeholder="Votre réponse…"></textarea></div>
+    </div>
+
+    <div class="question">
+      <div class="q-label">
+        <div class="q-num">6</div>
+        <div class="q-text">Citez 5 acteurs de la formation professionnelle.</div>
+        <span class="q-badge badge-open">Ouverte</span>
+      </div>
+      <div class="field"><textarea id="p1b-q6" placeholder="1. …&#10;2. …&#10;3. …&#10;4. …&#10;5. …"></textarea></div>
+    </div>
+
+    <div class="question">
+      <div class="q-label">
+        <div class="q-num">7</div>
+        <div class="q-text">À votre avis, le digital et le numérique ont-ils un impact dans le métier de formateur ?</div>
+        <span class="q-badge badge-open">Ouverte</span>
+      </div>
+      <div class="field"><textarea class="large" id="p1b-q7" placeholder="Votre réponse…"></textarea></div>
+    </div>
+  </div>
+
+  <!-- ════════════ PARTIE 2 ════════════ -->
+  <div class="part-separator">
+    <span class="part-line"></span>
+    <span class="part-label">Deuxième Partie</span>
+    <span class="part-line"></span>
+  </div>
+  <p class="part-title" style="margin-bottom:6px">Connaissances de Base</p>
+  <p class="part-desc" style="margin-bottom:28px">Questions de logique, mathématiques, orthographe et vocabulaire.</p>
+
+  <!-- P2 Q1 : CORRECTION -->
+  <div class="card">
+    <div class="card-header">
+      <div class="section-num">1</div>
+      <div>
+        <div class="card-title">Correction orthographique</div>
+        <div class="card-subtitle">Notez uniquement les mots incorrects et leur correction.</div>
+      </div>
+    </div>
+    <div class="passage" style="margin-bottom:20px">
+      <p>Dans le cadre de son accompagnement, Monsieur Dupont a témoigné des obstacles qu'il rencontre pour réintégrer le marché de la formation. Ayant exercé plusieurs métiers sans réelle stabilité, il éprouve des difficultés à <u>déterminé</u> un projet professionnel <u>cohérant</u> avec <u>ces</u> compétences et <u>ces</u> aspirations.</p>
+      <p>Il a indiqué qu'il souhaiterait bénéficier d'un bilan de <u>compétence</u> afin de mieux identifier <u>ces</u> atouts et d'envisager une reconversion. Toutefois, il ignore quels organismes proposent cet accompagnement et comment y accéder.</p>
+      <p>Par ailleurs, il a fait part de son découragement face aux refus <u>successif</u> des recruteurs. <u>Malgré qu'il ait</u> envoyé de nombreuses candidatures, il ne parvient pas à obtenir des entretiens. Il se demande donc si son CV et <u>ça</u> lettre de motivation sont adaptées aux attentes des employeurs.</p>
+      <p>En synthèse, un appui méthodologique serait nécessaire pour l'aider à élaborer une stratégie de recherche efficace et à sécuriser son parcours vers une formation pérenne.</p>
+    </div>
+    <div class="question">
+      <div class="q-label">
+        <span class="q-badge badge-open">Ouverte – correction manuelle</span>
+      </div>
+      <div class="field"><textarea class="large" id="p2-q1" placeholder="Exemple :&#10;déterminé → déterminer&#10;cohérant → cohérent&#10;…"></textarea></div>
+    </div>
+  </div>
+
+  <!-- P2 Q2 : SUITES -->
+  <div class="card">
+    <div class="card-header">
+      <div class="section-num">2</div>
+      <div>
+        <div class="card-title">Suites de nombres</div>
+        <div class="card-subtitle">Complétez chaque suite — <span style="color:var(--gold)">noté</span></div>
+      </div>
+    </div>
+    <div class="scored-group">
+      <div class="scored-group-label">Suite A</div>
+      <div class="inline-row">
+        <span class="seq-prefix">2 &nbsp;,&nbsp; 4 &nbsp;,&nbsp; 6 &nbsp;,&nbsp; 8 &nbsp;,&nbsp; …</span>
+        <input class="seq-input" type="number" id="p2-q2a" placeholder="?">
+      </div>
+    </div>
+    <div class="scored-group">
+      <div class="scored-group-label">Suite B</div>
+      <div class="inline-row">
+        <span class="seq-prefix">3 &nbsp;,&nbsp; 9 &nbsp;,&nbsp; 27 &nbsp;,&nbsp; 81 &nbsp;,&nbsp; …</span>
+        <input class="seq-input" type="number" id="p2-q2b" placeholder="?">
+      </div>
+    </div>
+  </div>
+
+  <!-- P2 Q3 : ÉQUATIONS -->
+  <div class="card">
+    <div class="card-header">
+      <div class="section-num">3</div>
+      <div>
+        <div class="card-title">Équations</div>
+        <div class="card-subtitle">Résolvez et entrez le résultat — <span style="color:var(--gold)">noté</span></div>
+      </div>
+    </div>
+    <div class="scored-group">
+      <div class="scored-group-label">Calcul A</div>
+      <div class="inline-row">
+        <span class="seq-prefix">2² ÷ (3 + 1) =</span>
+        <input class="seq-input" type="number" id="p2-q3a" placeholder="?">
+      </div>
+    </div>
+    <div class="scored-group">
+      <div class="scored-group-label">Calcul B</div>
+      <div class="inline-row">
+        <span class="seq-prefix">(2² − 1) × 3 − (2 × 2 + 1) =</span>
+        <input class="seq-input" type="number" id="p2-q3b" placeholder="?">
+      </div>
+    </div>
+  </div>
+
+  <!-- P2 Q4 : INTRUS -->
+  <div class="card">
+    <div class="card-header">
+      <div class="section-num">4</div>
+      <div>
+        <div class="card-title">L'intrus</div>
+        <div class="card-subtitle">Sélectionnez le mot qui ne correspond pas aux autres — <span style="color:var(--gold)">noté</span></div>
+      </div>
+    </div>
+    <div class="scored-group" style="margin-bottom:14px">
+      <div class="scored-group-label">Série A</div>
+      <div class="radio-group" id="intrus-a">
+        <label class="radio-option"><input type="radio" name="intrus-a" value="Pédagogie"><div class="radio-dot"></div>Pédagogie</label>
+        <label class="radio-option"><input type="radio" name="intrus-a" value="Andragogie"><div class="radio-dot"></div>Andragogie</label>
+        <label class="radio-option"><input type="radio" name="intrus-a" value="Heuristique"><div class="radio-dot"></div>Heuristique</label>
+        <label class="radio-option"><input type="radio" name="intrus-a" value="Stagnation"><div class="radio-dot"></div>Stagnation</label>
+      </div>
+    </div>
+    <div class="scored-group">
+      <div class="scored-group-label">Série B</div>
+      <div class="radio-group" id="intrus-b">
+        <label class="radio-option"><input type="radio" name="intrus-b" value="Didactique"><div class="radio-dot"></div>Didactique</label>
+        <label class="radio-option"><input type="radio" name="intrus-b" value="Méthodologie"><div class="radio-dot"></div>Méthodologie</label>
+        <label class="radio-option"><input type="radio" name="intrus-b" value="Scolastique"><div class="radio-dot"></div>Scolastique</label>
+        <label class="radio-option"><input type="radio" name="intrus-b" value="Rigoureux"><div class="radio-dot"></div>Rigoureux</label>
+      </div>
+    </div>
+  </div>
+
+  <!-- P2 Q5 : SYNONYMES -->
+  <div class="card">
+    <div class="card-header">
+      <div class="section-num">5</div>
+      <div>
+        <div class="card-title">Synonymes</div>
+        <div class="card-subtitle">Sélectionnez le meilleur synonyme — <span style="color:var(--gold)">noté</span></div>
+      </div>
+    </div>
+    <div class="scored-group" style="margin-bottom:14px">
+      <div class="scored-group-label">FACILITATEUR</div>
+      <div class="radio-group" id="syno-a">
+        <label class="radio-option"><input type="radio" name="syno-a" value="médiateur"><div class="radio-dot"></div>Médiateur</label>
+        <label class="radio-option"><input type="radio" name="syno-a" value="adversaire"><div class="radio-dot"></div>Adversaire</label>
+        <label class="radio-option"><input type="radio" name="syno-a" value="détracteur"><div class="radio-dot"></div>Détracteur</label>
+        <label class="radio-option"><input type="radio" name="syno-a" value="promoteur"><div class="radio-dot"></div>Promoteur</label>
+      </div>
+    </div>
+    <div class="scored-group">
+      <div class="scored-group-label">ÉVALUATION SOMMATIVE</div>
+      <div class="radio-group" id="syno-b">
+        <label class="radio-option"><input type="radio" name="syno-b" value="finale"><div class="radio-dot"></div>Finale</label>
+        <label class="radio-option"><input type="radio" name="syno-b" value="continue"><div class="radio-dot"></div>Continue</label>
+        <label class="radio-option"><input type="radio" name="syno-b" value="périodique"><div class="radio-dot"></div>Périodique</label>
+      </div>
+    </div>
+  </div>
+
+  <!-- P2 Q6 : HANDICAP -->
+  <div class="card">
+    <div class="card-header">
+      <div class="section-num">6</div>
+      <div>
+        <div class="card-title">Acteurs du handicap en formation</div>
+        <div class="card-subtitle">Citez 4 organismes qui accompagnent les bénéficiaires en situation de handicap.</div>
+      </div>
+    </div>
+    <div class="field">
+      <textarea id="p2-q6" placeholder="1. …&#10;2. …&#10;3. …&#10;4. …"></textarea>
+    </div>
+  </div>
+
+  <!-- SUBMIT -->
+  <div class="submit-zone">
+    <button class="btn-submit" onclick="submitTest()">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+      Valider et voir les résultats
+    </button>
+    <span class="submit-note">Vos réponses seront analysées et un rapport complet sera généré.</span>
+  </div>
+
+</div><!-- /main -->
+
+<!-- ════════ RESULTS OVERLAY ════════ -->
+<div class="overlay" id="resultsOverlay">
+  <div class="results-box">
+
+    <div class="results-header">
+      <div class="results-tag">Résultats du test</div>
+      <h2 id="res-candidate-name">Résultats</h2>
+      <p id="res-meta"></p>
+    </div>
+
+    <!-- Score cards -->
+    <div class="score-area">
+      <div class="score-card">
+        <div class="score-circle-wrap">
+          <div class="score-circle" id="scoreCircle1">
+            <div class="score-circle-inner">
+              <div class="score-pct" id="scorePct1">0%</div>
+              <div class="score-pct-sub">Score</div>
+            </div>
+          </div>
+        </div>
+        <div class="score-card-title">Score total</div>
+        <div class="score-card-detail" id="scoreDetail1">— pts</div>
+      </div>
+      <div class="score-card">
+        <div class="score-circle-wrap">
+          <div class="score-circle" id="scoreCircle2">
+            <div class="score-circle-inner">
+              <div class="score-pct" id="scorePct2">0%</div>
+              <div class="score-pct-sub">Complété</div>
+            </div>
+          </div>
+        </div>
+        <div class="score-card-title">Questions ouvertes</div>
+        <div class="score-card-detail" id="scoreDetail2">— / — pts mots-clés</div>
+      </div>
+    </div>
+
+    <!-- Email info -->
+    <div class="config-card" id="emailInfoCard">
+      <h3>📄 Envoi du rapport PDF à Real Conseil</h3>
+      <p>En cliquant sur le bouton, le rapport PDF complet (toutes vos réponses + éléments de correction) va se <strong>télécharger automatiquement</strong>, puis votre messagerie s'ouvrira. <strong>Joignez le PDF téléchargé au mail</strong> avant d'appuyer sur Envoyer.</p>
+    </div>
+
+    <!-- Answers -->
+    <div id="answersContainer"></div>
+
+    <!-- Action buttons -->
+    <div class="action-row">
+      <button class="btn-primary" id="btnSendEmail" onclick="sendEmail()">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2L11 13"/><path d="M22 2L15 22l-4-9-9-4 20-7z"/></svg>
+        Générer le PDF &amp; Envoyer
+      </button>
+      <button class="btn-secondary" onclick="backToForm()">
+        ← Retour au test
+      </button>
+    </div>
+
+  </div>
+</div>
+
+<!-- TIMER -->
+<div class="timer-wrap" id="timer-wrap">
+  <span class="timer-icon">⏱</span>
+  <div>
+    <div class="timer-text" id="timer-display">45:00</div>
+    <div class="timer-label">temps restant</div>
+  </div>
+</div>
+
+<!-- PDF CONTAINER (hors écran pour génération) -->
+<div id="pdf-report" style="position:absolute;left:-9999px;top:0;width:800px;background:white;"></div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<script>
+// ── TIMER 45 MIN ──
+let timerInterval;
+
+// ── RADIO INTERACTIVITY ──
+document.querySelectorAll('.radio-group').forEach(group => {
+  group.querySelectorAll('.radio-option').forEach(opt => {
+    opt.addEventListener('click', () => {
+      const name = opt.querySelector('input').name;
+      document.querySelectorAll(`input[name="${name}"]`).forEach(r => {
+        r.closest('.radio-option').classList.remove('selected');
+      });
+      opt.querySelector('input').checked = true;
+      opt.classList.add('selected');
+      updateProgress();
+    });
+  });
+});
+
+// ── PROGRESS ──
+const allFields = [
+  'f-nom','f-prenom','f-date','f-ville',
+  'p1a-q1','p1a-q2','p1a-q3','p1a-q4','p1a-q5',
+  'p1b-q1','p1b-q2','p1b-q3','p1b-q4','p1b-q5','p1b-q6','p1b-q7',
+  'p2-q1','p2-q2a','p2-q2b','p2-q3a','p2-q3b','p2-q6'
+];
+const radioFields = ['intrus-a','intrus-b','syno-a','syno-b'];
+const totalFields = allFields.length + radioFields.length;
+
+function updateProgress() {
+  let filled = 0;
+  allFields.forEach(id => {
+    const el = document.getElementById(id);
+    if (el && el.value.trim()) filled++;
+  });
+  radioFields.forEach(name => {
+    if (document.querySelector(`input[name="${name}"]:checked`)) filled++;
+  });
+  const pct = Math.round((filled / totalFields) * 100);
+  document.getElementById('progressFill').style.width = pct + '%';
+  document.getElementById('progressPct').textContent = pct + '%';
+}
+
+document.querySelectorAll('input, textarea').forEach(el => {
+  el.addEventListener('input', updateProgress);
+  el.addEventListener('change', updateProgress);
+});
+
+// ── SCORING ──
+const correctAnswers = {
+  'p2-q2a': 10,
+  'p2-q2b': 243,
+  'p2-q3a': 1,
+  'p2-q3b': 4,
+  'intrus-a': 'Stagnation',
+  'intrus-b': 'Scolastique',
+  'syno-a': 'médiateur',
+  'syno-b': 'finale'
+};
+
+function getAnswers() {
+  const a = {};
+  allFields.forEach(id => {
+    a[id] = document.getElementById(id)?.value?.trim() || '';
+  });
+  radioFields.forEach(name => {
+    const checked = document.querySelector(`input[name="${name}"]:checked`);
+    a[name] = checked ? checked.value : '';
+  });
+  return a;
+}
+
+function scoreKeywords(answer, keywords) {
+  const lower = (answer || '').toLowerCase();
+  const found = keywords.filter(kw => lower.includes(kw.toLowerCase()));
+  const count = found.length;
+  let pts = 0;
+  if (count >= 4) pts = 3;
+  else if (count >= 3) pts = 2;
+  else if (count >= 1) pts = 1;
+  return { pts, found, missing: keywords.filter(kw => !found.map(f => f.toLowerCase()).includes(kw.toLowerCase())) };
+}
+
+function scoreAnswers(answers) {
+  let correct = 0, total = 0;
+  Object.keys(correctAnswers).forEach(k => {
+    total++;
+    const expected = String(correctAnswers[k]).toLowerCase();
+    const given = String(answers[k] || '').toLowerCase();
+    if (given && given === expected) correct++;
+  });
+  let kwPoints = 0, kwMax = 0;
+  sections.forEach(sec => {
+    sec.questions.forEach(q => {
+      if (q.keywords && !q.scored) {
+        kwMax += 3;
+        if (answers[q.id]) kwPoints += scoreKeywords(answers[q.id], q.keywords).pts;
+      }
+    });
+  });
+  return { correct, total, kwPoints, kwMax };
+}
+
+// ── COMPLETION RATE ──
+function completionRate(answers) {
+  const keys = Object.keys(answers).filter(k => !['f-nom','f-prenom','f-date','f-ville'].includes(k));
+  const filled = keys.filter(k => answers[k]).length;
+  return { filled, total: keys.length };
+}
+
+// ── SUBMIT ──
+function submitTest() {
+  const answers = getAnswers();
+  if (!answers['f-nom'] || !answers['f-prenom']) {
+    showToast('⚠️ Veuillez indiquer votre nom et prénom.', 'error');
+    return;
+  }
+
+  const { correct, total, kwPoints, kwMax } = scoreAnswers(answers);
+  const combined = correct + kwPoints;
+  const combinedMax = total + kwMax;
+  const pct = Math.round((combined / combinedMax) * 100);
+  const kwPct = kwMax > 0 ? Math.round((kwPoints / kwMax) * 100) : 0;
+
+  // Candidate header
+  document.getElementById('res-candidate-name').textContent =
+    answers['f-prenom'] + ' ' + answers['f-nom'];
+  document.getElementById('res-meta').textContent =
+    (answers['f-date'] ? new Date(answers['f-date']).toLocaleDateString('fr-FR', {day:'2-digit',month:'long',year:'numeric'}) : 'Date non renseignée') +
+    (answers['f-ville'] ? '  •  ' + answers['f-ville'] : '');
+
+  // Circles
+  animateCircle('scoreCircle1', pct);
+  animateCircle('scoreCircle2', kwPct);
+  document.getElementById('scorePct1').textContent = pct + '%';
+  document.getElementById('scorePct2').textContent = kwPct + '%';
+  document.getElementById('scoreDetail1').textContent = combined + ' / ' + combinedMax + ' pts (auto + mots-clés)';
+  document.getElementById('scoreDetail2').textContent = kwPoints + ' / ' + kwMax + ' pts (questions ouvertes)';
+
+  buildAnswers(answers);
+  clearInterval(timerInterval);
+  document.getElementById('timer-wrap').style.display = 'none';
+  document.getElementById('resultsOverlay').classList.add('active');
+  window.scrollTo(0, 0);
+  window._lastAnswers = answers;
+}
+
+function animateCircle(id, pct) {
+  const deg = (pct / 100) * 360;
+  document.getElementById(id).style.background =
+    `conic-gradient(var(--gold) ${deg}deg, var(--navy-card) ${deg}deg)`;
+}
+
+function backToForm() {
+  document.getElementById('resultsOverlay').classList.remove('active');
+}
+
+// ── BUILD ANSWER LIST ──
+const sections = [
+  {
+    title: 'Partie 1A — Étude de texte',
+    questions: [
+      {
+        id: 'p1a-q1', label: 'Quel est le sujet traité dans le texte ?',
+        keywords: ['formation professionnelle', 'adultes', '1971', 'compétence', 'VAE', 'continue', 'loi'],
+        model: "La formation professionnelle continue des adultes en France : son évolution historique, législative (loi de 1971) et conceptuelle, du droit à la formation jusqu'à la logique de compétence et la VAE."
+      },
+      {
+        id: 'p1a-q2', label: 'De quelle évolution parle-t-on ?',
+        keywords: ['qualification', 'compétence', 'passage', 'logique', 'diplôme', 'capacité'],
+        model: "Le passage d'une logique de qualification (centrée sur les diplômes et titres) à une logique de compétence (centrée sur les capacités réelles à agir en situation professionnelle)."
+      },
+      {
+        id: 'p1a-q3', label: 'Qui soutient cette évolution ?',
+        keywords: ['Medef', 'Deauville', '1998', 'patronat', 'employeurs', 'journées'],
+        model: "Le Medef, lors des journées internationales de la formation à Deauville en 1998."
+      },
+      {
+        id: 'p1a-q4', label: 'Quel public est concerné ?',
+        keywords: ['adultes', 'salariés', 'demandeurs', 'emploi', 'reconversion', 'formation'],
+        model: "Les adultes en formation professionnelle continue : salariés, demandeurs d'emploi, toute personne engagée dans un parcours de formation ou de reconversion professionnelle."
+      },
+      {
+        id: 'p1a-q5', label: "D'après vous, qu'est-ce qu'une compétence professionnelle ?",
+        keywords: ['savoir', 'savoir-faire', 'savoir-être', 'mobiliser', 'situation', 'contexte'],
+        model: "Une compétence professionnelle est la capacité à mobiliser et combiner des savoirs (connaissances), savoir-faire (gestes, techniques) et savoir-être (postures, comportements) pour réaliser efficacement une activité professionnelle dans un contexte donné. Elle se démontre en situation réelle de travail."
+      },
+    ]
+  },
+  {
+    title: 'Partie 1B — Questions ouvertes',
+    questions: [
+      {
+        id: 'p1b-q1', label: 'Comment identifieriez-vous les besoins pédagogiques ?',
+        keywords: ['analyse', 'référentiel', 'entretien', 'questionnaire', 'positionnement', 'compétences', 'cahier des charges'],
+        model: "Analyse du cahier des charges / référentiel métier, entretiens avec le commanditaire et les futurs apprenants, questionnaire de positionnement initial, observation de situations de travail, analyse des écarts entre compétences actuelles et compétences visées."
+      },
+      {
+        id: 'p1b-q2', label: 'Quelles méthodes pédagogiques privilégiez-vous ?',
+        keywords: ['actives', 'participatives', 'étude de cas', 'jeux de rôle', 'projet', 'alternance', 'différenciée'],
+        model: "Méthodes actives et participatives : études de cas, jeux de rôle, travaux en sous-groupes, apprentissage par projet. Méthode interrogative pour stimuler la réflexion. Alternance théorie / mise en pratique. Pédagogie différenciée selon les profils."
+      },
+      {
+        id: 'p1b-q3', label: 'Comment évalueriez-vous les compétences acquises ?',
+        keywords: ['diagnostique', 'formative', 'sommative', 'mise en situation', 'grille', 'critères', 'référentiel'],
+        model: "Évaluation diagnostique (en amont), évaluation formative continue (QCM, exercices, retours oraux), évaluation sommative en fin de séquence (mise en situation, grille d'évaluation). Critères définis à partir du référentiel de compétences."
+      },
+      {
+        id: 'p1b-q4', label: 'Gestion de la diversité des profils dans un groupe ?',
+        keywords: ['diagnostic', 'différenciation', 'supports', 'tutorat', 'sous-groupes', 'valorisation'],
+        model: "Diagnostic initial des apprenants (niveau, expérience, objectifs). Différenciation pédagogique : supports adaptés, activités à niveaux, tutorat entre pairs. Valorisation des acquis de chacun. Constitution de sous-groupes hétérogènes ou homogènes selon l'objectif."
+      },
+      {
+        id: 'p1b-q5', label: 'Stratégies pour maintenir la dynamique de groupe et éviter les conflits ?',
+        keywords: ['contrat', 'règles', 'écoute', 'médiation', 'brise-glace', 'valorisation'],
+        model: "Établir un contrat de formation / règles de vie dès le départ. Activités brise-glace en début de formation. Écoute active, reformulation, gestion positive des désaccords. Valorisation de chaque participant. Médiation en cas de tension. Varier les modalités pour maintenir l'attention."
+      },
+      {
+        id: 'p1b-q6', label: 'Citez 5 acteurs de la formation professionnelle.',
+        keywords: ['France Travail', 'Pôle Emploi', 'OPCO', 'CPF', 'Région', 'France Compétences', 'DREETS'],
+        model: "Exemples attendus : France Travail (ex-Pôle Emploi), OPCO (Opérateurs de Compétences), Caisse des Dépôts / Mon Compte Formation (CPF), les Régions, France Compétences, DREETS, les organismes de formation (OF), les entreprises (plan de développement des compétences), les CIBC."
+      },
+      {
+        id: 'p1b-q7', label: 'Impact du numérique dans le métier de formateur ?',
+        keywords: ['classes virtuelles', 'FOAD', 'LMS', 'e-learning', 'numérique', 'collaboratifs', 'digital'],
+        model: "Oui, impact majeur : développement des classes virtuelles et de la FOAD, LMS (Moodle, etc.), outils collaboratifs (Padlet, Klaxoon, Wooclap), e-learning et micro-learning. Le formateur doit maîtriser ces outils, adapter ses pratiques pédagogiques et accompagner les apprenants dans les usages numériques."
+      },
+    ]
+  },
+  {
+    title: 'Partie 2 — Connaissances de base',
+    questions: [
+      {
+        id: 'p2-q1', label: 'Correction orthographique',
+        keywords: ['déterminer', 'cohérent', 'ses compétences', 'ses aspirations', 'successifs', 'bien qu', 'sa lettre', 'compétences'],
+        model: "9 erreurs à corriger :\n1. déterminé → déterminer (infinitif après préposition « à »)\n2. cohérant → cohérent (adjectif)\n3. ces compétences → ses compétences (pronom possessif)\n4. ces aspirations → ses aspirations\n5. bilan de compétence → bilan de compétences (pluriel)\n6. ces atouts → ses atouts\n7. refus successif → refus successifs (accord avec le nom pluriel)\n8. Malgré qu'il ait → Bien qu'il ait (« malgré » est suivi d'un nom, non d'une subordonnée)\n9. ça lettre → sa lettre (adjectif possessif)"
+      },
+      { id: 'p2-q2a', label: 'Suite A : 2, 4, 6, 8, …', scored: true, correct: 10 },
+      { id: 'p2-q2b', label: 'Suite B : 3, 9, 27, 81, …', scored: true, correct: 243 },
+      { id: 'p2-q3a', label: 'Calcul A : 2² ÷ (3 + 1) =', scored: true, correct: 1 },
+      { id: 'p2-q3b', label: 'Calcul B : (2²−1)×3 − (2×2+1) =', scored: true, correct: 4 },
+      { id: 'intrus-a', label: 'Intrus A : Pédagogie / Andragogie / Heuristique / Stagnation', scored: true, correct: 'Stagnation', radio: true },
+      { id: 'intrus-b', label: 'Intrus B : Didactique / Méthodologie / Scolastique / Rigoureux', scored: true, correct: 'Scolastique', radio: true },
+      { id: 'syno-a', label: 'Synonyme de FACILITATEUR', scored: true, correct: 'médiateur', radio: true },
+      { id: 'syno-b', label: "Synonyme d'ÉVALUATION SOMMATIVE", scored: true, correct: 'finale', radio: true },
+      { id: 'p2-q6', label: '4 organismes accompagnant les bénéficiaires en situation de handicap',
+        keywords: ['AGEFIPH', 'FIPHFP', 'Cap Emploi', 'MDPH', 'ESAT', 'SAMETH'],
+        model: "Exemples attendus : AGEFIPH (secteur privé), FIPHFP (secteur public), Cap Emploi, MDPH (Maison Départementale des Personnes Handicapées), ESAT, SAMETH, Handiforum, associations spécialisées (APF, UNAPEI…)."
+      },
+    ]
+  }
+];
+
+function buildAnswers(answers) {
+  const container = document.getElementById('answersContainer');
+  container.innerHTML = '';
+  sections.forEach(sec => {
+    let html = `<div class="answers-section"><div class="answers-section-title">📋 ${sec.title}</div>`;
+    sec.questions.forEach(q => {
+      const val = answers[q.id] || '';
+      const isEmpty = !val;
+      let cls = 'answer-item';
+      let iconHtml = '';
+      let extraHtml = '';
+      if (q.scored) {
+        const isCorrect = !isEmpty && String(val).toLowerCase() === String(q.correct).toLowerCase();
+        cls += isCorrect ? ' correct' : ' incorrect';
+        iconHtml = `<div class="answer-badge-icon ${isCorrect ? 'badge-ok' : 'badge-ko'}">${isCorrect ? '✓' : '✗'}</div>`;
+        if (!isCorrect) extraHtml = `<div class="answer-correct-val">✓ Bonne réponse : <strong>${q.correct}</strong></div>`;
+      } else if (q.keywords) {
+        const kw = scoreKeywords(val, q.keywords);
+        iconHtml = `<div class="answer-badge-icon badge-kw">${kw.pts}/3</div>`;
+        const kwHtml = q.keywords.map(k => {
+          const isFound = kw.found.some(f => f.toLowerCase() === k.toLowerCase());
+          return `<span class="${isFound ? 'kw-found' : 'kw-missing'}">${escHtml(k)}</span>`;
+        }).join(' ');
+        extraHtml = `<div class="answer-kw-bar"><span class="kw-label">Mots-clés :</span> ${kwHtml}</div>`;
+        if (q.model) extraHtml += `<div class="answer-model"><div class="answer-model-label">Éléments de réponse attendus</div><div class="answer-model-text">${escHtml(q.model)}</div></div>`;
+      } else {
+        iconHtml = `<div class="answer-badge-icon badge-na">—</div>`;
+        if (q.model) {
+          extraHtml = `<div class="answer-model"><div class="answer-model-label">Éléments de réponse attendus</div><div class="answer-model-text">${escHtml(q.model)}</div></div>`;
+        }
+      }
+      html += `<div class="${cls}">
+        <div class="answer-q">${q.label}</div>
+        <div class="answer-row">
+          <div style="flex:1">
+            <div class="answer-val ${isEmpty ? 'empty' : ''}">${isEmpty ? 'Non renseigné' : escHtml(val)}</div>
+            ${extraHtml}
+          </div>
+          ${iconHtml}
+        </div>
+      </div>`;
+    });
+    html += '</div>';
+    container.innerHTML += html;
+  });
+}
+
+function escHtml(s) {
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/\n/g,'<br>');
+}
+
+// ── GENERATE PLAIN TEXT REPORT ──
+function generateTextReport(answers) {
+  const { correct, total } = scoreAnswers(answers);
+  const pct = Math.round((correct / total) * 100);
+  const { filled, total: totalQ } = completionRate(answers);
+  const completionPct = Math.round((filled / totalQ) * 100);
+  const candidateName = `${answers['f-prenom'] || ''} ${answers['f-nom'] || ''}`.trim();
+  const dateStr = answers['f-date'] ? new Date(answers['f-date']).toLocaleDateString('fr-FR', {day:'2-digit',month:'long',year:'numeric'}) : 'Non renseignée';
+  const ville = answers['f-ville'] || 'Non renseignée';
+  const sentDate = new Date().toLocaleString('fr-FR');
+
+  let body = '';
+  body += '═══════════════════════════════════════════════════════════\n';
+  body += '   TEST DE POSITIONNEMENT — FORMATEUR PROFESSIONNEL D\'ADULTES\n';
+  body += '   Real Conseil\n';
+  body += '═══════════════════════════════════════════════════════════\n\n';
+  body += `Candidat    : ${candidateName || 'Non renseigné'}\n`;
+  body += `Date        : ${dateStr}\n`;
+  body += `Ville       : ${ville}\n`;
+  body += `Rapport généré le : ${sentDate}\n\n`;
+  body += '───────────────────────────────────────────────────────────\n';
+  body += '  RÉSULTATS GLOBAUX\n';
+  body += '───────────────────────────────────────────────────────────\n';
+  body += `  Score questions notées : ${pct}%  (${correct}/${total} correctes)\n`;
+  body += `  Taux de complétion     : ${completionPct}%  (${filled}/${totalQ} questions renseignées)\n\n`;
+
+  sections.forEach(sec => {
+    body += '═══════════════════════════════════════════════════════════\n';
+    body += `  ${sec.title.toUpperCase()}\n`;
+    body += '═══════════════════════════════════════════════════════════\n\n';
+    sec.questions.forEach((q, i) => {
+      const val = answers[q.id] || '';
+      body += `Q${i+1}. ${q.label}\n`;
+      body += `Réponse : ${val || '(non renseigné)'}\n`;
+      if (q.scored) {
+        const isOk = val && String(val).toLowerCase() === String(q.correct).toLowerCase();
+        body += `Résultat : ${isOk ? '✓ CORRECT' : '✗ INCORRECT — Bonne réponse : ' + q.correct}\n`;
+      } else if (q.model) {
+        body += `── Éléments de réponse attendus ──\n${q.model}\n`;
+      } else {
+        body += `[Question ouverte — évaluation manuelle]\n`;
+      }
+      body += '\n';
+    });
+  });
+
+  body += '───────────────────────────────────────────────────────────\n';
+  body += 'Les questions ouvertes nécessitent une évaluation manuelle.\n';
+  body += 'Real Conseil — Test de positionnement FPA\n';
+  return body;
+}
+
+// ── GÉNÉRATION PDF ──
+function buildAndDownloadPDF(answers, callback) {
+  const { correct, total, kwPoints, kwMax } = scoreAnswers(answers);
+  const combined = correct + kwPoints;
+  const combinedMax = total + kwMax;
+  const pct = Math.round((combined / combinedMax) * 100);
+  const { filled, total: totalQ } = completionRate(answers);
+  const completionPct = Math.round((filled / totalQ) * 100);
+  const candidateName = (`${answers['f-prenom'] || ''} ${answers['f-nom'] || ''}`).trim() || 'Candidat';
+  const dateStr = answers['f-date']
+    ? new Date(answers['f-date']).toLocaleDateString('fr-FR', {day:'2-digit', month:'long', year:'numeric'})
+    : 'Non renseignée';
+  const ville = answers['f-ville'] || 'Non renseignée';
+  const now = new Date();
+  const nowStr = now.toLocaleDateString('fr-FR', {weekday:'long', day:'2-digit', month:'long', year:'numeric'});
+  const nowTime = now.toLocaleTimeString('fr-FR', {hour:'2-digit', minute:'2-digit'});
+
+  let sectionsHTML = '';
+  sections.forEach(sec => {
+    sectionsHTML += `<div style="margin-bottom:18px;">
+      <div style="background:#0d1b35;color:white;padding:6px 10px;font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;border-radius:4px;margin-bottom:8px;">${sec.title}</div>`;
+    sec.questions.forEach((q, idx) => {
+      const val = answers[q.id] || '';
+      const isEmpty = !val;
+      let statusHTML = '';
+      let borderColor = '#c9a227';
+      if (q.scored) {
+        const isOk = !isEmpty && String(val).toLowerCase() === String(q.correct).toLowerCase();
+        borderColor = isOk ? '#1a7a3a' : '#c0392b';
+        const statusBg = isOk ? '#e6f4ea' : '#fdecea';
+        const statusCol = isOk ? '#1a7a3a' : '#c0392b';
+        statusHTML = `<div style="display:inline-block;padding:2px 8px;border-radius:10px;font-size:9px;font-weight:700;background:${statusBg};color:${statusCol};margin-bottom:4px;">${isOk ? '✓ CORRECT' : '✗ INCORRECT — Bonne réponse : ' + q.correct}</div>`;
+      } else if (q.keywords) {
+        const kw = scoreKeywords(val, q.keywords);
+        const kwCol = kw.pts === 3 ? '#1a7a3a' : kw.pts >= 2 ? '#c9a227' : kw.pts >= 1 ? '#e67e22' : '#c0392b';
+        const kwBg = kw.pts === 3 ? '#e6f4ea' : kw.pts >= 2 ? 'rgba(201,162,39,0.12)' : kw.pts >= 1 ? 'rgba(230,126,34,0.1)' : '#fdecea';
+        borderColor = kwCol;
+        const foundStr = kw.found.length > 0 ? kw.found.join(', ') : 'aucun';
+        statusHTML = `<div style="display:inline-block;padding:2px 8px;border-radius:10px;font-size:9px;font-weight:700;background:${kwBg};color:${kwCol};margin-bottom:4px;">Mots-clés : ${kw.found.length}/${q.keywords.length} — ${kw.pts}/3 pts — Trouvés : ${foundStr}</div>`;
+      }
+      sectionsHTML += `<div style="margin-bottom:7px;padding:9px 11px;border:1px solid #e5e0d8;border-left:3px solid ${borderColor};border-radius:4px;">`;
+      sectionsHTML += `<div style="font-size:9px;font-weight:700;color:#c9a227;text-transform:uppercase;letter-spacing:1px;margin-bottom:3px;">Q${idx+1}. ${q.label}</div>`;
+      sectionsHTML += statusHTML;
+      sectionsHTML += `<div style="font-size:11px;color:#1a1a2e;padding:5px 8px;background:#f8f8f8;border-radius:3px;margin-bottom:${q.model ? '7px' : '0'};">${isEmpty ? '<em style="color:#999;">Non renseigné</em>' : String(val).replace(/\n/g,'<br>')}</div>`;
+      if (q.model) {
+        sectionsHTML += `<div style="padding:6px 10px;background:rgba(201,162,39,0.07);border-left:2px solid #c9a227;border-radius:0 3px 3px 0;">
+          <div style="font-size:8px;font-weight:700;color:#c9a227;text-transform:uppercase;letter-spacing:1px;margin-bottom:3px;">Éléments de réponse attendus</div>
+          <div style="font-size:10px;color:#555;line-height:1.5;">${q.model.replace(/\n/g,'<br>')}</div>
+        </div>`;
+      }
+      sectionsHTML += `</div>`;
+    });
+    sectionsHTML += `</div>`;
+  });
+
+  const html = `<div style="font-family:Arial,Helvetica,sans-serif;color:#1a1a2e;width:780px;background:white;margin:0;padding:0;">
+    <div style="background:#0d1b35;color:white;padding:22px 28px 16px;">
+      <div style="font-size:8px;letter-spacing:3px;text-transform:uppercase;opacity:.55;margin-bottom:5px;">REAL CONSEIL · CENTRE DE FORMATION · AMIENS</div>
+      <div style="font-size:19px;font-weight:700;margin-bottom:3px;">Test de Positionnement — Formateur Professionnel d'Adultes</div>
+      <div style="font-size:9px;opacity:.55;">Établi le ${nowStr} à ${nowTime} · Document confidentiel — Archive Région Hauts-de-France</div>
+    </div>
+    <div style="background:#c9a227;height:3px;"></div>
+    <div style="padding:14px 28px 0;">
+      <div style="font-size:8px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#c9a227;padding-bottom:4px;border-bottom:1px solid #e5e0d8;margin-bottom:9px;">INFORMATIONS CANDIDAT</div>
+      <table style="width:100%;border-collapse:collapse;font-size:11px;">
+        <tr><td style="padding:3px 6px;font-weight:600;color:#6b6b80;width:25%;">Nom complet</td><td style="padding:3px 6px;">${candidateName}</td><td style="padding:3px 6px;font-weight:600;color:#6b6b80;width:22%;">Date du test</td><td style="padding:3px 6px;">${dateStr}</td></tr>
+        <tr style="background:#f8f7f4;"><td style="padding:3px 6px;font-weight:600;color:#6b6b80;">Ville de la session</td><td colspan="3" style="padding:3px 6px;">${ville}</td></tr>
+      </table>
+    </div>
+    <div style="padding:12px 28px 0;">
+      <div style="font-size:8px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#c9a227;padding-bottom:4px;border-bottom:1px solid #e5e0d8;margin-bottom:9px;">RÉSULTATS</div>
+      <table style="width:100%;border-collapse:collapse;font-size:11px;">
+        <tr style="background:#0d1b35;"><th style="padding:5px 8px;color:white;text-align:left;font-size:9px;text-transform:uppercase;letter-spacing:1px;">Indicateur</th><th style="padding:5px 8px;color:white;text-align:center;font-size:9px;text-transform:uppercase;letter-spacing:1px;">Résultat</th><th style="padding:5px 8px;color:white;text-align:center;font-size:9px;text-transform:uppercase;letter-spacing:1px;">%</th></tr>
+        <tr><td style="padding:4px 8px;border-bottom:1px solid #f0ede8;">Questions notées auto (Partie 2)</td><td style="padding:4px 8px;text-align:center;border-bottom:1px solid #f0ede8;font-weight:600;">${correct}/${total}</td><td style="padding:4px 8px;text-align:center;border-bottom:1px solid #f0ede8;">${Math.round(correct/total*100)}%</td></tr>
+        <tr><td style="padding:4px 8px;border-bottom:1px solid #f0ede8;">Questions ouvertes (mots-clés)</td><td style="padding:4px 8px;text-align:center;border-bottom:1px solid #f0ede8;font-weight:600;">${kwPoints}/${kwMax}</td><td style="padding:4px 8px;text-align:center;border-bottom:1px solid #f0ede8;">${kwMax > 0 ? Math.round(kwPoints/kwMax*100) : 0}%</td></tr>
+        <tr style="background:#f0ede8;font-weight:700;"><td style="padding:4px 8px;border-bottom:1px solid #e0dbd0;">Score total combiné</td><td style="padding:4px 8px;text-align:center;border-bottom:1px solid #e0dbd0;font-weight:700;">${combined}/${combinedMax}</td><td style="padding:4px 8px;text-align:center;border-bottom:1px solid #e0dbd0;">${pct}%</td></tr>
+        <tr style="background:#fafaf9;"><td style="padding:4px 8px;">Taux de complétion global</td><td style="padding:4px 8px;text-align:center;font-weight:600;">${filled}/${totalQ}</td><td style="padding:4px 8px;text-align:center;">${completionPct}%</td></tr>
+      </table>
+    </div>
+    <div style="padding:12px 28px 0;">
+      <div style="font-size:8px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#c9a227;padding-bottom:4px;border-bottom:1px solid #e5e0d8;margin-bottom:9px;">DÉTAIL DES RÉPONSES</div>
+      ${sectionsHTML}
+    </div>
+    <div style="background:#f8f7f4;border-top:2px solid #c9a227;margin-top:10px;padding:10px 28px;">
+      <div style="font-size:8px;color:#6b6b80;text-align:center;">Real Conseil · Centre de Formation · Amiens · ${nowStr} · Confidentiel — Archive Région Hauts-de-France<br>Les questions ouvertes (Partie 1) nécessitent une évaluation manuelle par le formateur.</div>
+    </div>
+  </div>`;
+
+  const safeNom = (answers['f-nom'] || 'Candidat').replace(/\s+/g,'-');
+  const safePrenom = (answers['f-prenom'] || '').replace(/\s+/g,'-');
+  const safeDate = now.toLocaleDateString('fr-FR').replace(/\//g,'-');
+
+  html2pdf().set({
+    margin: 0,
+    filename: `Test-Positionnement-FPA_${safeNom}-${safePrenom}_${safeDate}.pdf`,
+    image: { type: 'jpeg', quality: 0.97 },
+    html2canvas: { scale: 2, useCORS: true, logging: false, scrollY: 0 },
+    jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+  }).from(html, 'string').save().then(callback);
+}
+
+// ── SEND EMAIL via mailto ──
+function sendEmail() {
+  const answers = window._lastAnswers;
+  const candidateName = (`${answers['f-prenom'] || ''} ${answers['f-nom'] || ''}`).trim();
+  const { correct, total, kwPoints, kwMax } = scoreAnswers(answers);
+  const combined = correct + kwPoints;
+  const combinedMax = total + kwMax;
+  const pct = Math.round((combined / combinedMax) * 100);
+  const dateStr = answers['f-date'] ? new Date(answers['f-date']).toLocaleDateString('fr-FR') : '';
+  const now = new Date();
+
+  const subject = encodeURIComponent(
+    `Test FPA — ${candidateName || 'Candidat'} — Score ${combined}/${combinedMax} pts${dateStr ? ' — ' + dateStr : ''}`
+  );
+  const mailBody = `Test de Positionnement FPA — Real Conseil
+==========================================
+
+Candidat  : ${candidateName || 'Non renseigné'}
+Date      : ${dateStr || 'Non renseignée'}
+Ville     : ${answers['f-ville'] || 'Non renseignée'}
+Envoyé le : ${now.toLocaleString('fr-FR')}
+
+Score total           : ${pct}% (${combined}/${combinedMax})
+  dont auto-noté      : ${correct}/${total} pts
+  dont mots-clés      : ${kwPoints}/${kwMax} pts
+
+---
+Le rapport PDF complet (avec toutes les réponses et les éléments de correction)
+a été téléchargé automatiquement sur votre ordinateur.
+Merci de le joindre à ce mail avant d'envoyer.
+---`.trim();
+
+  const mailtoLink = `mailto:a.dakhlaoui@realconseil.com?subject=${subject}&body=${encodeURIComponent(mailBody)}`;
+
+  const btn = document.getElementById('btnSendEmail');
+  if (btn) { btn.disabled = true; btn.textContent = '⏳ Génération du PDF…'; }
+
+  buildAndDownloadPDF(answers, () => {
+    if (btn) { btn.disabled = false; btn.innerHTML = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2L11 13"/><path d="M22 2L15 22l-4-9-9-4 20-7z"/></svg> Générer le PDF &amp; Envoyer`; }
+    const pdfModal = document.getElementById('pdfAttachModal');
+    if (pdfModal) {
+      pdfModal.style.display = 'flex';
+      document.getElementById('btnConfirmAttach').onclick = function() {
+        pdfModal.style.display = 'none';
+        window.location.href = mailtoLink;
+      };
+    } else {
+      window.location.href = mailtoLink;
+    }
+  });
+}
+
+// ── TOAST ──
+function showToast(msg, type='') {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.className = 'toast show ' + type;
+  setTimeout(() => { t.className = 'toast'; }, 3500);
+}
+
+// Set default date
+document.getElementById('f-date').value = new Date().toISOString().split('T')[0];
+updateProgress();
+
+// Démarrage du timer 45 minutes
+(function startTimer() {
+  let timeLeft = 45 * 60;
+  const displayEl = document.getElementById('timer-display');
+  timerInterval = setInterval(() => {
+    timeLeft--;
+    const m = Math.floor(timeLeft / 60);
+    const s = timeLeft % 60;
+    displayEl.textContent = `${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+    if (timeLeft <= 300) displayEl.style.color = '#f59e0b';
+    if (timeLeft <= 60)  displayEl.style.color = '#ef4444';
+    if (timeLeft <= 0) {
+      clearInterval(timerInterval);
+      displayEl.textContent = '00:00';
+      submitTest();
+    }
+  }, 1000);
+})();
+</script>
+
+<!-- Modale rappel pièce jointe PDF -->
+<div id="pdfAttachModal">
+  <div class="pdf-modal-box">
+    <div class="pdf-modal-icon">📎</div>
+    <div class="pdf-modal-title">Votre PDF a été téléchargé !</div>
+    <div class="pdf-modal-text">
+      Avant d'envoyer l'email, vous devez <strong>joindre le fichier PDF</strong> manuellement.<br>
+      Il se trouve dans votre dossier <strong>Téléchargements</strong>.
+    </div>
+    <ol class="pdf-modal-steps">
+      <li>✅ Le PDF vient d'être téléchargé sur votre ordinateur</li>
+      <li>📂 Retrouvez-le dans votre dossier <strong>Téléchargements</strong></li>
+      <li>📧 Cliquez ci-dessous → votre client mail s'ouvre</li>
+      <li>📎 Attachez le PDF avant d'appuyer sur <strong>Envoyer</strong></li>
+    </ol>
+    <button class="btn-confirm-attach" id="btnConfirmAttach">
+      ✉️ J'ai compris — Ouvrir le mail
+    </button>
+  </div>
+</div>
+</body>
+</html>
