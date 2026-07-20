@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Test de Positionnement &ndash; ETI | Real Conseil</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+<style>
+:root{--navy:#1b2a4d;--navy-mid:#243560;--navy-card:#2d4279;--navy-light:#3a5299;--gold:#a28a70;--gold-light:#bda891;--gold-pale:rgba(162,138,112,0.12);--text:#e4eaf5;--text-muted:#7a90b8;--text-dim:#4a5f8a;--white:#ffffff;--success:#2ecc71;--error:#e74c3c;--border:rgba(162,138,112,0.2);}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'DM Sans',sans-serif;background:var(--navy);color:var(--text);min-height:100vh;}
+.header{position:sticky;top:0;z-index:100;background:rgba(27,42,77,0.95);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);padding:0 32px;}
+.header-inner{max-width:860px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:64px;}
+.brand-logo{height:40px;width:auto;object-fit:contain;}
+.header-progress{display:flex;align-items:center;gap:14px;}
+.progress-label{font-size:12px;color:var(--text-muted);font-weight:500;}
+.progress-track{width:160px;height:4px;background:var(--navy-light);border-radius:2px;overflow:hidden;}
+.progress-fill{height:100%;background:linear-gradient(90deg,var(--gold),var(--gold-light));border-radius:2px;transition:width 0.4s ease;width:0%;}
+.progress-pct{font-size:12px;font-weight:600;color:var(--gold);min-width:32px;}
+.hero{max-width:860px;margin:0 auto;padding:60px 32px 0;}
+.hero-tag{display:inline-block;padding:4px 14px;border-radius:20px;background:var(--gold-pale);border:1px solid var(--border);font-size:11px;font-weight:600;color:var(--gold);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:20px;}
+.hero h1{font-family:'Playfair Display',serif;font-size:42px;line-height:1.15;color:var(--white);margin-bottom:12px;}
+.hero h1 span{color:var(--gold);}
+.hero-sub{font-size:15px;color:var(--text-muted);font-weight:300;max-width:560px;line-height:1.6;margin-bottom:32px;}
+.hero-divider{width:100%;height:1px;background:linear-gradient(90deg,var(--gold),transparent);margin-bottom:48px;}
+.main{max-width:860px;margin:0 auto;padding:0 32px 80px;}
+.card{background:var(--navy-card);border:1px solid var(--border);border-radius:16px;padding:28px 32px;margin-bottom:28px;}
+.card-header{display:flex;align-items:center;gap:12px;margin-bottom:24px;}
+.section-num{width:28px;height:28px;border-radius:50%;background:var(--gold);color:var(--navy);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex-shrink:0;}
+.card-title{font-family:'Playfair Display',serif;font-size:18px;color:var(--white);}
+.card-subtitle{font-size:12px;color:var(--text-muted);margin-top:2px;}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+.field{display:flex;flex-direction:column;gap:6px;}
+.field label{font-size:12px;font-weight:600;color:var(--gold);letter-spacing:0.05em;text-transform:uppercase;}
+.field input,.field textarea{background:rgba(27,42,77,0.8);border:1px solid var(--navy-light);border-radius:8px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:14px;padding:10px 14px;transition:border-color 0.2s;outline:none;resize:vertical;}
+.field input:focus,.field textarea:focus{border-color:var(--gold);box-shadow:0 0 0 3px rgba(162,138,112,0.1);}
+.field textarea{min-height:90px;}
+.field-num{display:flex;flex-direction:column;gap:6px;}
+.field-num label{font-size:12px;font-weight:600;color:var(--gold);letter-spacing:0.05em;text-transform:uppercase;}
+.field-num input{background:rgba(27,42,77,0.8);border:1px solid var(--navy-light);border-radius:8px;color:var(--text);font-size:18px;font-weight:700;padding:10px 14px;width:140px;text-align:center;outline:none;transition:border-color 0.2s;}
+.field-num input:focus{border-color:var(--gold);}
+.part-separator{display:flex;align-items:center;gap:16px;margin:40px 0 28px;}
+.part-label{font-family:'Playfair Display',serif;font-size:13px;font-weight:700;color:var(--gold);text-transform:uppercase;letter-spacing:0.15em;white-space:nowrap;}
+.part-line{flex:1;height:1px;background:var(--border);}
+.part-title{font-family:'Playfair Display',serif;font-size:22px;color:var(--white);margin-bottom:6px;}
+.part-desc{font-size:13px;color:var(--text-muted);line-height:1.5;}
+.text-passage{background:rgba(228,234,245,0.04);border:1px solid rgba(228,234,245,0.08);border-left:3px solid var(--gold);border-radius:0 12px 12px 0;padding:22px 24px;margin-bottom:24px;}
+.text-passage-title{font-size:11px;font-weight:700;color:var(--gold);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:12px;}
+.text-passage-content{font-size:13.5px;color:var(--text-muted);line-height:1.8;}
+.text-passage-content p{margin-bottom:12px;}
+.text-passage-content p:last-child{margin-bottom:0;}
+.text-passage-source{font-size:11px;color:var(--text-dim);font-style:italic;margin-top:12px;padding-top:12px;border-top:1px solid rgba(228,234,245,0.07);}
+.correction-text{background:rgba(27,42,77,0.7);border:1px solid var(--navy-light);border-radius:10px;padding:18px 20px;margin-bottom:16px;font-size:13.5px;color:var(--text-muted);line-height:1.85;}
+.err{color:#e07070;font-weight:600;}
+.suites-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+.suite-card{background:rgba(27,42,77,0.6);border:1px solid var(--navy-light);border-radius:10px;padding:18px 20px;}
+.suite-seq{font-size:15px;color:var(--text-muted);margin-bottom:12px;font-family:monospace;}
+.suite-seq strong{color:var(--text);}
+.ops-grid{display:flex;flex-direction:column;gap:14px;}
+.op-row{display:flex;align-items:center;gap:16px;background:rgba(27,42,77,0.6);border:1px solid var(--navy-light);border-radius:10px;padding:14px 18px;flex-wrap:wrap;}
+.op-num{min-width:24px;height:24px;border-radius:6px;border:1px solid var(--border);color:var(--gold);font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.op-text{font-size:13.5px;color:var(--text);flex:1;line-height:1.5;min-width:200px;}
+.question{margin-bottom:22px;}
+.q-label{display:flex;align-items:flex-start;gap:10px;margin-bottom:8px;}
+.q-num{min-width:26px;height:26px;border-radius:6px;border:1px solid var(--border);color:var(--gold);font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;}
+.q-text{font-size:14px;color:var(--text);line-height:1.55;}
+.q-pts{font-size:10px;padding:2px 8px;border-radius:10px;font-weight:600;letter-spacing:0.05em;margin-left:auto;flex-shrink:0;margin-top:2px;background:rgba(162,138,112,0.15);color:var(--gold);}
+.q-pts-open{background:rgba(122,144,184,0.15);color:var(--text-muted);}
+.radio-group{display:flex;flex-wrap:wrap;gap:10px;}
+.radio-option{display:flex;align-items:center;gap:8px;background:rgba(27,42,77,0.7);border:1px solid var(--navy-light);border-radius:8px;padding:9px 16px;cursor:pointer;transition:all 0.2s;user-select:none;font-size:13.5px;}
+.radio-option:hover{border-color:var(--gold);background:var(--gold-pale);}
+.radio-option input{display:none;}
+.radio-option.selected{border-color:var(--gold);background:var(--gold-pale);color:var(--gold-light);}
+.radio-dot{width:14px;height:14px;border-radius:50%;border:2px solid var(--text-dim);transition:all 0.2s;}
+.radio-option.selected .radio-dot{border-color:var(--gold);background:var(--gold);}
+.submit-zone{margin-top:40px;display:flex;flex-direction:column;align-items:center;gap:12px;}
+.btn-submit{display:flex;align-items:center;gap:10px;background:linear-gradient(135deg,var(--gold),var(--gold-light));color:var(--navy);border:none;border-radius:12px;padding:16px 40px;font-family:'DM Sans',sans-serif;font-size:15px;font-weight:700;cursor:pointer;transition:all 0.2s;box-shadow:0 4px 20px rgba(162,138,112,0.3);}
+.btn-submit:hover{transform:translateY(-2px);}
+.btn-submit svg{width:18px;height:18px;}
+.submit-note{font-size:12px;color:var(--text-dim);text-align:center;}
+.overlay{position:fixed;inset:0;z-index:500;background:rgba(27,42,77,0.97);backdrop-filter:blur(8px);display:none;overflow-y:auto;padding:40px 20px;}
+.overlay.active{display:block;}
+.results-box{max-width:720px;margin:0 auto;animation:slideUp 0.4s ease;}
+@keyframes slideUp{from{opacity:0;transform:translateY(30px);}to{opacity:1;transform:translateY(0);}}
+.results-header{text-align:center;margin-bottom:40px;}
+.results-tag{display:inline-block;padding:4px 14px;border-radius:20px;background:var(--gold-pale);border:1px solid var(--border);font-size:11px;font-weight:600;color:var(--gold);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:16px;}
+.results-header h2{font-family:'Playfair Display',serif;font-size:32px;color:var(--white);margin-bottom:8px;}
+.results-header p{font-size:14px;color:var(--text-muted);}
+.score-area{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:32px;}
+.score-card{background:var(--navy-card);border:1px solid var(--border);border-radius:16px;padding:24px;text-align:center;}
+.score-circle-wrap{display:flex;justify-content:center;margin-bottom:12px;}
+.score-circle{width:100px;height:100px;border-radius:50%;background:conic-gradient(var(--gold) 0deg,var(--navy) 0deg);display:flex;align-items:center;justify-content:center;}
+.score-circle-inner{width:78px;height:78px;border-radius:50%;background:var(--navy-card);display:flex;align-items:center;justify-content:center;flex-direction:column;}
+.score-pct{font-size:22px;font-weight:700;color:var(--white);line-height:1;}
+.score-pct-sub{font-size:11px;color:var(--text-muted);}
+.score-card-title{font-size:12px;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:4px;}
+.score-card-detail{font-size:13px;color:var(--text-dim);}
+.config-card{background:rgba(162,138,112,0.06);border:1px solid rgba(162,138,112,0.2);border-radius:12px;padding:20px 24px;margin-bottom:28px;}
+.config-card h3{font-size:15px;font-weight:600;color:var(--gold);margin-bottom:8px;}
+.config-card p{font-size:13px;color:var(--text-muted);line-height:1.6;}
+.config-card strong{color:var(--text);font-weight:600;}
+.answers-section{margin-bottom:28px;}
+.answers-section-title{font-family:'Playfair Display',serif;font-size:16px;color:var(--gold);margin-bottom:16px;padding-bottom:8px;border-bottom:1px solid var(--border);}
+.answer-item{background:rgba(27,42,77,0.6);border:1px solid var(--navy-light);border-radius:10px;padding:14px 16px;margin-bottom:10px;}
+.answer-item.correct{border-color:rgba(46,204,113,0.3);background:rgba(46,204,113,0.04);}
+.answer-item.incorrect{border-color:rgba(231,76,60,0.3);background:rgba(231,76,60,0.04);}
+.answer-row{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;}
+.answer-q{font-size:12px;color:var(--text-dim);margin-bottom:6px;font-weight:500;}
+.answer-val{font-size:13.5px;color:var(--text);line-height:1.5;}
+.answer-val.empty{color:var(--text-dim);font-style:italic;}
+.answer-correct-val{font-size:12px;color:var(--success);margin-top:4px;}
+.answer-model{margin-top:10px;padding:10px 12px;background:rgba(162,138,112,0.07);border-left:2px solid var(--gold);border-radius:0 6px 6px 0;}
+.answer-model-label{font-size:10px;font-weight:700;color:var(--gold);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:4px;}
+.answer-model-text{font-size:12px;color:var(--text-muted);line-height:1.55;white-space:pre-line;}
+.answer-badge-icon{width:22px;height:22px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:12px;}
+.badge-ok{background:rgba(46,204,113,0.2);color:var(--success);}
+.badge-ko{background:rgba(231,76,60,0.2);color:var(--error);}
+.badge-na{background:rgba(122,144,184,0.15);color:var(--text-dim);}
+.badge-kw{background:rgba(162,138,112,0.2);color:var(--gold);font-size:11px;font-weight:700;}
+.answer-kw-bar{display:flex;flex-wrap:wrap;gap:5px;margin-top:8px;align-items:center;}
+.kw-label{font-size:10px;font-weight:700;color:var(--text-dim);text-transform:uppercase;letter-spacing:0.05em;margin-right:4px;white-space:nowrap;}
+.kw-found{font-size:11px;padding:2px 8px;border-radius:10px;background:rgba(46,204,113,0.15);color:var(--success);font-weight:600;}
+.kw-missing{font-size:11px;padding:2px 8px;border-radius:10px;background:rgba(122,144,184,0.1);color:var(--text-dim);}
+.action-row{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:32px;}
+.btn-primary{display:flex;align-items:center;gap:8px;background:linear-gradient(135deg,var(--gold),var(--gold-light));color:var(--navy);border:none;border-radius:10px;padding:13px 28px;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:700;cursor:pointer;transition:all 0.2s;}
+.btn-primary:hover{transform:translateY(-2px);}
+.btn-secondary{background:transparent;border:1px solid var(--border);border-radius:10px;color:var(--text-muted);padding:13px 24px;font-family:'DM Sans',sans-serif;font-size:14px;cursor:pointer;transition:all 0.2s;}
+.btn-secondary:hover{border-color:var(--gold);color:var(--gold);}
+.timer-wrap{position:fixed;bottom:24px;right:24px;z-index:200;background:rgba(27,42,77,0.92);backdrop-filter:blur(8px);border:1px solid var(--border);border-radius:12px;padding:10px 16px;display:flex;align-items:center;gap:10px;}
+.timer-icon{font-size:18px;}
+.timer-text{font-size:18px;font-weight:700;color:var(--white);font-variant-numeric:tabular-nums;}
+.timer-label{font-size:10px;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.08em;}
+.toast{position:fixed;bottom:90px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--navy-card);border:1px solid var(--border);border-radius:10px;padding:12px 24px;font-size:13px;color:var(--text);opacity:0;transition:all 0.3s;z-index:999;pointer-events:none;white-space:nowrap;}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+.pdf-modal{display:none;position:fixed;inset:0;z-index:600;background:rgba(27,42,77,0.85);backdrop-filter:blur(6px);align-items:center;justify-content:center;padding:20px;}
+.pdf-modal.active{display:flex;}
+.pdf-modal-box{background:var(--navy-card);border:1px solid var(--border);border-radius:16px;padding:32px;max-width:480px;width:100%;text-align:center;}
+.pdf-modal-box h3{font-family:'Playfair Display',serif;font-size:22px;color:var(--white);margin-bottom:10px;}
+.pdf-modal-box p{font-size:13px;color:var(--text-muted);line-height:1.6;margin-bottom:24px;}
+.pdf-modal-box .btn-primary{width:100%;justify-content:center;margin-bottom:10px;}
+.pdf-modal-box .btn-secondary{width:100%;justify-content:center;}
+@media(max-width:600px){.hero h1{font-size:28px;}.main,.hero{padding-left:18px;padding-right:18px;}.header{padding:0 18px;}.card{padding:20px 18px;}.score-area,.row,.suites-grid{grid-template-columns:1fr;}.radio-group{flex-direction:column;}.progress-track{width:80px;}.op-row{flex-direction:column;align-items:flex-start;}}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-inner">
+    <div class="header-brand"><img class="brand-logo" src="data:image/jpeg;base64,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" alt="Real Conseil"></div>
+    <div class="header-progress">
+      <span class="progress-label">Progression</span>
+      <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+      <span class="progress-pct" id="progressPct">0%</span>
+    </div>
+  </div>
+</div>
+
+<div class="hero">
+  <span class="hero-tag">Test de positionnement</span>
+  <h1>Encadrant Technique<br><span>d'Insertion</span></h1>
+  <p class="hero-sub">Ce test &eacute;value vos connaissances sur le m&eacute;tier d'Encadrant Technique d'Insertion (ETI) et vos comp&eacute;tences de base. Lisez attentivement chaque consigne et r&eacute;pondez dans vos propres mots.</p>
+  <div class="hero-divider"></div>
+</div>
+
+<div class="main">
+  <div class="card">
+    <div class="card-header"><div class="section-num">i</div><div><div class="card-title">Informations du candidat</div><div class="card-subtitle">&Agrave; compl&eacute;ter avant de commencer</div></div></div>
+    <div class="row" style="margin-bottom:16px;">
+      <div class="field"><label for="f-nom">Nom</label><input type="text" id="f-nom" placeholder="Nom de famille"></div>
+      <div class="field"><label for="f-prenom">Pr&eacute;nom</label><input type="text" id="f-prenom" placeholder="Pr&eacute;nom"></div>
+    </div>
+    <div class="row">
+      <div class="field"><label for="f-date">Date</label><input type="date" id="f-date"></div>
+      <div class="field"><label for="f-ville">Ville</label><input type="text" id="f-ville" placeholder="Ville de la session"></div>
+    </div>
+  </div>
+
+  <div class="part-separator"><div class="part-line"></div><div class="part-label">Premi&egrave;re Partie</div><div class="part-line"></div></div>
+  <div style="margin-bottom:28px;"><div class="part-title">Focus M&eacute;tier</div><div class="part-desc">Questions sur le m&eacute;tier d'ETI &mdash; not&eacute;e sur 12 points.</div></div>
+
+  <div class="card">
+    <div class="card-header"><div class="section-num">A</div><div><div class="card-title">&Eacute;tude de texte</div><div class="card-subtitle">Lisez le texte puis r&eacute;pondez aux 4 questions &mdash; 6 points</div></div></div>
+    <div class="text-passage">
+      <div class="text-passage-title">Texte &agrave; analyser</div>
+      <div class="text-passage-content">
+        <p>Les entreprises d'Insertion par l'Activit&eacute; Economique (IAE) ont pour mission d'accompagner des personnes &eacute;loign&eacute;es du march&eacute; du travail &agrave; cause de difficult&eacute;s sociales (logement, sant&eacute;, difficult&eacute;s familiales, de langue, etc.) &agrave; int&eacute;grer un emploi durable. Ces personnes sont embauch&eacute;es en contrat d'insertion au sein de l'entreprise d'insertion.</p>
+        <p>Elles sont accompagn&eacute;es par un.e Encadrant.e Technique d'Insertion (ETI) sur leur poste de travail, qui assure leur mont&eacute;e en comp&eacute;tences et l'acquisition des savoir-&ecirc;tre et savoir-faire n&eacute;cessaires dans le monde du travail. En plus du salaire, int&eacute;grer une entreprise d'insertion permet aux salari&eacute;.es de b&eacute;n&eacute;ficier de l'accompagnement d'un.e Charg&eacute;.e d'Insertion Professionnelle (CIP), qui les aident &agrave; lever leurs freins &agrave; l'emploi et &agrave; r&eacute;aliser leur projet professionnel.</p>
+        <p>Cependant, contrairement aux CIP, les ETI doivent &eacute;galement assurer le bon d&eacute;roul&eacute; de l'activit&eacute; commerciale pour laquelle les salari&eacute;.es en insertion travaillent.</p>
+        <p>Le travail d'enqu&ecirc;te men&eacute; au sein du groupement Envie Rh&ocirc;ne-Alpes a mis en avant les difficult&eacute;s des ETI : les freins &agrave; l'emploi des salari&eacute;.es &mdash; notamment les difficult&eacute;s de fran&ccedil;ais &mdash; et le manque d'outils p&eacute;dagogiques adapt&eacute;s sur le poste de travail.</p>
+        <div class="text-passage-source">Source : Rose DAVIET &mdash; M&eacute;moire de Master 2, Universit&eacute; Lumi&egrave;re Lyon 2.</div>
+      </div>
+    </div>
+    <div class="question"><div class="q-label"><div class="q-num">1</div><div class="q-text">Quel est le sujet principal trait&eacute; dans ce texte&nbsp;?</div><span class="q-pts q-pts-open">1 pt</span></div><div class="field"><textarea id="q1" placeholder="R&eacute;sumez le sujet principal en quelques lignes&hellip;"></textarea></div></div>
+    <div class="question"><div class="q-label"><div class="q-num">2</div><div class="q-text">En quoi le r&ocirc;le de l'ETI se distingue-t-il de celui du CIP dans l'accompagnement des salari&eacute;.es&nbsp;?</div><span class="q-pts q-pts-open">2 pts</span></div><div class="field"><textarea id="q2" placeholder="Expliquez la diff&eacute;rence entre les deux r&ocirc;les en vous appuyant sur le texte&hellip;"></textarea></div></div>
+    <div class="question"><div class="q-label"><div class="q-num">3</div><div class="q-text">Selon vous, pourquoi est-il important que l'ETI valorise les progr&egrave;s des salari&eacute;.es en insertion&nbsp;?</div><span class="q-pts q-pts-open">1 pt</span></div><div class="field"><textarea id="q3" placeholder="Donnez votre point de vue et justifiez-le&hellip;"></textarea></div></div>
+    <div class="question" style="margin-bottom:0;"><div class="q-label"><div class="q-num">4</div><div class="q-text">Quels freins &agrave; l'emploi sont &eacute;voqu&eacute;s dans le texte, et comment peuvent-ils compliquer la mission de l'ETI&nbsp;?</div><span class="q-pts q-pts-open">2 pts</span></div><div class="field"><textarea id="q4" placeholder="Identifiez les freins cit&eacute;s et expliquez leur impact sur la mission ETI&hellip;"></textarea></div></div>
+  </div>
+
+  <div class="card">
+    <div class="card-header"><div class="section-num">B</div><div><div class="card-title">Questions ouvertes</div><div class="card-subtitle">R&eacute;pondez en vos propres mots &mdash; 6 points (1 pt par question)</div></div></div>
+    <div class="question"><div class="q-label"><div class="q-num">5</div><div class="q-text">Quel est le r&ocirc;le principal de l'Encadrant Technique d'Insertion&nbsp;?</div><span class="q-pts q-pts-open">1 pt</span></div><div class="field"><textarea id="q5" placeholder="D&eacute;crivez le r&ocirc;le principal de l'ETI&hellip;"></textarea></div></div>
+    <div class="question"><div class="q-label"><div class="q-num">6</div><div class="q-text">Quelles structures rel&egrave;vent de l'Insertion par l'Activit&eacute; &Eacute;conomique (IAE)&nbsp;?</div><span class="q-pts q-pts-open">1 pt</span></div><div class="field"><textarea id="q6" placeholder="Citez les diff&eacute;rentes structures de l'IAE (sigles et/ou noms)&hellip;"></textarea></div></div>
+    <div class="question"><div class="q-label"><div class="q-num">7</div><div class="q-text">Avec qui travaille principalement un Encadrant Technique d'Insertion&nbsp;?</div><span class="q-pts q-pts-open">1 pt</span></div><div class="field"><textarea id="q7" placeholder="Citez les diff&eacute;rents interlocuteurs de l'ETI&hellip;"></textarea></div></div>
+    <div class="question"><div class="q-label"><div class="q-num">8</div><div class="q-text">Sur quoi porte l'&eacute;valuation des acquis des salari&eacute;s en insertion&nbsp;?</div><span class="q-pts q-pts-open">1 pt</span></div><div class="field"><textarea id="q8" placeholder="D&eacute;crivez ce qui est &eacute;valu&eacute; chez les salari&eacute;s en insertion&hellip;"></textarea></div></div>
+    <div class="question"><div class="q-label"><div class="q-num">9</div><div class="q-text">Quels sont les secteurs d'activit&eacute; o&ugrave; un ETI peut exercer&nbsp;?</div><span class="q-pts q-pts-open">1 pt</span></div><div class="field"><textarea id="q9" placeholder="Citez diff&eacute;rents secteurs (espaces verts, b&acirc;timent, restauration&hellip;)"></textarea></div></div>
+    <div class="question" style="margin-bottom:0;"><div class="q-label"><div class="q-num">10</div><div class="q-text">Quels sont selon vous les savoir-&ecirc;tre professionnels qu'un ETI doit poss&eacute;der&nbsp;?</div><span class="q-pts q-pts-open">1 pt</span></div><div class="field"><textarea id="q10" placeholder="Citez au moins 3 qualit&eacute;s ou savoir-&ecirc;tre essentiels&hellip;"></textarea></div></div>
+  </div>
+
+  <div class="part-separator"><div class="part-line"></div><div class="part-label">Deuxi&egrave;me Partie</div><div class="part-line"></div></div>
+  <div style="margin-bottom:28px;"><div class="part-title">Connaissances de base</div><div class="part-desc">Exercices de fran&ccedil;ais, logique et calcul &mdash; not&eacute;e sur 8 points.</div></div>
+
+  <div class="card">
+    <div class="card-header"><div class="section-num">1</div><div><div class="card-title">Correction orthographique</div><div class="card-subtitle">Identifiez les fautes et notez les corrections &mdash; 2 points</div></div></div>
+    <div class="correction-text">
+      &Agrave; France Horizon, les EHPAD ne sont pas seulement des lieux de vie et d'accompagnement aupr&egrave;s des <span class="err">ain&eacute;es</span>. Ils sont aussi acteur des besoins en emploi de leur territoire.<br><br>
+      Servir le petit d&eacute;jeuner aux r&eacute;sidents, effectuer la <span class="err">maintenances</span> des locaux, participer aux actes de la vie quotidienne des <span class="err">a&icirc;nn&eacute;s</span> ou encore contribuer &agrave; leur soins et bien-&ecirc;tre tout en accompagnant des personnes <span class="err">&eacute;loign&eacute;</span> de l'emploi &agrave; se <span class="err">r&eacute;ins&eacute;r&eacute;</span> durablement, <span class="err">tel sont</span> les objectifs des chantiers d'insertion.<br><br>
+      Les ateliers et chantiers d'insertion (ACI) <span class="err">vises</span> &agrave; faciliter le retour vers l'emploi de personnes rencontrant des difficult&eacute;s <span class="err">social</span>, <span class="err">financi&egrave;re</span> et <span class="err">professionnel</span>, en leur proposant un emploi et des formations adapt&eacute;es ainsi qu'un soutien pour r&eacute;pondre aux <span class="err">besoin</span> en emploi des EHPAD.
+    </div>
+    <div class="question" style="margin-bottom:0;"><div class="q-label"><div class="q-num">11</div><div class="q-text">Notez les mots incorrects et leur correction (ex : <em>maintenances &rarr; maintenance</em>).</div><span class="q-pts q-pts-open">2 pts</span></div><div class="field"><textarea id="q11" style="min-height:130px;" placeholder="Mot incorrect &rarr; correction&#10;Mot incorrect &rarr; correction&#10;&hellip;"></textarea></div></div>
+  </div>
+
+  <div class="card">
+    <div class="card-header"><div class="section-num">2</div><div><div class="card-title">Suites de nombres</div><div class="card-subtitle">Compl&eacute;tez le nombre suivant &mdash; 2 points (1 pt par suite)</div></div></div>
+    <div class="suites-grid">
+      <div class="suite-card"><div class="suite-seq"><strong>2, 4, 6, 8,</strong> &hellip;</div><div class="field-num"><label>Nombre suivant</label><input type="text" id="q12" placeholder="?"></div></div>
+      <div class="suite-card"><div class="suite-seq"><strong>3, 9, 27, 81,</strong> &hellip;</div><div class="field-num"><label>Nombre suivant</label><input type="text" id="q13" placeholder="?"></div></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header"><div class="section-num">3</div><div><div class="card-title">Op&eacute;rations de base</div><div class="card-subtitle">R&eacute;solvez chaque probl&egrave;me &mdash; 3 points (1 pt par op&eacute;ration)</div></div></div>
+    <div class="ops-grid">
+      <div class="op-row"><div class="op-num">a</div><div class="op-text">Un groupe de <strong>5 personnes</strong> fabrique <strong>12 objets</strong> chacun. Combien d'objets au total&nbsp;?</div><div class="field-num"><label>R&eacute;ponse</label><input type="text" id="q14" placeholder="?"></div></div>
+      <div class="op-row"><div class="op-num">b</div><div class="op-text">Une &eacute;quipe doit nettoyer <strong>200&thinsp;m&sup2;</strong>. Elle a d&eacute;j&agrave; nettoy&eacute; <strong>50&thinsp;m&sup2;</strong>. Quel pourcentage reste-t-il&nbsp;?</div><div class="field-num"><label>R&eacute;ponse</label><input type="text" id="q15" placeholder="?&thinsp;%"></div></div>
+      <div class="op-row"><div class="op-num">c</div><div class="op-text">On coupe une planche de <strong>2,50&thinsp;m</strong> en morceaux de <strong>0,50&thinsp;m</strong>. Combien de morceaux&nbsp;?</div><div class="field-num"><label>R&eacute;ponse</label><input type="text" id="q16" placeholder="?"></div></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header"><div class="section-num">4</div><div><div class="card-title">Synonymes</div><div class="card-subtitle">Choisissez le bon synonyme &mdash; 1 point (0,5 pt par question)</div></div></div>
+    <div class="question"><div class="q-label"><div class="q-num">17</div><div class="q-text">Quel est le synonyme de <strong>&laquo;&nbsp;Facilitateur&nbsp;&raquo;</strong>&nbsp;?</div><span class="q-pts">0,5 pt</span></div>
+      <div class="radio-group">
+        <label class="radio-option"><input type="radio" name="q17" value="q17-a"><div class="radio-dot"></div>M&eacute;diateur</label>
+        <label class="radio-option"><input type="radio" name="q17" value="q17-b"><div class="radio-dot"></div>Adversaire</label>
+        <label class="radio-option"><input type="radio" name="q17" value="q17-c"><div class="radio-dot"></div>D&eacute;tracteur</label>
+        <label class="radio-option"><input type="radio" name="q17" value="q17-d"><div class="radio-dot"></div>Promoteur</label>
+      </div>
+    </div>
+    <div class="question" style="margin-bottom:0;"><div class="q-label"><div class="q-num">18</div><div class="q-text">Quel est le synonyme de <strong>&laquo;&nbsp;&Eacute;valuation sommative&nbsp;&raquo;</strong>&nbsp;?</div><span class="q-pts">0,5 pt</span></div>
+      <div class="radio-group">
+        <label class="radio-option"><input type="radio" name="q18" value="q18-a"><div class="radio-dot"></div>Finale</label>
+        <label class="radio-option"><input type="radio" name="q18" value="q18-b"><div class="radio-dot"></div>Continue</label>
+        <label class="radio-option"><input type="radio" name="q18" value="q18-c"><div class="radio-dot"></div>P&eacute;riodique</label>
+        <label class="radio-option"><input type="radio" name="q18" value="q18-d"><div class="radio-dot"></div>Formative</label>
+      </div>
+    </div>
+  </div>
+
+  <div class="submit-zone">
+    <button class="btn-submit" onclick="submitTest()">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+      Valider et voir les r&eacute;sultats
+    </button>
+    <span class="submit-note">Vos r&eacute;ponses seront analys&eacute;es et un rapport PDF complet sera g&eacute;n&eacute;r&eacute;.</span>
+  </div>
+</div>
+
+<div class="overlay" id="resultsOverlay">
+  <div class="results-box">
+    <div class="results-header">
+      <div class="results-tag">R&eacute;sultats du test</div>
+      <h2 id="res-candidate-name">R&eacute;sultats</h2>
+      <p id="res-meta"></p>
+    </div>
+    <div class="score-area">
+      <div class="score-card"><div class="score-circle-wrap"><div class="score-circle" id="scoreCircle1"><div class="score-circle-inner"><div class="score-pct" id="scorePct1">0%</div><div class="score-pct-sub">Score</div></div></div></div><div class="score-card-title">Score total</div><div class="score-card-detail" id="scoreDetail1">&mdash; pts</div></div>
+      <div class="score-card"><div class="score-circle-wrap"><div class="score-circle" id="scoreCircle2"><div class="score-circle-inner"><div class="score-pct" id="scorePct2">0%</div><div class="score-pct-sub">Compl&eacute;t&eacute;</div></div></div></div><div class="score-card-title">Taux de compl&eacute;tion</div><div class="score-card-detail" id="scoreDetail2">&mdash; / 18 questions</div></div>
+    </div>
+    <div class="config-card">
+      <h3>&#128196; Envoi du rapport PDF</h3>
+      <p>Le PDF va se <strong>t&eacute;l&eacute;charger automatiquement</strong>. <strong>Joignez-le au mail</strong> avant d'envoyer. Le mail sera adress&eacute; &agrave; <strong>t.darras@realconseil.com</strong> et <strong>a.dakhlaoui@realconseil.com</strong>.</p>
+    </div>
+    <div id="answersContainer"></div>
+    <div class="action-row">
+      <button class="btn-primary" onclick="sendEmail()">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2L11 13"/><path d="M22 2L15 22l-4-9-9-4 20-7z"/></svg>
+        G&eacute;n&eacute;rer le PDF &amp; Envoyer
+      </button>
+      <button class="btn-secondary" onclick="backToForm()">&larr; Retour au test</button>
+    </div>
+  </div>
+</div>
+
+<div id="lockedOverlay" style="display:none;position:fixed;inset:0;z-index:9999;background:#1b2a4d;flex-direction:column;align-items:center;justify-content:center;padding:40px;text-align:center;">
+  <div style="max-width:500px;margin:0 auto;">
+    <div style="width:80px;height:80px;border-radius:50%;background:rgba(162,138,112,0.12);border:2px solid rgba(162,138,112,0.35);display:flex;align-items:center;justify-content:center;font-size:36px;margin:0 auto 32px;">&#128274;</div>
+    <div style="font-family:'Playfair Display',serif;font-size:32px;color:white;margin-bottom:14px;">Test non disponible</div>
+    <p style="font-size:14px;color:#7a90b8;line-height:1.75;margin-bottom:32px;">Ce test a d&eacute;j&agrave; &eacute;t&eacute; compl&eacute;t&eacute;. Il ne peut &ecirc;tre utilis&eacute; qu'une seule fois. Contactez votre formateur en cas d'erreur.</p>
+    <div style="background:rgba(162,138,112,0.08);border:1px solid rgba(162,138,112,0.22);border-radius:12px;padding:18px 24px;">
+      <p style="font-size:11px;color:#4a5f8a;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:6px;">Contactez Real Conseil</p>
+      <p style="font-size:14px;font-weight:600;color:#a28a70;">t.darras@realconseil.com</p>
+    </div>
+  </div>
+</div>
+
+<div class="timer-wrap" id="timer-wrap">
+  <span class="timer-icon">&#9203;</span>
+  <div><div class="timer-text" id="timer-display">60:00</div><div class="timer-label">temps restant</div></div>
+</div>
+<div class="toast" id="toast"></div>
+<div class="pdf-modal" id="pdfAttachModal">
+  <div class="pdf-modal-box">
+    <h3>&#128206; Joindre le PDF</h3>
+    <p>Le PDF vient d'&ecirc;tre t&eacute;l&eacute;charg&eacute;.<br><strong>Pensez &agrave; le joindre au mail</strong> avant d'envoyer.</p>
+    <button class="btn-primary" onclick="openMailto()">Ouvrir ma messagerie</button>
+    <button class="btn-secondary" onclick="document.getElementById('pdfAttachModal').classList.remove('active')">Fermer</button>
+  </div>
+</div>
+
+<script>
+const TEST_LOCK_KEY='rc_eti_positionnement_done';
+(function(){if(localStorage.getItem(TEST_LOCK_KEY)==='1')document.getElementById('lockedOverlay').style.display='flex';})();
+let timerInterval;
+(function(){let s=3600;const d=document.getElementById('timer-display');timerInterval=setInterval(()=>{s--;const m=Math.floor(s/60),sec=s%60;d.textContent=String(m).padStart(2,'0')+':'+String(sec).padStart(2,'0');if(s<=300)d.style.color='#e74c3c';if(s<=0){clearInterval(timerInterval);submitTest();}},1000);})();
+document.querySelectorAll('.radio-group').forEach(g=>{g.querySelectorAll('.radio-option').forEach(o=>{o.addEventListener('click',e=>{e.preventDefault();const n=o.querySelector('input').name;document.querySelectorAll('input[name="'+n+'"]').forEach(r=>r.closest('.radio-option').classList.remove('selected'));o.querySelector('input').checked=true;o.classList.add('selected');updateProgress();});});});
+document.querySelectorAll('input[type="text"],input[type="date"],textarea').forEach(el=>{el.addEventListener('input',updateProgress);el.addEventListener('change',updateProgress);});
+const allIds=['q1','q2','q3','q4','q5','q6','q7','q8','q9','q10','q11','q12','q13','q14','q15','q16'];
+const qcmN=['q17','q18'];const totalQ=allIds.length+qcmN.length;
+function updateProgress(){let f=0;const inf=['f-nom','f-prenom','f-date','f-ville'].filter(id=>document.getElementById(id)?.value?.trim()).length;allIds.forEach(id=>{if(document.getElementById(id)?.value?.trim())f++;});qcmN.forEach(n=>{if(document.querySelector('input[name="'+n+'"]:checked'))f++;});const p=Math.round(((inf+f)/(4+totalQ))*100);document.getElementById('progressFill').style.width=p+'%';document.getElementById('progressPct').textContent=p+'%';}
+const sections=[
+{title:'&#128214; &Eacute;tude de texte',questions:[
+{id:'q1',type:'open',text:'Sujet principal du texte',keywords:['insertion','iae','encadrant','eti','emploi','loign','accompagnement'],maxPts:1,model:"Le texte traite du r\u00f4le de l'ETI dans les entreprises d'IAE, accompagnant des personnes \u00e9loign\u00e9es du march\u00e9 du travail vers un emploi durable."},
+{id:'q2',type:'open',text:'Distinction ETI / CIP',keywords:['activit','commercial','contrairement','cip','charg','conomique','galement','aussi'],maxPts:2,model:"Contrairement au CIP (qui g\u00e8re l'accompagnement socio-professionnel), l'ETI doit aussi assurer le bon d\u00e9roulement de l'activit\u00e9 commerciale de la structure."},
+{id:'q3',type:'open',text:'Valoriser les progr\u00e8s',keywords:['motivation','confiance','estime','encourager','progr','emploi','autonomie'],maxPts:1,model:"Valoriser les progr\u00e8s renforce la motivation et la confiance en soi, ce qui favorise l'engagement et l'insertion durable dans l'emploi."},
+{id:'q4',type:'open',text:'Freins \u00e0 l'emploi',keywords:['fran','langue','logement','sant','famille','difficult','outils','dagogique'],maxPts:2,model:"Freins : difficult\u00e9s de fran\u00e7ais, logement, sant\u00e9, famille. Ils compliquent la mission car l'ETI g\u00e8re ces probl\u00e8mes tout en assurant l'activit\u00e9 commerciale, avec peu d'outils adapt\u00e9s."}
+]},
+{title:'&#10067; Questions ouvertes',questions:[
+{id:'q5',type:'open',text:'R\u00f4le principal ETI',keywords:['accompagner','encadrer','comp','tences','savoir','insertion','poste'],maxPts:1,model:"L'ETI accompagne et encadre les salari\u00e9s sur leur poste de travail, assure leur mont\u00e9e en comp\u00e9tences et contribue \u00e0 l'activit\u00e9 \u00e9conomique."},
+{id:'q6',type:'open',text:'Structures IAE',keywords:['chantier','aci','ei','etti','ai','association','interm'],maxPts:1,model:"EI, ACI, ETTI (Entreprise de Travail Temporaire d'Insertion), AI (Association Interm\u00e9diaire), GEIQ."},
+{id:'q7',type:'open',text:'Interlocuteurs ETI',keywords:['salari','cip','charg','directeur','quipe','responsable'],maxPts:1,model:"Les salari\u00e9s en insertion, le CIP, la direction, les autres encadrants, les partenaires ext\u00e9rieurs."},
+{id:'q8',type:'open',text:'\u00c9valuation des acquis',keywords:['comp','tences','savoir','technique','posture','comportement','progression'],maxPts:1,model:"Les comp\u00e9tences techniques (savoir-faire), les savoir-\u00eatre (ponctualit\u00e9, communication, posture) et la progression individuelle."},
+{id:'q9',type:'open',text:'Secteurs d'activit\u00e9',keywords:['timent','espaces verts','recyclage','restauration','propret','nettoyage','mara','cuisine','logistique','textile'],maxPts:1,model:"B\u00e2timent, espaces verts, recyclage, restauration, propret\u00e9, mara\u00eechage, logistique, couture/textile, num\u00e9rique."},
+{id:'q10',type:'open',text:'Savoir-\u00eatre ETI',keywords:['patience','coute','bienveillance','dagogie','communication','organisation','adaptabilit','empathie'],maxPts:1,model:"Patience, \u00e9coute, bienveillance, sens p\u00e9dagogique, communication, adaptabilit\u00e9, empathie, rigueur, autorit\u00e9 bienveillante."}
+]},
+{title:'&#9999;&#65039; Correction orthographique',questions:[
+{id:'q11',type:'open',text:'Correction des fautes',keywords:['maintenance','a\u00een\u00e9s','loign\u00e9es','ins\u00e9rer','tels','besoins','visent','sociales','financi\u00e8res','professionnelles'],maxPts:2,model:"maintenances\u2192maintenance | a\u00eenn\u00e9s\u2192a\u00een\u00e9s | \u00e9loign\u00e9\u2192\u00e9loign\u00e9es | r\u00e9ins\u00e9r\u00e9\u2192r\u00e9ins\u00e9rer | tel sont\u2192tels sont | besoin\u2192besoins | vises\u2192visent | social\u2192sociales | financi\u00e8re\u2192financi\u00e8res | professionnel\u2192professionnelles"}
+]},
+{title:'&#128290; Suites de nombres',questions:[
+{id:'q12',type:'exact',text:'2,4,6,8,?',correct:'10',pts:1,model:'Suite arithm\u00e9tique +2 \u2192 10'},
+{id:'q13',type:'exact',text:'3,9,27,81,?',correct:'243',pts:1,model:'Suite g\u00e9om\u00e9trique \u00d73 \u2192 243'}
+]},
+{title:'&#129518; Op\u00e9rations',questions:[
+{id:'q14',type:'exact',text:'5\u00d712=?',correct:'60',pts:1,model:'5\u00d712=60 objets'},
+{id:'q15',type:'exact',text:'(200-50)/200\u00d7100=?%',correct:'75',pts:1,model:'75%'},
+{id:'q16',type:'exact',text:'2.50\u00f70.50=?',correct:'5',pts:1,model:'5 morceaux'}
+]},
+{title:'&#128288;&#65039; Synonymes',questions:[
+{id:'q17',type:'qcm',scored:true,pts:0.5,text:'Synonyme de Facilitateur',correct:'q17-a',model:'M\u00e9diateur',options:{'q17-a':'M\u00e9diateur','q17-b':'Adversaire','q17-c':'D\u00e9tracteur','q17-d':'Promoteur'}},
+{id:'q18',type:'qcm',scored:true,pts:0.5,text:'Synonyme de \u00c9valuation sommative',correct:'q18-a',model:'Finale \u2014 bilan en fin de parcours.',options:{'q18-a':'Finale','q18-b':'Continue','q18-c':'P\u00e9riodique','q18-d':'Formative'}}
+]}
+];
+function getAnswers(){const a={};['f-nom','f-prenom','f-date','f-ville'].forEach(id=>{a[id]=document.getElementById(id)?.value?.trim()||'';});allIds.forEach(id=>{a[id]=document.getElementById(id)?.value?.trim()||'';});qcmN.forEach(n=>{const c=document.querySelector('input[name="'+n+'"]:checked');a[n]=c?c.value:'';});return a;}
+function scoreKW(ans,kws){const lo=(ans||'').toLowerCase();const found=kws.filter(k=>lo.includes(k.toLowerCase()));const c=found.length;return{pts:c>=4?3:c>=2?2:c>=1?1:0,found,missing:kws.filter(k=>!found.map(f=>f.toLowerCase()).includes(k.toLowerCase()))};}
+function chkEx(g,c){const n=s=>s.trim().replace(/[^0-9]/g,'');const gn=n(g);return gn!==''&&gn.includes(n(c));}
+function scoreAll(ans){let e=0,em=0,q=0,qm=0,kw=0,km=0;sections.forEach(s=>s.questions.forEach(q2=>{if(q2.type==='qcm'&&q2.scored){qm+=q2.pts;if(ans[q2.id]&&ans[q2.id].toLowerCase()===q2.correct.toLowerCase())q+=q2.pts;}else if(q2.type==='exact'){em+=q2.pts;if(chkEx(ans[q2.id]||'',q2.correct))e+=q2.pts;}else if(q2.keywords){const mx=q2.maxPts||1;km+=mx;if(ans[q2.id])kw+=Math.min(scoreKW(ans[q2.id],q2.keywords).pts,mx);}}));return{combined:e+q+kw,combinedMax:em+qm+km};}
+function compRate(ans){let f=0;allIds.forEach(id=>{if(ans[id])f++;});qcmN.forEach(n=>{if(ans[n])f++;});return{filled:f,total:totalQ};}
+function submitTest(){const ans=getAnswers();if(!ans['f-nom']||!ans['f-prenom']){showToast('\u26a0\ufe0f Veuillez indiquer votre nom et pr\u00e9nom.');return;}const{combined,combinedMax}=scoreAll(ans);const pct=Math.round((combined/combinedMax)*100);const{filled,total}=compRate(ans);const cpct=Math.round((filled/total)*100);document.getElementById('res-candidate-name').textContent=ans['f-prenom']+' '+ans['f-nom'];document.getElementById('res-meta').textContent=(ans['f-date']?new Date(ans['f-date']).toLocaleDateString('fr-FR',{day:'2-digit',month:'long',year:'numeric'}):'Date non renseign\u00e9e')+(ans['f-ville']?'  \u2022  '+ans['f-ville']:'');animCirc('scoreCircle1',pct);animCirc('scoreCircle2',cpct);document.getElementById('scorePct1').textContent=pct+'%';document.getElementById('scorePct2').textContent=cpct+'%';const ds=Number.isInteger(combined)?combined:combined.toFixed(1);document.getElementById('scoreDetail1').textContent=ds+' / '+combinedMax+' pts';document.getElementById('scoreDetail2').textContent=filled+' / '+total+' questions r\u00e9pondues';buildAns(ans);clearInterval(timerInterval);document.getElementById('timer-wrap').style.display='none';document.getElementById('resultsOverlay').classList.add('active');window.scrollTo(0,0);localStorage.setItem(TEST_LOCK_KEY,'1');window._lastAns=ans;}
+function animCirc(id,pct){const d=Math.round(pct*3.6);document.getElementById(id).style.background='conic-gradient(var(--gold) '+d+'deg, var(--navy) '+d+'deg)';}
+function buildAns(answers){const ct=document.getElementById('answersContainer');ct.innerHTML='';sections.forEach(sec=>{const sd=document.createElement('div');sd.className='answers-section';sd.innerHTML='<div class="answers-section-title">'+sec.title+'</div>';sec.questions.forEach(q=>{const val=answers[q.id]||'';let cls='',badge='',detail='';if(q.type==='qcm'&&q.scored){const ok=val&&val.toLowerCase()===q.correct.toLowerCase();cls=ok?'correct':'incorrect';badge=ok?'<div class="answer-badge-icon badge-ok">\u2713</div>':'<div class="answer-badge-icon badge-ko">\u2717</div>';if(!ok)detail='<div class="answer-correct-val">\u2713 '+(q.options?q.options[q.correct]:q.correct)+'</div>';}else if(q.type==='exact'){const ok=chkEx(val,q.correct);cls=ok?'correct':'incorrect';badge=ok?'<div class="answer-badge-icon badge-ok">\u2713</div>':'<div class="answer-badge-icon badge-ko">\u2717</div>';if(!ok)detail='<div class="answer-correct-val">\u2713 R\u00e9ponse : '+q.correct+'</div>';}else if(q.keywords){const{pts,found,missing}=scoreKW(val,q.keywords);const ac=Math.min(pts,q.maxPts||1);badge='<div class="answer-badge-icon badge-kw">'+ac+'/'+(q.maxPts||1)+'</div>';detail='<div class="answer-kw-bar"><span class="kw-label">Mots-cl\u00e9s :</span>'+found.map(k=>'<span class="kw-found">'+k+'</span>').join('')+missing.slice(0,4).map(k=>'<span class="kw-missing">'+k+'</span>').join('')+'</div>';}else badge='<div class="answer-badge-icon badge-na">\u2014</div>';const vh=val?'<div class="answer-val">'+val.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/\n/g,'<br>')+'</div>':'<div class="answer-val empty">Sans r\u00e9ponse</div>';const mh=q.model?'<div class="answer-model"><div class="answer-model-label">\u00c9l\u00e9ments attendus</div><div class="answer-model-text">'+q.model+'</div></div>':'';sd.innerHTML+='<div class="answer-item '+cls+'"><div class="answer-row"><div style="flex:1"><div class="answer-q">'+q.text+'</div>'+vh+detail+'</div>'+badge+'</div>'+mh+'</div>';});ct.appendChild(sd);});}
+function sendEmail(){document.getElementById('pdfAttachModal').classList.add('active');const ans=window._lastAns||{};const name=(ans['f-prenom']||'')+' '+(ans['f-nom']||'');const{combined,combinedMax}=scoreAll(ans);const ds=Number.isInteger(combined)?combined:combined.toFixed(1);html2pdf().set({margin:[10,10,10,10],filename:'test-positionnement-eti-'+(ans['f-nom']||'candidat').toLowerCase()+'.pdf',html2canvas:{scale:2,useCORS:true,logging:false,scrollY:0},jsPDF:{unit:'mm',format:'a4',orientation:'portrait'}}).from(document.getElementById('resultsOverlay')).save();window._mailSubject='Test Positionnement ETI - '+name+' - '+ds+'/'+combinedMax+' pts';}
+function openMailto(){const s=encodeURIComponent(window._mailSubject||'Test Positionnement ETI');window.location.href='mailto:t.darras@realconseil.com,a.dakhlaoui@realconseil.com?subject='+s+'&body='+encodeURIComponent('Bonjour,\n\nVeuillez trouver en pi\u00e8ce jointe le test de positionnement ETI compl\u00e9t\u00e9.\n\nCordialement.');document.getElementById('pdfAttachModal').classList.remove('active');}
+function backToForm(){document.getElementById('resultsOverlay').classList.remove('active');window.scrollTo(0,0);}
+function showToast(msg){const t=document.getElementById('toast');t.textContent=msg;t.className='toast show';setTimeout(()=>{t.className='toast';},3500);}
+</script>
+</body>
+</html>
