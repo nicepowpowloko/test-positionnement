@@ -368,7 +368,86 @@ function compRate(ans){let f=0;allIds.forEach(id=>{if(ans[id])f++;});qcmN.forEac
 function submitTest(){const ans=getAnswers();if(!ans['f-nom']||!ans['f-prenom']){showToast('\u26a0\ufe0f Veuillez indiquer votre nom et pr\u00e9nom.');return;}const{combined,combinedMax}=scoreAll(ans);const pct=Math.round((combined/combinedMax)*100);const{filled,total}=compRate(ans);const cpct=Math.round((filled/total)*100);document.getElementById('res-candidate-name').textContent=ans['f-prenom']+' '+ans['f-nom'];document.getElementById('res-meta').textContent=(ans['f-date']?new Date(ans['f-date']).toLocaleDateString('fr-FR',{day:'2-digit',month:'long',year:'numeric'}):'Date non renseign\u00e9e')+(ans['f-ville']?'  \u2022  '+ans['f-ville']:'');animCirc('scoreCircle1',pct);animCirc('scoreCircle2',cpct);document.getElementById('scorePct1').textContent=pct+'%';document.getElementById('scorePct2').textContent=cpct+'%';const ds=Number.isInteger(combined)?combined:combined.toFixed(1);document.getElementById('scoreDetail1').textContent=ds+' / '+combinedMax+' pts';document.getElementById('scoreDetail2').textContent=filled+' / '+total+' questions r\u00e9pondues';buildAns(ans);clearInterval(timerInterval);document.getElementById('timer-wrap').style.display='none';document.getElementById('resultsOverlay').classList.add('active');window.scrollTo(0,0);localStorage.setItem(TEST_LOCK_KEY,'1');window._lastAns=ans;}
 function animCirc(id,pct){const d=Math.round(pct*3.6);document.getElementById(id).style.background='conic-gradient(var(--gold) '+d+'deg, var(--navy) '+d+'deg)';}
 function buildAns(answers){const ct=document.getElementById('answersContainer');ct.innerHTML='';sections.forEach(sec=>{const sd=document.createElement('div');sd.className='answers-section';sd.innerHTML='<div class="answers-section-title">'+sec.title+'</div>';sec.questions.forEach(q=>{const val=answers[q.id]||'';let cls='',badge='',detail='';if(q.type==='qcm'&&q.scored){const ok=val&&val.toLowerCase()===q.correct.toLowerCase();cls=ok?'correct':'incorrect';badge=ok?'<div class="answer-badge-icon badge-ok">\u2713</div>':'<div class="answer-badge-icon badge-ko">\u2717</div>';if(!ok)detail='<div class="answer-correct-val">\u2713 '+(q.options?q.options[q.correct]:q.correct)+'</div>';}else if(q.type==='exact'){const ok=chkEx(val,q.correct);cls=ok?'correct':'incorrect';badge=ok?'<div class="answer-badge-icon badge-ok">\u2713</div>':'<div class="answer-badge-icon badge-ko">\u2717</div>';if(!ok)detail='<div class="answer-correct-val">\u2713 R\u00e9ponse : '+q.correct+'</div>';}else if(q.keywords){const{pts,found,missing}=scoreKW(val,q.keywords);const ac=Math.min(pts,q.maxPts||1);badge='<div class="answer-badge-icon badge-kw">'+ac+'/'+(q.maxPts||1)+'</div>';detail='<div class="answer-kw-bar"><span class="kw-label">Mots-cl\u00e9s :</span>'+found.map(k=>'<span class="kw-found">'+k+'</span>').join('')+missing.slice(0,4).map(k=>'<span class="kw-missing">'+k+'</span>').join('')+'</div>';}else badge='<div class="answer-badge-icon badge-na">\u2014</div>';const vh=val?'<div class="answer-val">'+val.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/\n/g,'<br>')+'</div>':'<div class="answer-val empty">Sans r\u00e9ponse</div>';const mh=q.model?'<div class="answer-model"><div class="answer-model-label">\u00c9l\u00e9ments attendus</div><div class="answer-model-text">'+q.model+'</div></div>':'';sd.innerHTML+='<div class="answer-item '+cls+'"><div class="answer-row"><div style="flex:1"><div class="answer-q">'+q.text+'</div>'+vh+detail+'</div>'+badge+'</div>'+mh+'</div>';});ct.appendChild(sd);});}
-function sendEmail(){const ans=window._lastAns||{};const name=(ans['f-prenom']||'')+' '+(ans['f-nom']||'');const{combined,combinedMax}=scoreAll(ans);const ds=Number.isInteger(combined)?combined:combined.toFixed(1);window._mailSubject='Test Positionnement ETI - '+name+' - '+ds+'/'+combinedMax+' pts';const overlay=document.getElementById('resultsOverlay');const savedCss=overlay.style.cssText;overlay.style.cssText='display:block;position:relative;overflow:visible;z-index:auto;background:rgba(27,42,77,0.97);padding:40px 20px;';html2pdf().set({margin:[10,10,10,10],filename:'test-positionnement-eti-'+(ans['f-nom']||'candidat').toLowerCase()+'.pdf',html2canvas:{scale:2,useCORS:true,logging:false,scrollY:0},jsPDF:{unit:'mm',format:'a4',orientation:'portrait'}}).from(overlay).save().then(()=>{overlay.style.cssText=savedCss;document.getElementById('pdfAttachModal').classList.add('active');});}
+function sendEmail(){
+  const ans=window._lastAns||{};
+  const name=(ans['f-prenom']||'')+' '+(ans['f-nom']||'');
+  const{combined,combinedMax}=scoreAll(ans);
+  const ds=Number.isInteger(combined)?combined:combined.toFixed(1);
+  const pct=Math.round((combined/combinedMax)*100);
+  window._mailSubject='Test Positionnement ETI - '+name+' - '+ds+'/'+combinedMax+' pts';
+
+  // Build clean white print div
+  const printDiv=document.createElement('div');
+  printDiv.style.cssText='position:absolute;left:-9999px;top:0;width:794px;background:white;color:#1b2a4d;font-family:Arial,sans-serif;padding:28px;box-sizing:border-box;';
+
+  let rows='';
+  sections.forEach(sec=>{
+    let qRows='';
+    sec.questions.forEach(q=>{
+      const ua=ans[q.id]||'';
+      let pts=0,maxP=0;
+      let ad=ua||'<em style="color:#aaa">Sans réponse</em>';
+      if(q.type==='qcm'&&q.scored){
+        maxP=q.pts;
+        pts=ua&&ua.toLowerCase()===q.correct.toLowerCase()?q.pts:0;
+        ad=q.options[ua]||ua||'<em style="color:#aaa">Sans réponse</em>';
+      }else if(q.type==='exact'){
+        maxP=q.pts;
+        pts=chkEx(ua,q.correct)?q.pts:0;
+      }else if(q.keywords){
+        maxP=q.maxPts||1;
+        pts=Math.min(scoreKW(ua,q.keywords).pts,maxP);
+      }
+      const ok=pts>0;
+      const ps=Number.isInteger(pts)?pts:pts.toFixed(1);
+      const scoreCell=maxP>0?`<td style="padding:5px 6px;border-bottom:1px solid #e0e0e0;font-size:11px;font-weight:bold;color:${ok?'#1a7a1a':'#bb2020'};text-align:center;white-space:nowrap;">${ps}/${maxP}</td>`:'<td style="border-bottom:1px solid #e0e0e0;"></td>';
+      qRows+=`<tr>
+        <td style="padding:5px 6px;border-bottom:1px solid #e0e0e0;font-size:10px;color:#444;width:28%;vertical-align:top;">${q.text}</td>
+        <td style="padding:5px 6px;border-bottom:1px solid #e0e0e0;font-size:10px;color:#1b2a4d;width:34%;vertical-align:top;">${ad}</td>
+        <td style="padding:5px 6px;border-bottom:1px solid #e0e0e0;font-size:10px;color:#777;font-style:italic;width:28%;vertical-align:top;">${q.model||''}</td>
+        ${scoreCell}
+      </tr>`;
+    });
+    rows+=`<tr><td colspan="4" style="padding:6px 8px;background:#1b2a4d;color:white;font-size:11px;font-weight:bold;">${sec.title}</td></tr>${qRows}`;
+  });
+
+  printDiv.innerHTML=`
+    <div style="border-bottom:3px solid #1b2a4d;padding-bottom:10px;margin-bottom:14px;display:flex;justify-content:space-between;align-items:flex-end;">
+      <div>
+        <div style="font-size:16px;font-weight:bold;color:#1b2a4d;">Test de Positionnement — ETI</div>
+        <div style="font-size:11px;color:#555;margin-top:3px;">${(ans['f-prenom']||'')} ${(ans['f-nom']||'')} &nbsp;•&nbsp; ${ans['f-date']||''} &nbsp;•&nbsp; ${ans['f-ville']||''}</div>
+      </div>
+      <div style="background:#1b2a4d;color:white;border-radius:6px;padding:8px 16px;text-align:center;">
+        <div style="font-size:22px;font-weight:bold;">${ds}&nbsp;/&nbsp;${combinedMax}</div>
+        <div style="font-size:9px;opacity:0.7;letter-spacing:1px;">SCORE TOTAL</div>
+      </div>
+    </div>
+    <table style="width:100%;border-collapse:collapse;">
+      <thead>
+        <tr style="background:#f0f3f9;">
+          <th style="padding:5px 6px;text-align:left;font-size:9px;color:#888;border-bottom:2px solid #1b2a4d;font-weight:600;letter-spacing:0.5px;">QUESTION</th>
+          <th style="padding:5px 6px;text-align:left;font-size:9px;color:#888;border-bottom:2px solid #1b2a4d;font-weight:600;letter-spacing:0.5px;">RÉPONSE DE L'APPRENANT</th>
+          <th style="padding:5px 6px;text-align:left;font-size:9px;color:#888;border-bottom:2px solid #1b2a4d;font-weight:600;letter-spacing:0.5px;">RÉPONSE ATTENDUE</th>
+          <th style="padding:5px 6px;text-align:center;font-size:9px;color:#888;border-bottom:2px solid #1b2a4d;font-weight:600;letter-spacing:0.5px;">SCORE</th>
+        </tr>
+      </thead>
+      <tbody>${rows}</tbody>
+    </table>
+    <div style="margin-top:14px;font-size:8px;color:#bbb;text-align:right;">Généré par Real Conseil &mdash; Test Positionnement ETI</div>
+  `;
+
+  document.body.appendChild(printDiv);
+  html2pdf().set({
+    margin:[8,8,8,8],
+    filename:'test-positionnement-eti-'+(ans['f-nom']||'candidat').toLowerCase()+'.pdf',
+    html2canvas:{scale:2,useCORS:true,logging:false,scrollY:0},
+    jsPDF:{unit:'mm',format:'a4',orientation:'portrait'}
+  }).from(printDiv).save().then(()=>{
+    document.body.removeChild(printDiv);
+    document.getElementById('pdfAttachModal').classList.add('active');
+  });
+}
+
 function openMailto(){const s=encodeURIComponent(window._mailSubject||'Test Positionnement ETI');window.location.href='mailto:t.darras@realconseil.com,a.dakhlaoui@realconseil.com,c.gricourt@realconseil.com?subject='+s+'&body='+encodeURIComponent('Bonjour,\n\nVeuillez trouver en pi\u00e8ce jointe le test de positionnement ETI compl\u00e9t\u00e9.\n\nCordialement.');document.getElementById('pdfAttachModal').classList.remove('active');}
 function backToForm(){document.getElementById('resultsOverlay').classList.remove('active');window.scrollTo(0,0);}
 function showToast(msg){const t=document.getElementById('toast');t.textContent=msg;t.className='toast show';setTimeout(()=>{t.className='toast';},3500);}
