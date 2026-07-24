@@ -320,7 +320,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--navy);color:var(--text);m
 
 <script>
 const TEST_LOCK_KEY='rc_eti_positionnement_done';
-(function(){if(localStorage.getItem(TEST_LOCK_KEY)==='1')document.getElementById('lockedOverlay').style.display='flex';})();
+(function(){if(new URLSearchParams(location.search).get('reset')==='1'){localStorage.removeItem(TEST_LOCK_KEY);}if(localStorage.getItem(TEST_LOCK_KEY)==='1')document.getElementById('lockedOverlay').style.display='flex';})();
 let timerInterval;
 (function(){let s=3600;const d=document.getElementById('timer-display');timerInterval=setInterval(()=>{s--;const m=Math.floor(s/60),sec=s%60;d.textContent=String(m).padStart(2,'0')+':'+String(sec).padStart(2,'0');if(s<=300)d.style.color='#e74c3c';if(s<=0){clearInterval(timerInterval);submitTest();}},1000);})();
 document.querySelectorAll('.radio-group').forEach(g=>{g.querySelectorAll('.radio-option').forEach(o=>{o.addEventListener('click',e=>{e.preventDefault();const n=o.querySelector('input').name;document.querySelectorAll('input[name="'+n+'"]').forEach(r=>r.closest('.radio-option').classList.remove('selected'));o.querySelector('input').checked=true;o.classList.add('selected');updateProgress();});});});
