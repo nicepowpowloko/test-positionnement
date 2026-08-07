@@ -1021,21 +1021,94 @@ function buildAnswers(answers) {
 
 // ── SEND EMAIL ──
 function sendEmail() {
-  document.getElementById('pdfAttachModal').classList.add('active');
   const ans = window._lastAnswers || {};
   const name = (ans['f-prenom'] || '') + ' ' + (ans['f-nom'] || '');
   const { correct, total, kwPoints, kwMax } = scoreAnswers(ans);
   const combined = correct + kwPoints;
   const combinedMax = total + kwMax;
+  window._mailSubject = 'Test Positionnement MPB - ' + name + ' - ' + combined + '/' + combinedMax + ' pts';
 
-  const pdfEl = document.getElementById('resultsOverlay');
+  // Build clean white print div (overlay dark background is not renderable by html2canvas)
+  const printDiv = document.createElement('div');
+  printDiv.style.cssText = 'width:794px;background:white;color:#1b2a4d;font-family:Arial,sans-serif;padding:28px;box-sizing:border-box;';
+
+  let rows = '';
+  sections.forEach(sec => {
+    let qRows = '';
+    sec.questions.forEach(q => {
+      const ua = ans[q.id] || '';
+      let pts = 0, maxP = 0;
+      let ad = ua || '<em style="color:#aaa">Sans réponse</em>';
+      if (q.scored) {
+        maxP = q.pts;
+        pts = ua && ua.toLowerCase() === q.correct.toLowerCase() ? q.pts : 0;
+        ad = q.options[ua] || ua || '<em style="color:#aaa">Sans réponse</em>';
+      } else if (q.keywords) {
+        maxP = q.maxPts || 1;
+        pts = Math.min(scoreKeywords(ua, q.keywords).pts, maxP);
+      }
+      const ok = pts > 0;
+      const ps = Number.isInteger(pts) ? pts : pts.toFixed(1);
+      const scoreCell = maxP > 0
+        ? `<td style="padding:5px 6px;border-bottom:1px solid #e0e0e0;font-size:11px;font-weight:bold;color:${ok ? '#1a7a1a' : '#bb2020'};text-align:center;white-space:nowrap;">${ps}/${maxP}</td>`
+        : '<td style="border-bottom:1px solid #e0e0e0;"></td>';
+      qRows += `<tr>
+        <td style="padding:5px 6px;border-bottom:1px solid #e0e0e0;font-size:10px;color:#444;width:28%;vertical-align:top;">${q.text}</td>
+        <td style="padding:5px 6px;border-bottom:1px solid #e0e0e0;font-size:10px;color:#1b2a4d;width:34%;vertical-align:top;">${ad}</td>
+        <td style="padding:5px 6px;border-bottom:1px solid #e0e0e0;font-size:10px;color:#777;font-style:italic;width:28%;vertical-align:top;">${q.model || ''}</td>
+        ${scoreCell}
+      </tr>`;
+    });
+    rows += `<tr><td colspan="4" style="padding:6px 8px;background:#1b2a4d;color:white;font-size:11px;font-weight:bold;">${sec.title}</td></tr>${qRows}`;
+  });
+
+  // Auto-évaluation rows
+  const autoEvalLabels = { word: 'Word', excel: 'Excel', ppt: 'PowerPoint', access: 'Access', outlook: 'Outlook', vba: 'VBA' };
+  let autoRows = '';
+  Object.entries(autoEvalLabels).forEach(([k, label]) => {
+    const v = ans[k] || '—';
+    autoRows += `<tr>
+      <td style="padding:5px 6px;border-bottom:1px solid #e0e0e0;font-size:10px;color:#444;">${label}</td>
+      <td colspan="3" style="padding:5px 6px;border-bottom:1px solid #e0e0e0;font-size:10px;color:#1b2a4d;">${v}</td>
+    </tr>`;
+  });
+  rows += `<tr><td colspan="4" style="padding:6px 8px;background:#1b2a4d;color:white;font-size:11px;font-weight:bold;">📋 Auto-évaluation</td></tr>${autoRows}`;
+
+  printDiv.innerHTML = `
+    <div style="border-bottom:3px solid #1b2a4d;padding-bottom:10px;margin-bottom:14px;display:flex;justify-content:space-between;align-items:flex-end;">
+      <div>
+        <div style="font-size:16px;font-weight:bold;color:#1b2a4d;">Test de Positionnement — MPB</div>
+        <div style="font-size:11px;color:#555;margin-top:3px;">${ans['f-prenom'] || ''} ${ans['f-nom'] || ''} &nbsp;•&nbsp; ${ans['f-date'] || ''} &nbsp;•&nbsp; ${ans['f-ville'] || ''}</div>
+      </div>
+      <div style="background:#1b2a4d;color:white;border-radius:6px;padding:8px 16px;text-align:center;">
+        <div style="font-size:22px;font-weight:bold;">${combined}&nbsp;/&nbsp;${combinedMax}</div>
+        <div style="font-size:9px;opacity:0.7;letter-spacing:1px;">SCORE TOTAL</div>
+      </div>
+    </div>
+    <table style="width:100%;border-collapse:collapse;">
+      <thead>
+        <tr style="background:#f0f3f9;">
+          <th style="padding:5px 6px;text-align:left;font-size:9px;color:#888;border-bottom:2px solid #1b2a4d;font-weight:600;">QUESTION</th>
+          <th style="padding:5px 6px;text-align:left;font-size:9px;color:#888;border-bottom:2px solid #1b2a4d;font-weight:600;">RÉPONSE DE L'APPRENANT</th>
+          <th style="padding:5px 6px;text-align:left;font-size:9px;color:#888;border-bottom:2px solid #1b2a4d;font-weight:600;">RÉPONSE ATTENDUE</th>
+          <th style="padding:5px 6px;text-align:center;font-size:9px;color:#888;border-bottom:2px solid #1b2a4d;font-weight:600;">SCORE</th>
+        </tr>
+      </thead>
+      <tbody>${rows}</tbody>
+    </table>
+    <div style="margin-top:14px;font-size:8px;color:#bbb;text-align:right;">Généré par Real Conseil &mdash; Test Positionnement MPB</div>
+  `;
+
+  document.body.appendChild(printDiv);
   html2pdf().set({
-    margin: [10, 10, 10, 10],
+    margin: [8, 8, 8, 8],
     filename: 'test-positionnement-mpb-' + (ans['f-nom'] || 'candidat').toLowerCase() + '.pdf',
     html2canvas: { scale: 2, useCORS: true, logging: false, scrollY: 0 },
     jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
-  }).from(pdfEl).save();
-  window._mailSubject = 'Test Positionnement MPB - ' + name + ' - ' + combined + '/' + combinedMax + ' pts';
+  }).from(printDiv).save().then(() => {
+    document.body.removeChild(printDiv);
+    document.getElementById('pdfAttachModal').classList.add('active');
+  });
 }
 
 function openMailto() {
