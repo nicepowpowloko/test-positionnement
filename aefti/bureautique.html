@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex">
+<title>Test de positionnement – Bureautique certifiante | AEFTI</title>
+<link rel="icon" href="assets/aefti-logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;600;700;800;900&family=Bree+Serif&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/aefti.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
+<script src="assets/config.js"></script>
+</head>
+<body>
+<div id="app"></div>
+<script>
+/* Contenu du test — la bonne réponse est TOUJOURS écrite en premier (l'ordre est mélangé à l'affichage). */
+window.TEST = {
+  code: 'BUREAUTIQUE',
+  titre: 'Bureautique certifiante',
+  sousTitre: 'Windows · Word · Excel · PowerPoint · Outlook',
+  duree: 20,
+  domaines: [
+    { id: 'win', nom: 'Windows et fichiers' },
+    { id: 'word', nom: 'Word' },
+    { id: 'excel', nom: 'Excel' },
+    { id: 'ppt', nom: 'PowerPoint' },
+    { id: 'web', nom: 'Outlook et outils en ligne' }
+  ],
+  questions: [
+    { d: 'win', q: 'Quel raccourci clavier permet de copier un élément sélectionné ?',
+      o: ['Ctrl + C', 'Ctrl + V', 'Ctrl + X', 'Ctrl + Z'] },
+    { d: 'win', q: 'Que se passe-t-il quand on supprime un fichier sur l\'ordinateur ?',
+      o: ['Il va dans la Corbeille', 'Il est effacé définitivement tout de suite', 'Il est envoyé par mail', 'Il est copié sur une clé USB'] },
+    { d: 'win', q: 'Dans le nom de fichier « CV_Dupont.docx », que signifie « .docx » ?',
+      o: ['C\'est l\'extension : le fichier est un document Word', 'C\'est le dossier où il est rangé', 'C\'est la taille du fichier', 'C\'est le nom de l\'auteur'] },
+    { d: 'win', q: 'Pour ranger vos documents par thème (CV, lettres, factures…), vous créez :',
+      o: ['Des dossiers', 'Des raccourcis', 'Des extensions', 'Des onglets'] },
+
+    { d: 'word', q: 'Dans Word, quel bouton du ruban met le texte en gras ?',
+      o: ['G', 'I', 'S', 'ab'] },
+    { d: 'word', q: 'Pour placer un titre au milieu de la ligne, on utilise :',
+      o: ['L\'alignement centré', 'La taille de police', 'L\'interligne', 'Le retrait'] },
+    { d: 'word', q: 'Pour que le numéro de page apparaisse automatiquement en bas de chaque page, on utilise :',
+      o: ['Le pied de page', 'Une zone de texte sur chaque page', 'Un tableau', 'La touche Entrée'] },
+    { d: 'word', q: 'À quoi sert le publipostage dans Word ?',
+      o: ['Envoyer un même courrier personnalisé à plusieurs personnes', 'Publier un document sur Internet', 'Corriger l\'orthographe', 'Imprimer en recto-verso'] },
+    { d: 'word', q: 'Pour commencer une nouvelle page sans appuyer plusieurs fois sur Entrée, on insère :',
+      o: ['Un saut de page', 'Un tableau', 'Une tabulation', 'Une image'] },
+
+    { d: 'excel', q: 'Dans Excel, comment s\'appelle la cellule située colonne B, ligne 3 ?',
+      o: ['B3', '3B', 'C2', 'B-3'] },
+    { d: 'excel', q: 'Quelle formule calcule la somme des cellules A1 à A10 ?',
+      o: ['=SOMME(A1:A10)', '=ADDITION(A1;A10)', 'SOMME A1-A10', '=TOTAL(A1+A10)'] },
+    { d: 'excel', q: 'La cellule A1 contient 20 et la cellule B1 contient 5. Que donne la formule =A1*B1 ?',
+      o: ['100', '25', '4', '15'] },
+    { d: 'excel', q: 'La formule =SI(B2>=10;"Admis";"Refusé") affiche « Admis » quand :',
+      o: ['B2 vaut 10 ou plus', 'B2 vaut moins de 10', 'B2 est vide', 'Toujours, quelle que soit la valeur'] },
+    { d: 'excel', q: 'Dans un grand tableau, pour n\'afficher que les lignes d\'une seule ville, on utilise :',
+      o: ['Un filtre', 'Un graphique', 'La fusion de cellules', 'Le zoom'] },
+
+    { d: 'ppt', q: 'Une présentation PowerPoint est composée de :',
+      o: ['Diapositives', 'Feuilles de calcul', 'Cellules', 'Pages de courrier'] },
+    { d: 'ppt', q: 'Pour changer en une seule fois la police et les couleurs de toutes les diapositives, on utilise :',
+      o: ['Le masque des diapositives', 'Les animations', 'Le mode Lecture', 'Le correcteur d\'orthographe'] },
+    { d: 'ppt', q: 'Dans PowerPoint, qu\'est-ce qu\'une « transition » ?',
+      o: ['L\'effet visuel lors du passage d\'une diapositive à la suivante', 'Un graphique', 'Une zone de texte', 'Une note pour l\'orateur'] },
+
+    { d: 'web', q: 'Dans un mail, à quoi sert le champ « Cc » ?',
+      o: ['Envoyer une copie du mail à une autre personne', 'Ajouter une pièce jointe', 'Écrire l\'objet du mail', 'Supprimer le mail'] },
+    { d: 'web', q: 'Pour envoyer votre CV par mail, vous l\'ajoutez en :',
+      o: ['Pièce jointe', 'Objet', 'Signature', 'Brouillon'] },
+    { d: 'web', q: 'À quoi servent OneDrive ou Google Drive ?',
+      o: ['Stocker et partager des fichiers en ligne', 'Imprimer des documents', 'Protéger l\'ordinateur contre les virus', 'Écrire des mails'] }
+  ],
+  profil: [
+    { q: 'Avec un ordinateur, vous êtes :',
+      o: ['Très à l\'aise', 'Plutôt à l\'aise', 'Peu à l\'aise', 'Pas du tout à l\'aise'] },
+    { q: 'Quels logiciels avez-vous déjà utilisés ?', multi: true,
+      o: ['Word', 'Excel', 'PowerPoint', 'Outlook ou une messagerie', 'Aucun'] },
+    { q: 'Avez-vous un ordinateur à la maison ?',
+      o: ['Oui, avec Internet', 'Oui, sans Internet', 'Non, seulement un smartphone', 'Non'] },
+    { q: 'Quel est votre objectif principal ?',
+      o: ['Trouver un emploi de bureau', 'Obtenir une certification', 'Évoluer dans mon poste actuel', 'Prendre confiance avec l\'ordinateur'] }
+  ]
+};
+</script>
+<script src="assets/aefti-test.js"></script>
+</body>
+</html>

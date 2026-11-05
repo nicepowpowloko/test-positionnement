@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex">
+<title>Test de positionnement – Découverte des métiers du numérique | AEFTI</title>
+<link rel="icon" href="assets/aefti-logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;600;700;800;900&family=Bree+Serif&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/aefti.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
+<script src="assets/config.js"></script>
+</head>
+<body>
+<div id="app"></div>
+<script>
+/* Contenu du test — la bonne réponse est TOUJOURS écrite en premier (l'ordre est mélangé à l'affichage). */
+window.TEST = {
+  code: 'DMN',
+  titre: 'Découverte des métiers du numérique',
+  sousTitre: 'Explorer, essayer, choisir son métier',
+  duree: 20,
+  domaines: [
+    { id: 'cult', nom: 'Culture numérique et métiers' },
+    { id: 'base', nom: 'Bases du numérique et bureautique' },
+    { id: 'code', nom: 'Logique et code' },
+    { id: 'secu', nom: 'Web, réseau et cybersécurité' }
+  ],
+  questions: [
+    { d: 'cult', q: 'Qu\'est-ce qu\'un navigateur web ?',
+      o: ['Un logiciel pour aller sur Internet (Chrome, Firefox, Edge…)', 'Un moteur de recherche', 'Un site internet', 'Un câble réseau'] },
+    { d: 'cult', q: 'Que signifie « RGPD » ?',
+      o: ['Règlement général sur la protection des données', 'Réseau global de partage de documents', 'Répertoire général des programmes distribués', 'Règle de gestion des postes à distance'] },
+    { d: 'cult', q: 'Quel métier consiste à aider les utilisateurs qui ont un problème informatique ?',
+      o: ['Technicien support', 'Community manager', 'Webdesigner', 'Data analyst'] },
+    { d: 'cult', q: 'Que fait principalement un community manager ?',
+      o: ['Il anime les réseaux sociaux d\'une entreprise', 'Il répare les ordinateurs', 'Il installe les câbles réseau', 'Il programme des bases de données'] },
+    { d: 'cult', q: 'Le « cloud », c\'est :',
+      o: ['Stocker et utiliser des données sur des serveurs accessibles par Internet', 'Un logiciel de météo', 'Un virus informatique', 'Un type d\'écran'] },
+
+    { d: 'base', q: 'Qu\'est-ce qu\'un système d\'exploitation ?',
+      o: ['Le logiciel principal qui fait fonctionner l\'ordinateur (Windows, macOS, Linux…)', 'Un antivirus', 'Un traitement de texte', 'Une pièce de l\'écran'] },
+    { d: 'base', q: 'Quel raccourci clavier permet de coller un élément copié ?',
+      o: ['Ctrl + V', 'Ctrl + C', 'Ctrl + X', 'Ctrl + Z'] },
+    { d: 'base', q: 'Dans le nom de fichier « photo.jpg », que désigne « .jpg » ?',
+      o: ['Le format du fichier : c\'est une image', 'Le dossier du fichier', 'La date du fichier', 'Le nom de l\'appareil photo'] },
+    { d: 'base', q: 'Dans Excel, quelle formule calcule la somme des cellules A1 à A10 ?',
+      o: ['=SOMME(A1:A10)', '=ADDITION(A1;A10)', '=TOTAL(A1+A10)', 'SOMME A1-A10'] },
+    { d: 'base', q: 'Pour travailler à plusieurs sur le même document en même temps, on utilise :',
+      o: ['Un outil collaboratif en ligne (Google Drive, OneDrive…)', 'Une clé USB', 'Une imprimante', 'Le Bloc-notes'] },
+
+    { d: 'code', q: 'Dans un programme, pour répéter une action 5 fois, on utilise :',
+      o: ['Une boucle', 'Une variable', 'Un commentaire', 'Une image'] },
+    { d: 'code', q: 'Quel nombre continue la suite : 2, 4, 8, 16, … ?',
+      o: ['32', '18', '20', '24'] },
+    { d: 'code', q: 'Dans un programme, à quoi sert une « variable » ?',
+      o: ['À garder une valeur en mémoire (un nombre, un texte…)', 'À afficher une image', 'À éteindre l\'ordinateur', 'À se connecter au Wi-Fi'] },
+    { d: 'code', q: 'Règle : « SI il pleut ALORS je prends un parapluie, SINON je prends des lunettes de soleil ». Il ne pleut pas. Que prend-on ?',
+      o: ['Des lunettes de soleil', 'Un parapluie', 'Les deux', 'Rien'] },
+    { d: 'code', q: 'À quoi sert le langage HTML ?',
+      o: ['À structurer le contenu d\'une page web (titres, textes, images…)', 'À protéger un ordinateur des virus', 'À retoucher des photos', 'À faire des calculs dans un tableur'] },
+
+    { d: 'secu', q: 'À quoi sert le CSS sur un site web ?',
+      o: ['À mettre en forme la page (couleurs, polices, disposition)', 'À stocker les mots de passe', 'À envoyer des mails', 'À accélérer la connexion Internet'] },
+    { d: 'secu', q: 'Qu\'est-ce que le « phishing » (hameçonnage) ?',
+      o: ['Un faux message qui cherche à voler vos informations', 'Un jeu vidéo', 'Une technique pour accélérer Internet', 'Un logiciel de dessin'] },
+    { d: 'secu', q: 'Quel mot de passe est le plus sûr ?',
+      o: ['Soleil!Velo27#Bus', 'azerty', '123456', 'Votre prénom'] },
+    { d: 'secu', q: 'Qu\'est-ce qu\'une adresse IP ?',
+      o: ['Un numéro qui identifie un appareil sur un réseau', 'Une adresse mail', 'Le nom d\'un site web', 'Le mot de passe du Wi-Fi'] },
+    { d: 'secu', q: 'Un utilisateur vous dit : « Internet ne marche plus ». Que vérifiez-vous en premier ?',
+      o: ['Que l\'appareil est bien connecté (câble ou Wi-Fi)', 'Qu\'il faut réinstaller Windows', 'Qu\'il faut acheter un nouvel ordinateur', 'Qu\'il faut changer l\'écran'] }
+  ],
+  profil: [
+    { q: 'Quelles familles de métiers du numérique vous attirent ?', multi: true,
+      o: ['Support et réseau (technicien)', 'Développement (web, mobile)', 'Cybersécurité', 'Données (data)', 'Design et web', 'Marketing et relation client', 'Je ne sais pas encore'] },
+    { q: 'Ce que vous préférez faire :',
+      o: ['Résoudre des problèmes techniques', 'Créer (visuels, sites, contenus)', 'Analyser des chiffres et des informations', 'Communiquer et aider les gens'] },
+    { q: 'Avec un ordinateur, vous êtes :',
+      o: ['Très à l\'aise', 'Plutôt à l\'aise', 'Peu à l\'aise', 'Pas du tout à l\'aise'] },
+    { q: 'Où en est votre projet professionnel ?',
+      o: ['J\'ai déjà un métier en tête', 'J\'hésite entre plusieurs métiers', 'Je découvre complètement'] }
+  ]
+};
+</script>
+<script src="assets/aefti-test.js"></script>
+</body>
+</html>

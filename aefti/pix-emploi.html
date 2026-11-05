@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex">
+<title>Test de positionnement – Pix Emploi | AEFTI</title>
+<link rel="icon" href="assets/aefti-logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;600;700;800;900&family=Bree+Serif&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/aefti.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
+<script src="assets/config.js"></script>
+</head>
+<body>
+<div id="app"></div>
+<script>
+/* Contenu du test — la bonne réponse est TOUJOURS écrite en premier (l'ordre est mélangé à l'affichage). */
+window.TEST = {
+  code: 'PIX_EMPLOI',
+  titre: 'Pix Emploi – Compétences numériques',
+  sousTitre: 'Les compétences numériques pour l\'emploi',
+  duree: 20,
+  domaines: [
+    { id: 'env', nom: 'Environnement numérique' },
+    { id: 'info', nom: 'Information et données' },
+    { id: 'com', nom: 'Communication et démarches en ligne' },
+    { id: 'crea', nom: 'Création de contenu' },
+    { id: 'secu', nom: 'Protection et sécurité' }
+  ],
+  questions: [
+    { d: 'env', q: 'Sur un ordinateur, à quoi sert la souris ?',
+      o: ['À déplacer la flèche et à cliquer', 'À écrire du texte', 'À imprimer', 'À allumer l\'écran'] },
+    { d: 'env', q: 'Votre ordinateur est bloqué et ne répond plus. Que faites-vous d\'abord ?',
+      o: ['Je le redémarre', 'J\'appuie très fort sur l\'écran', 'J\'ouvre d\'autres programmes', 'Je débranche le clavier'] },
+    { d: 'env', q: 'Pour connecter votre téléphone à Internet sans utiliser votre forfait, vous utilisez :',
+      o: ['Le Wi-Fi', 'Le mode avion', 'La lampe torche', 'Le Bluetooth'] },
+    { d: 'env', q: 'Où se trouvent en général les fichiers téléchargés sur Internet ?',
+      o: ['Dans le dossier « Téléchargements »', 'Dans la Corbeille', 'Dans le dossier « Musique »', 'Dans l\'imprimante'] },
+
+    { d: 'info', q: 'Pour chercher une information sur Internet, on utilise :',
+      o: ['Un moteur de recherche (Google, Qwant, Bing…)', 'Un traitement de texte', 'Une imprimante', 'Une clé USB'] },
+    { d: 'info', q: 'Vous voyez une information étonnante sur un réseau social. Que faites-vous ?',
+      o: ['Je vérifie sur d\'autres sites sérieux', 'Je la partage tout de suite', 'Je la crois car beaucoup de gens l\'ont aimée', 'Je l\'imprime'] },
+    { d: 'info', q: 'Vous cherchez un emploi de cuisinier à Amiens. Qu\'écrivez-vous dans la barre de recherche ?',
+      o: ['offre emploi cuisinier Amiens', 'travail', 'recette cuisine', 'météo Amiens'] },
+    { d: 'info', q: 'L\'adresse d\'un site commence par « https:// ». Que veut dire le « s » ?',
+      o: ['La connexion est sécurisée', 'Le site est gratuit', 'Le site est en français', 'Le site est simple'] },
+
+    { d: 'com', q: 'Quelle adresse mail est correcte ?',
+      o: ['marie.dupont@gmail.com', 'marie dupont@gmail', 'www.mariedupont.fr', 'marie.dupont.gmail.com'] },
+    { d: 'com', q: 'Vous répondez à une offre d\'emploi par mail. Qu\'écrivez-vous dans « Objet » ?',
+      o: ['Candidature au poste de vendeur', 'Coucou', 'Rien, je laisse vide', 'Mon numéro de téléphone'] },
+    { d: 'com', q: 'Pour ajouter votre CV à un mail, vous cliquez sur :',
+      o: ['Le trombone (pièce jointe)', 'La poubelle', 'Le drapeau', 'L\'étoile'] },
+    { d: 'com', q: 'Un entretien « en visio », c\'est un entretien :',
+      o: ['En vidéo, sur un ordinateur ou un téléphone', 'Par courrier', 'Par SMS', 'Toujours dans les locaux de l\'entreprise'] },
+
+    { d: 'crea', q: 'Pour écrire un CV sur ordinateur, on utilise un logiciel de :',
+      o: ['Traitement de texte (Word, LibreOffice Writer…)', 'Retouche photo', 'Musique', 'Navigation Internet'] },
+    { d: 'crea', q: 'Pourquoi envoyer son CV en PDF plutôt qu\'en Word ?',
+      o: ['La mise en page ne bouge pas chez le recruteur', 'Le CV devient plus long', 'Le fichier devient en couleur', 'Le recruteur ne peut pas l\'ouvrir'] },
+    { d: 'crea', q: 'Quel raccourci clavier permet d\'annuler la dernière action ?',
+      o: ['Ctrl + Z', 'Ctrl + P', 'Ctrl + A', 'Échap'] },
+    { d: 'crea', q: 'Sur un CV, quelle information est indispensable ?',
+      o: ['Vos coordonnées (téléphone, mail)', 'Votre numéro de sécurité sociale', 'Votre mot de passe', 'Le code de votre carte bancaire'] },
+
+    { d: 'secu', q: 'Quel mot de passe est le plus sûr ?',
+      o: ['Soleil!Velo27#Bus', '123456', 'motdepasse', 'Votre date de naissance'] },
+    { d: 'secu', q: 'Vous recevez ce SMS : « Votre colis est bloqué, payez 1,99 € ici : lien ». Que faites-vous ?',
+      o: ['Je ne clique pas et je supprime le message', 'Je clique et je paie', 'Je réponds avec mes coordonnées bancaires', 'Je l\'envoie à mes amis'] },
+    { d: 'secu', q: 'Votre banque ou France Travail peut-elle vous demander votre mot de passe par mail ?',
+      o: ['Non, jamais', 'Oui, souvent', 'Oui, une fois par an', 'Oui, si c\'est urgent'] },
+    { d: 'secu', q: 'La « double authentification », c\'est :',
+      o: ['Un code reçu en plus du mot de passe pour se connecter', 'Avoir deux ordinateurs', 'Écrire son mot de passe deux fois sur un papier', 'Avoir deux adresses mail'] }
+  ],
+  profil: [
+    { q: 'Avec le numérique (ordinateur, téléphone, Internet), vous êtes :',
+      o: ['Très à l\'aise', 'Plutôt à l\'aise', 'Peu à l\'aise', 'Pas du tout à l\'aise'] },
+    { q: 'Quels appareils avez-vous chez vous ?', multi: true,
+      o: ['Un ordinateur', 'Un smartphone', 'Une tablette', 'Une connexion Internet', 'Aucun'] },
+    { q: 'Avez-vous une adresse mail ?',
+      o: ['Oui, je l\'utilise seul(e)', 'Oui, mais j\'ai besoin d\'aide', 'Non'] },
+    { q: 'Utilisez-vous votre espace France Travail en ligne ?',
+      o: ['Oui, seul(e)', 'Oui, avec de l\'aide', 'Non', 'Je ne suis pas inscrit(e)'] }
+  ]
+};
+</script>
+<script src="assets/aefti-test.js"></script>
+</body>
+</html>
