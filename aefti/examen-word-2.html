@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex">
+<title>Examen blanc Word n° 2 | AEFTI</title>
+<link rel="icon" href="assets/aefti-logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;600;700;800;900&family=Bree+Serif&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/aefti.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
+<script src="assets/config.js"></script>
+</head>
+<body>
+<div id="app"></div>
+<script>
+/* Contenu de l'examen blanc — la bonne réponse est TOUJOURS écrite en premier (l'ordre est mélangé à l'affichage). */
+window.TEST = {
+ "code": "EB2_WORD",
+ "typeLabel": "Examen blanc",
+ "titre": "Examen blanc Word n° 2",
+ "sousTitre": "Préparation au TOSA Word · 20 questions",
+ "duree": 25,
+ "domaines": [
+  {
+   "id": "env",
+   "nom": "Environnement et méthodes"
+  },
+  {
+   "id": "mef",
+   "nom": "Mise en forme et mise en page"
+  },
+  {
+   "id": "edit",
+   "nom": "Outils d'édition"
+  },
+  {
+   "id": "obj",
+   "nom": "Objets graphiques et tableaux"
+  }
+ ],
+ "questions": [
+  {
+   "d": "env",
+   "q": "Quel raccourci ouvre l’impression ?",
+   "o": [
+    "Ctrl + P",
+    "Ctrl + I",
+    "Ctrl + O",
+    "Ctrl + F"
+   ]
+  },
+  {
+   "d": "env",
+   "q": "Comment rouvrir rapidement un document utilisé hier ?",
+   "o": [
+    "Fichier › Ouvrir › Récents",
+    "Insertion › Objet",
+    "Révision › Comparer",
+    "Affichage › Nouvelle fenêtre"
+   ]
+  },
+  {
+   "d": "env",
+   "q": "Où règle-t-on le zoom ?",
+   "o": [
+    "En bas à droite, dans la barre d’état",
+    "Dans l’onglet Insertion",
+    "Dans l’onglet Références",
+    "Dans le menu Fichier › Options uniquement"
+   ]
+  },
+  {
+   "d": "env",
+   "q": "À quoi sert le bouton ¶ (Afficher tout) ?",
+   "o": [
+    "À voir les marques de paragraphe, les espaces et les tabulations",
+    "À imprimer le document",
+    "À insérer un saut de page",
+    "À justifier le texte"
+   ]
+  },
+  {
+   "d": "env",
+   "q": "Quelle est l’extension d’un modèle Word ?",
+   "o": [
+    ".dotx",
+    ".docx",
+    ".pdf",
+    ".xlsx"
+   ]
+  },
+  {
+   "d": "mef",
+   "q": "Que fait le raccourci Maj + F3 sur un texte sélectionné ?",
+   "o": [
+    "Il change la casse (minuscules, MAJUSCULES…)",
+    "Il met le texte en gras",
+    "Il ouvre la boîte Police",
+    "Il supprime le texte"
+   ]
+  },
+  {
+   "d": "mef",
+   "q": "Un paragraphe « justifié » est…",
+   "o": [
+    "aligné à la fois à gauche et à droite",
+    "centré",
+    "aligné seulement à droite",
+    "écrit en italique"
+   ]
+  },
+  {
+   "d": "mef",
+   "q": "Quel raccourci insère un saut de page ?",
+   "o": [
+    "Ctrl + Entrée",
+    "Maj + Entrée",
+    "Alt + Entrée",
+    "Tab"
+   ]
+  },
+  {
+   "d": "mef",
+   "q": "À quoi sert un taquet de tabulation décimal ?",
+   "o": [
+    "À aligner des nombres sur la virgule",
+    "À centrer un titre",
+    "À créer une liste à puces",
+    "À insérer un tableau"
+   ]
+  },
+  {
+   "d": "mef",
+   "q": "Une table des matières automatique se construit à partir…",
+   "o": [
+    "des styles de titre",
+    "du texte en gras",
+    "de la taille de police",
+    "des numéros de page tapés à la main"
+   ]
+  },
+  {
+   "d": "edit",
+   "q": "Que fait Ctrl + Z ?",
+   "o": [
+    "Il annule la dernière action",
+    "Il rétablit l’action",
+    "Il coupe le texte",
+    "Il ferme le document"
+   ]
+  },
+  {
+   "d": "edit",
+   "q": "Comment ajouter une remarque dans la marge sans modifier le texte ?",
+   "o": [
+    "Révision › Nouveau commentaire",
+    "Insertion › Zone de texte",
+    "Accueil › Surligner",
+    "Références › Note de fin"
+   ]
+  },
+  {
+   "d": "edit",
+   "q": "Dans un publipostage, la règle « Si… Alors… Sinon » sert à…",
+   "o": [
+    "écrire un texte différent selon une condition",
+    "trier les destinataires",
+    "imprimer les enveloppes",
+    "protéger la lettre"
+   ]
+  },
+  {
+   "d": "edit",
+   "q": "Où protéger un document par un mot de passe ?",
+   "o": [
+    "Fichier › Informations › Protéger le document",
+    "Révision › Orthographe",
+    "Accueil › Police",
+    "Insertion › Signature"
+   ]
+  },
+  {
+   "d": "edit",
+   "q": "Comment connaître le nombre de mots d’un document ?",
+   "o": [
+    "Révision › Statistiques (ou la barre d’état)",
+    "Accueil › Styles",
+    "Insertion › Champ",
+    "Affichage › Règle"
+   ]
+  },
+  {
+   "d": "obj",
+   "q": "Comment trier les lignes d’un tableau par ordre alphabétique ?",
+   "o": [
+    "Disposition › Trier",
+    "Accueil › Trier les styles",
+    "Insertion › Tableau rapide",
+    "Création de tableau › Trame"
+   ]
+  },
+  {
+   "d": "obj",
+   "q": "Pour répéter la ligne de titres d’un long tableau en haut de chaque page, on utilise…",
+   "o": [
+    "Disposition › Répéter les lignes d’en-tête",
+    "Insertion › En-tête",
+    "Mise en page › Colonnes",
+    "Création de tableau › Styles"
+   ]
+  },
+  {
+   "d": "obj",
+   "q": "Comment couper les bords d’une image ?",
+   "o": [
+    "Format de l’image › Rogner",
+    "Format de l’image › Compresser",
+    "Accueil › Couper",
+    "Insertion › Capture"
+   ]
+  },
+  {
+   "d": "obj",
+   "q": "Pour placer un bloc de texte librement sur la page, on insère…",
+   "o": [
+    "une zone de texte",
+    "un saut de section",
+    "une note de bas de page",
+    "un signet"
+   ]
+  },
+  {
+   "d": "obj",
+   "q": "Pour placer une forme sous le texte, on choisit l’habillage…",
+   "o": [
+    "Derrière le texte",
+    "Carré",
+    "Aligné sur le texte",
+    "Haut et bas"
+   ]
+  }
+ ],
+ "profil": [],
+ "niveaux": [
+  [
+   88,
+   "Expert (estimation TOSA)"
+  ],
+  [
+   72,
+   "Avancé (estimation TOSA)"
+  ],
+  [
+   55,
+   "Opérationnel (estimation TOSA)"
+  ],
+  [
+   35,
+   "Basique (estimation TOSA)"
+  ],
+  [
+   0,
+   "Initial, non certifiable (estimation TOSA)"
+  ]
+ ],
+ "doneText": "Vous pouvez fermer cette page. Votre formateur analysera vos résultats avec vous pour préparer vos révisions.",
+ "introNsp": "Examen blanc : répondez seul, sans aide. Si vous ne savez pas, choisissez <b>« Je ne sais pas »</b> : cela aide à cibler vos révisions."
+};
+</script>
+<script src="assets/aefti-test.js"></script>
+</body>
+</html>

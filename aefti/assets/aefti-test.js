@@ -10,6 +10,7 @@
   const T = window.TEST;
   const C = window.AEFTI_CONFIG || {};
   const NSP = 'Je ne sais pas';
+  const TYPE = T.typeLabel || 'Test de positionnement';  // ex. « Examen blanc »
   const LOCK_KEY = 'aefti_positionnement_' + T.code + '_envoye';
   const app = document.getElementById('app');
 
@@ -73,13 +74,13 @@
     if (localStorage.getItem(LOCK_KEY) === '1') return renderLocked();
     const c = state.candidat;
     app.innerHTML = topbar('', null) + `<main class="wrap">
-      <span class="tag">Test de positionnement</span>
+      <span class="tag">${esc(TYPE)}</span>
       <h1>${esc(T.titre)}</h1>
       <p class="subtitle">${esc(T.sousTitre)}</p>
       <div class="card"><h2>Comment ça se passe ?</h2><ul class="info-list">
         <li><span class="ico">📝</span><span><b>${nbScored} questions</b> à choix, une par écran.</span></li>
         <li><span class="ico">⏱️</span><span>Environ <b>${T.duree || 20} minutes</b>. Prenez votre temps.</span></li>
-        <li><span class="ico">🤔</span><span>Vous ne savez pas ? Choisissez <b>« Je ne sais pas »</b>. Ce n'est pas un examen : ce test sert à connaître votre niveau.</span></li>
+        <li><span class="ico">🤔</span><span>${T.introNsp || 'Vous ne savez pas ? Choisissez <b>« Je ne sais pas »</b>. Ce n\'est pas un examen : ce test sert à connaître votre niveau.'}</span></li>
         <li><span class="ico">📨</span><span>À la fin, vos réponses sont envoyées à votre formateur.</span></li>
       </ul></div>
       <div class="card"><h2>Vos informations</h2><div class="fields">
@@ -231,6 +232,7 @@
     return { details, stats, domaines, profil, fin, dureeMin };
   }
   function niveau(p) {
+    if (T.niveaux) { for (const [seuil, lab] of T.niveaux) if (p >= seuil) return lab; }
     if (p >= 75) return 'Confirmé';
     if (p >= 50) return 'Intermédiaire';
     if (p >= 25) return 'Débutant';
@@ -264,7 +266,7 @@
     if (logoData) { try { doc.addImage(logoData, 'PNG', M, 4, 24, 24); } catch (e) { /* logo facultatif */ } }
     doc.setTextColor(255, 255, 255);
     doc.setFont('helvetica', 'bold'); doc.setFontSize(17);
-    doc.text('Test de positionnement', 41, 13);
+    doc.text(P(TYPE), 41, 13);
     doc.setFontSize(12); doc.setTextColor(...YEL);
     doc.text(P(T.titre), 41, 20.5);
     doc.setFont('helvetica', 'normal'); doc.setFontSize(8.5); doc.setTextColor(220, 222, 240);
@@ -370,7 +372,7 @@
     for (let p = 1; p <= n; p++) {
       doc.setPage(p);
       doc.setFont('helvetica', 'normal'); doc.setFontSize(7.5); doc.setTextColor(...LAV);
-      doc.text(P(`AEFTI Savoirs et Compétences · Test de positionnement ${T.titre} · Document confidentiel`), M, 290);
+      doc.text(P(`AEFTI Savoirs et Compétences · ${TYPE} ${T.titre} · Document confidentiel`), M, 290);
       doc.text(`Page ${p} / ${n}`, W - M, 290, { align: 'right' });
     }
     return doc;
@@ -387,13 +389,13 @@
     let doc;
     try { doc = buildPdf(R); } catch (e) { console.error(e); }
     const c = state.candidat;
-    const pdfName = `Positionnement_${T.code}_${slug(c.nom)}_${slug(c.prenom)}_${R.fin.toISOString().slice(0, 10)}.pdf`;
+    const pdfName = `${TYPE === 'Test de positionnement' ? 'Positionnement' : slug(TYPE)}_${T.code}_${slug(c.nom)}_${slug(c.prenom)}_${R.fin.toISOString().slice(0, 10)}.pdf`;
     lastPdf = doc ? { doc, name: pdfName } : null;
 
     if (!C.ENDPOINT) return renderDone(R, 'demo');
 
     const payload = {
-      formation: T.titre, code: T.code, candidat: c,
+      formation: T.titre, code: T.code, typeLabel: TYPE, candidat: c,
       date: R.fin.toISOString(), dureeMin: R.dureeMin,
       stats: R.stats, domaines: R.domaines, profil: R.profil,
       details: R.details.map(d => ({ n: d.n, domaine: d.domaine, question: d.question, reponse: d.reponse, bonne: d.bonne, statut: d.statut })),
@@ -417,7 +419,7 @@
     if (mode === 'ok') {
       body = `<div class="done-ico">✓</div><h1 style="font-size:32px">Merci ${esc(c.prenom)} !</h1>
         <p class="subtitle">Vos réponses ont bien été envoyées à votre formateur.</p>
-        <p>Vous pouvez fermer cette page. Les résultats seront vus ensemble lors de votre entretien.</p>`;
+        <p>${T.doneText || 'Vous pouvez fermer cette page. Les résultats seront vus ensemble lors de votre entretien.'}</p>`;
     } else if (mode === 'demo') {
       body = `<div class="done-ico">✓</div><h1 style="font-size:32px">Test terminé</h1>
         <p class="notice"><b>Mode démonstration :</b> l'envoi par email n'est pas encore configuré

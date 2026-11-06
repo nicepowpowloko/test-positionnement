@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex">
+<title>Examen blanc Excel n° 2 | AEFTI</title>
+<link rel="icon" href="assets/aefti-logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;600;700;800;900&family=Bree+Serif&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/aefti.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
+<script src="assets/config.js"></script>
+</head>
+<body>
+<div id="app"></div>
+<script>
+/* Contenu de l'examen blanc — la bonne réponse est TOUJOURS écrite en premier (l'ordre est mélangé à l'affichage). */
+window.TEST = {
+ "code": "EB2_EXCEL",
+ "typeLabel": "Examen blanc",
+ "titre": "Examen blanc Excel n° 2",
+ "sousTitre": "Préparation au TOSA Excel · 20 questions",
+ "duree": 25,
+ "domaines": [
+  {
+   "id": "env",
+   "nom": "Environnement et méthodes"
+  },
+  {
+   "id": "calc",
+   "nom": "Calculs"
+  },
+  {
+   "id": "mef",
+   "nom": "Mise en forme"
+  },
+  {
+   "id": "data",
+   "nom": "Gestion des données"
+  }
+ ],
+ "questions": [
+  {
+   "d": "env",
+   "q": "Comment renommer une feuille ?",
+   "o": [
+    "Double-clic sur son onglet",
+    "Clic sur la cellule A1",
+    "Fichier › Renommer",
+    "Ctrl + R"
+   ]
+  },
+  {
+   "d": "env",
+   "q": "Comment n’imprimer qu’une partie d’une feuille ?",
+   "o": [
+    "Mise en page › Zone d’impression › Définir",
+    "Affichage › Zoom",
+    "Données › Filtrer",
+    "Accueil › Effacer"
+   ]
+  },
+  {
+   "d": "env",
+   "q": "Comment sélectionner toute la colonne D ?",
+   "o": [
+    "Cliquer sur la lettre D",
+    "Double-cliquer sur D1",
+    "Appuyer sur Ctrl + D",
+    "Cliquer sur le numéro 4"
+   ]
+  },
+  {
+   "d": "env",
+   "q": "Que fait Ctrl + Origine ?",
+   "o": [
+    "Il revient à la cellule A1",
+    "Il va à la fin de la ligne",
+    "Il ferme le classeur",
+    "Il insère une colonne"
+   ]
+  },
+  {
+   "d": "env",
+   "q": "Quelle est l’extension d’un classeur Excel ?",
+   "o": [
+    ".xlsx",
+    ".docx",
+    ".pptx",
+    ".csv uniquement"
+   ]
+  },
+  {
+   "d": "calc",
+   "q": "Que donne =MOYENNE(10;20;30) ?",
+   "o": [
+    "20",
+    "60",
+    "30",
+    "10"
+   ]
+  },
+  {
+   "d": "calc",
+   "q": "Que renvoie =MAX(B2:B10) ?",
+   "o": [
+    "La plus grande valeur de la plage",
+    "La somme de la plage",
+    "Le nombre de cellules",
+    "La dernière valeur saisie"
+   ]
+  },
+  {
+   "d": "calc",
+   "q": "Que donne la formule =2+3*4 ?",
+   "o": [
+    "14",
+    "20",
+    "24",
+    "9"
+   ]
+  },
+  {
+   "d": "calc",
+   "q": "À quoi sert RECHERCHEX ?",
+   "o": [
+    "À chercher une valeur dans une colonne et renvoyer la valeur correspondante",
+    "À trier un tableau",
+    "À compter les cellules vides",
+    "À arrondir un nombre"
+   ]
+  },
+  {
+   "d": "calc",
+   "q": "Que signifie l’erreur #DIV/0! ?",
+   "o": [
+    "Une division par zéro ou par une cellule vide",
+    "Un nom de fonction inconnu",
+    "Une colonne trop étroite",
+    "Une référence supprimée"
+   ]
+  },
+  {
+   "d": "mef",
+   "q": "Le format Monétaire appliqué à 1250 affiche…",
+   "o": [
+    "1 250,00 €",
+    "1250 %",
+    "12,50 €",
+    "1 250 $"
+   ]
+  },
+  {
+   "d": "mef",
+   "q": "À quoi sert « Renvoyer à la ligne automatiquement » ?",
+   "o": [
+    "À écrire sur plusieurs lignes dans une même cellule",
+    "À passer à la ligne suivante de la feuille",
+    "À insérer une ligne",
+    "À recopier une formule"
+   ]
+  },
+  {
+   "d": "mef",
+   "q": "Que montrent les « barres de données » ?",
+   "o": [
+    "Une barre proportionnelle à la valeur dans chaque cellule",
+    "Une bordure épaisse",
+    "Un graphique sur une autre feuille",
+    "Les cellules vides"
+   ]
+  },
+  {
+   "d": "mef",
+   "q": "Quel graphique montre le mieux une évolution dans le temps ?",
+   "o": [
+    "Courbe",
+    "Secteurs",
+    "Anneau",
+    "Radar"
+   ]
+  },
+  {
+   "d": "mef",
+   "q": "Comment ajouter un titre à un graphique ?",
+   "o": [
+    "Bouton + à côté du graphique › Titre du graphique",
+    "Accueil › Fusionner",
+    "Insertion › En-tête",
+    "Données › Trier"
+   ]
+  },
+  {
+   "d": "data",
+   "q": "Comment trier par vendeur, puis par date ?",
+   "o": [
+    "Données › Trier, puis « Ajouter un niveau »",
+    "Trier deux fois de A à Z",
+    "Filtrer par vendeur",
+    "Insérer un tableau croisé dynamique"
+   ]
+  },
+  {
+   "d": "data",
+   "q": "Comment n’afficher que les montants supérieurs à 100 € ?",
+   "o": [
+    "Filtre › Filtres numériques › Supérieur à",
+    "Données › Trier du plus grand au plus petit",
+    "Mise en forme conditionnelle",
+    "Supprimer les lignes inférieures"
+   ]
+  },
+  {
+   "d": "data",
+   "q": "Dans un TCD, comment regrouper des dates par mois ?",
+   "o": [
+    "Clic droit sur une date › Grouper › Mois",
+    "Trier les dates",
+    "Changer le format de date",
+    "Filtrer les dates"
+   ]
+  },
+  {
+   "d": "data",
+   "q": "Quand faut-il « Actualiser » un tableau croisé dynamique ?",
+   "o": [
+    "Après une modification des données sources",
+    "Avant de l’imprimer seulement",
+    "Jamais, il se met à jour seul",
+    "Après l’avoir renommé"
+   ]
+  },
+  {
+   "d": "data",
+   "q": "Comment afficher le total d’une colonne dans un tableau (Ctrl + L) ?",
+   "o": [
+    "Création de tableau › Ligne de total",
+    "Accueil › Somme sur chaque ligne",
+    "Insertion › Total",
+    "Données › Sous-total uniquement"
+   ]
+  }
+ ],
+ "profil": [],
+ "niveaux": [
+  [
+   88,
+   "Expert (estimation TOSA)"
+  ],
+  [
+   72,
+   "Avancé (estimation TOSA)"
+  ],
+  [
+   55,
+   "Opérationnel (estimation TOSA)"
+  ],
+  [
+   35,
+   "Basique (estimation TOSA)"
+  ],
+  [
+   0,
+   "Initial, non certifiable (estimation TOSA)"
+  ]
+ ],
+ "doneText": "Vous pouvez fermer cette page. Votre formateur analysera vos résultats avec vous pour préparer vos révisions.",
+ "introNsp": "Examen blanc : répondez seul, sans aide. Si vous ne savez pas, choisissez <b>« Je ne sais pas »</b> : cela aide à cibler vos révisions."
+};
+</script>
+<script src="assets/aefti-test.js"></script>
+</body>
+</html>

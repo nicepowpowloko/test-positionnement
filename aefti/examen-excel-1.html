@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex">
+<title>Examen blanc Excel n° 1 | AEFTI</title>
+<link rel="icon" href="assets/aefti-logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;600;700;800;900&family=Bree+Serif&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/aefti.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
+<script src="assets/config.js"></script>
+</head>
+<body>
+<div id="app"></div>
+<script>
+/* Contenu de l'examen blanc — la bonne réponse est TOUJOURS écrite en premier (l'ordre est mélangé à l'affichage). */
+window.TEST = {
+ "code": "EB1_EXCEL",
+ "typeLabel": "Examen blanc",
+ "titre": "Examen blanc Excel n° 1",
+ "sousTitre": "Préparation au TOSA Excel · 20 questions",
+ "duree": 25,
+ "domaines": [
+  {
+   "id": "env",
+   "nom": "Environnement et méthodes"
+  },
+  {
+   "id": "calc",
+   "nom": "Calculs"
+  },
+  {
+   "id": "mef",
+   "nom": "Mise en forme"
+  },
+  {
+   "id": "data",
+   "nom": "Gestion des données"
+  }
+ ],
+ "questions": [
+  {
+   "d": "env",
+   "q": "Comment s’appelle la cellule à l’intersection de la colonne C et de la ligne 5 ?",
+   "o": [
+    "C5",
+    "5C",
+    "C-5",
+    "L5C3"
+   ]
+  },
+  {
+   "d": "env",
+   "q": "Comment garder la ligne des titres visible en faisant défiler une longue liste ?",
+   "o": [
+    "Affichage › Figer les volets",
+    "Accueil › Fusionner",
+    "Données › Filtrer",
+    "Mise en page › Imprimer les titres"
+   ]
+  },
+  {
+   "d": "env",
+   "q": "Comment ajouter une nouvelle feuille au classeur ?",
+   "o": [
+    "Cliquer sur le + à côté des onglets",
+    "Insertion › Tableau",
+    "Ctrl + N",
+    "Fichier › Nouveau"
+   ]
+  },
+  {
+   "d": "env",
+   "q": "Que fait Ctrl + ↓ dans une colonne remplie ?",
+   "o": [
+    "Il va à la dernière cellule remplie de la colonne",
+    "Il insère une ligne",
+    "Il trie la colonne",
+    "Il copie la cellule du dessus"
+   ]
+  },
+  {
+   "d": "env",
+   "q": "Pour répéter la ligne 1 en haut de chaque page imprimée, on utilise…",
+   "o": [
+    "Mise en page › Imprimer les titres",
+    "Affichage › Figer les volets",
+    "Accueil › Renvoyer à la ligne",
+    "Données › Grouper"
+   ]
+  },
+  {
+   "d": "calc",
+   "q": "A1, A2 et A3 contiennent 2, 4 et 6. Que donne =SOMME(A1:A3) ?",
+   "o": [
+    "12",
+    "6",
+    "246",
+    "3"
+   ]
+  },
+  {
+   "d": "calc",
+   "q": "La formule =B2*C2 est recopiée une ligne plus bas. Elle devient…",
+   "o": [
+    "=B3*C3",
+    "=B2*C2",
+    "=C2*D2",
+    "=B3*C2"
+   ]
+  },
+  {
+   "d": "calc",
+   "q": "Que signifie $B$1 dans une formule ?",
+   "o": [
+    "Une référence absolue, qui ne change pas à la recopie",
+    "Un montant en dollars",
+    "Une cellule protégée",
+    "Une cellule fusionnée"
+   ]
+  },
+  {
+   "d": "calc",
+   "q": "A1 contient 10. Que renvoie =SI(A1>10;\"Oui\";\"Non\") ?",
+   "o": [
+    "Non",
+    "Oui",
+    "10",
+    "Une erreur"
+   ]
+  },
+  {
+   "d": "calc",
+   "q": "Que fait =NB.SI(A1:A10;\"Admis\") ?",
+   "o": [
+    "Il compte les cellules qui contiennent « Admis »",
+    "Il additionne les cellules « Admis »",
+    "Il affiche « Admis »",
+    "Il trie la plage"
+   ]
+  },
+  {
+   "d": "mef",
+   "q": "Le format Pourcentage appliqué à 0,25 affiche…",
+   "o": [
+    "25 %",
+    "0,25 %",
+    "2,5 %",
+    "250 %"
+   ]
+  },
+  {
+   "d": "mef",
+   "q": "Une cellule affiche « ##### ». Pourquoi ?",
+   "o": [
+    "La colonne est trop étroite",
+    "La formule est fausse",
+    "La cellule est protégée",
+    "Le nombre est négatif"
+   ]
+  },
+  {
+   "d": "mef",
+   "q": "À quoi sert la mise en forme conditionnelle ?",
+   "o": [
+    "À colorer les cellules selon leur valeur",
+    "À protéger les formules",
+    "À trier les données",
+    "À fusionner les cellules"
+   ]
+  },
+  {
+   "d": "mef",
+   "q": "Quand utiliser « Fusionner et centrer » ?",
+   "o": [
+    "Pour un titre au-dessus du tableau",
+    "Pour chaque cellule du tableau",
+    "Pour additionner deux cellules",
+    "Pour trier une colonne"
+   ]
+  },
+  {
+   "d": "mef",
+   "q": "Quel graphique montre le mieux la répartition d’un total ?",
+   "o": [
+    "Secteurs",
+    "Courbe",
+    "Nuage de points",
+    "Histogramme empilé à 100 % uniquement"
+   ]
+  },
+  {
+   "d": "data",
+   "q": "Comment classer une liste de noms par ordre alphabétique ?",
+   "o": [
+    "Données › Trier de A à Z",
+    "Données › Filtrer",
+    "Accueil › Mise en forme conditionnelle",
+    "Formules › Insérer une fonction"
+   ]
+  },
+  {
+   "d": "data",
+   "q": "À quoi sert un filtre ?",
+   "o": [
+    "À n’afficher que les lignes qui répondent à un critère",
+    "À supprimer des lignes",
+    "À changer l’ordre des colonnes",
+    "À calculer un total"
+   ]
+  },
+  {
+   "d": "data",
+   "q": "À quoi sert un tableau croisé dynamique ?",
+   "o": [
+    "À résumer une grande liste de données",
+    "À dessiner un schéma",
+    "À protéger un classeur",
+    "À vérifier l’orthographe"
+   ]
+  },
+  {
+   "d": "data",
+   "q": "Que fait le raccourci Ctrl + L dans une liste ?",
+   "o": [
+    "Il la met sous forme de tableau",
+    "Il la trie",
+    "Il la supprime",
+    "Il l’imprime"
+   ]
+  },
+  {
+   "d": "data",
+   "q": "Comment enlever les lignes en double d’une liste ?",
+   "o": [
+    "Données › Supprimer les doublons",
+    "Accueil › Effacer",
+    "Données › Grouper",
+    "Révision › Comparer"
+   ]
+  }
+ ],
+ "profil": [],
+ "niveaux": [
+  [
+   88,
+   "Expert (estimation TOSA)"
+  ],
+  [
+   72,
+   "Avancé (estimation TOSA)"
+  ],
+  [
+   55,
+   "Opérationnel (estimation TOSA)"
+  ],
+  [
+   35,
+   "Basique (estimation TOSA)"
+  ],
+  [
+   0,
+   "Initial, non certifiable (estimation TOSA)"
+  ]
+ ],
+ "doneText": "Vous pouvez fermer cette page. Votre formateur analysera vos résultats avec vous pour préparer vos révisions.",
+ "introNsp": "Examen blanc : répondez seul, sans aide. Si vous ne savez pas, choisissez <b>« Je ne sais pas »</b> : cela aide à cibler vos révisions."
+};
+</script>
+<script src="assets/aefti-test.js"></script>
+</body>
+</html>
