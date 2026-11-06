@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex">
+<title>Examen blanc PowerPoint n° 2 | AEFTI</title>
+<link rel="icon" href="assets/aefti-logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;600;700;800;900&family=Bree+Serif&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/aefti.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
+<script src="assets/config.js"></script>
+</head>
+<body>
+<div id="app"></div>
+<script>
+/* Contenu de l'examen blanc — la bonne réponse est TOUJOURS écrite en premier (l'ordre est mélangé à l'affichage). */
+window.TEST = {
+ "code": "EB2_PPT",
+ "typeLabel": "Examen blanc",
+ "titre": "Examen blanc PowerPoint n° 2",
+ "sousTitre": "Préparation au TOSA PowerPoint · 20 questions",
+ "duree": 25,
+ "domaines": [
+  {
+   "id": "env",
+   "nom": "Environnement et méthodes"
+  },
+  {
+   "id": "texte",
+   "nom": "Gestion du texte"
+  },
+  {
+   "id": "obj",
+   "nom": "Gestion des objets"
+  },
+  {
+   "id": "theme",
+   "nom": "Thèmes et modèles"
+  }
+ ],
+ "questions": [
+  {
+   "d": "env",
+   "q": "Pendant un diaporama, quelle touche affiche un écran noir ?",
+   "o": [
+    "B",
+    "N",
+    "W",
+    "Entrée"
+   ]
+  },
+  {
+   "d": "env",
+   "q": "Quel raccourci ouvre le mode présentateur ?",
+   "o": [
+    "Alt + F5",
+    "Maj + F5",
+    "Ctrl + F5",
+    "F7"
+   ]
+  },
+  {
+   "d": "env",
+   "q": "Pour imprimer la diapositive avec les notes de l’orateur, on choisit…",
+   "o": [
+    "Pages de notes",
+    "Documents, 6 par page",
+    "Plan",
+    "Diapositives en pleine page"
+   ]
+  },
+  {
+   "d": "env",
+   "q": "Pour envoyer une présentation qui s’ouvre partout sans être modifiée, on l’exporte en…",
+   "o": [
+    "PDF",
+    "TXT",
+    "XLSX",
+    "POTX"
+   ]
+  },
+  {
+   "d": "env",
+   "q": "Quel raccourci duplique la diapositive sélectionnée ?",
+   "o": [
+    "Ctrl + D",
+    "Ctrl + M",
+    "Ctrl + C",
+    "Ctrl + Z"
+   ]
+  },
+  {
+   "d": "texte",
+   "q": "Que fait Maj + Tab dans une liste à puces ?",
+   "o": [
+    "Il remonte d’un niveau",
+    "Il descend d’un niveau",
+    "Il supprime la puce",
+    "Il ajoute une diapositive"
+   ]
+  },
+  {
+   "d": "texte",
+   "q": "Pour regrouper les diapositives par partie, on crée…",
+   "o": [
+    "des sections",
+    "des dispositions",
+    "des thèmes",
+    "des transitions"
+   ]
+  },
+  {
+   "d": "texte",
+   "q": "Pour changer l’interligne d’un texte, on utilise…",
+   "o": [
+    "Accueil › Interligne",
+    "Création › Variantes",
+    "Insertion › Zone de texte",
+    "Transitions › Durée"
+   ]
+  },
+  {
+   "d": "texte",
+   "q": "Quelle règle de lisibilité est la bonne ?",
+   "o": [
+    "Une idée par diapositive, texte de 24 points minimum",
+    "Tout écrire ce que l’on va dire",
+    "Une police de 12 points",
+    "Cinq polices différentes"
+   ]
+  },
+  {
+   "d": "texte",
+   "q": "Pour mettre un mot en gras dans PowerPoint en français, on utilise…",
+   "o": [
+    "Ctrl + G",
+    "Ctrl + B",
+    "Ctrl + I",
+    "Ctrl + U"
+   ]
+  },
+  {
+   "d": "obj",
+   "q": "Pour choisir quand démarre une animation sans cliquer, on choisit…",
+   "o": [
+    "« Après la précédente »",
+    "« Au clic »",
+    "« Par paragraphe »",
+    "« Appliquer partout »"
+   ]
+  },
+  {
+   "d": "obj",
+   "q": "Où voir et changer l’ordre des animations d’une diapositive ?",
+   "o": [
+    "Dans le volet Animation",
+    "Dans le mode Plan",
+    "Dans le masque",
+    "Dans les notes"
+   ]
+  },
+  {
+   "d": "obj",
+   "q": "Pour mettre une forme derrière une image, on utilise…",
+   "o": [
+    "Mettre à l’arrière-plan",
+    "Grouper",
+    "Aligner au centre",
+    "Rogner"
+   ]
+  },
+  {
+   "d": "obj",
+   "q": "Pour insérer un graphique qui vient d’Excel, le plus simple est…",
+   "o": [
+    "de le copier dans Excel et de le coller dans PowerPoint",
+    "de le redessiner avec des formes",
+    "de faire une capture d’écran",
+    "d’utiliser WordArt"
+   ]
+  },
+  {
+   "d": "obj",
+   "q": "Quelle transition est la plus adaptée à une présentation professionnelle ?",
+   "o": [
+    "Fondu, appliquée à toutes les diapositives",
+    "Une transition différente par diapositive",
+    "Vortex",
+    "Déchirure"
+   ]
+  },
+  {
+   "d": "theme",
+   "q": "Le masque principal est…",
+   "o": [
+    "la grande vignette en haut, dans le mode Masque",
+    "la première diapositive de la présentation",
+    "le thème de couleurs",
+    "la zone de notes"
+   ]
+  },
+  {
+   "d": "theme",
+   "q": "Pour ajouter un logo sur toutes les diapositives, on le place…",
+   "o": [
+    "dans le masque des diapositives",
+    "sur chaque diapositive",
+    "dans les notes",
+    "dans le titre"
+   ]
+  },
+  {
+   "d": "theme",
+   "q": "Pour changer la mise en page d’une diapositive (Titre et contenu, Deux contenus…), on utilise…",
+   "o": [
+    "Accueil › Disposition",
+    "Création › Format de l’arrière-plan",
+    "Insertion › Forme",
+    "Diaporama › Personnaliser"
+   ]
+  },
+  {
+   "d": "theme",
+   "q": "Que fait le Concepteur (onglet Création) ?",
+   "o": [
+    "Il propose des idées de mise en page",
+    "Il vérifie l’orthographe",
+    "Il lance le diaporama",
+    "Il crée un modèle"
+   ]
+  },
+  {
+   "d": "theme",
+   "q": "Pour réutiliser la même mise en page dans toutes ses présentations, on enregistre…",
+   "o": [
+    "un modèle PowerPoint (.potx)",
+    "un PDF",
+    "une image",
+    "une vidéo"
+   ]
+  }
+ ],
+ "profil": [],
+ "niveaux": [
+  [
+   88,
+   "Expert (estimation TOSA)"
+  ],
+  [
+   72,
+   "Avancé (estimation TOSA)"
+  ],
+  [
+   55,
+   "Opérationnel (estimation TOSA)"
+  ],
+  [
+   35,
+   "Basique (estimation TOSA)"
+  ],
+  [
+   0,
+   "Initial, non certifiable (estimation TOSA)"
+  ]
+ ],
+ "doneText": "Vous pouvez fermer cette page. Votre formateur analysera vos résultats avec vous pour préparer vos révisions.",
+ "introNsp": "Examen blanc : répondez seul, sans aide. Si vous ne savez pas, choisissez <b>« Je ne sais pas »</b> : cela aide à cibler vos révisions."
+};
+</script>
+<script src="assets/aefti-test.js"></script>
+</body>
+</html>

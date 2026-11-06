@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex">
+<title>Examen blanc PowerPoint n° 1 | AEFTI</title>
+<link rel="icon" href="assets/aefti-logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;600;700;800;900&family=Bree+Serif&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/aefti.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
+<script src="assets/config.js"></script>
+</head>
+<body>
+<div id="app"></div>
+<script>
+/* Contenu de l'examen blanc — la bonne réponse est TOUJOURS écrite en premier (l'ordre est mélangé à l'affichage). */
+window.TEST = {
+ "code": "EB1_PPT",
+ "typeLabel": "Examen blanc",
+ "titre": "Examen blanc PowerPoint n° 1",
+ "sousTitre": "Préparation au TOSA PowerPoint · 20 questions",
+ "duree": 25,
+ "domaines": [
+  {
+   "id": "env",
+   "nom": "Environnement et méthodes"
+  },
+  {
+   "id": "texte",
+   "nom": "Gestion du texte"
+  },
+  {
+   "id": "obj",
+   "nom": "Gestion des objets"
+  },
+  {
+   "id": "theme",
+   "nom": "Thèmes et modèles"
+  }
+ ],
+ "questions": [
+  {
+   "d": "env",
+   "q": "Quelle touche lance le diaporama depuis la première diapositive ?",
+   "o": [
+    "F5",
+    "F2",
+    "F7",
+    "F12"
+   ]
+  },
+  {
+   "d": "env",
+   "q": "Quel raccourci lance le diaporama à partir de la diapositive en cours ?",
+   "o": [
+    "Maj + F5",
+    "Ctrl + F5",
+    "Alt + F4",
+    "Ctrl + P"
+   ]
+  },
+  {
+   "d": "env",
+   "q": "Quel affichage montre toutes les diapositives en vignettes pour les réorganiser ?",
+   "o": [
+    "La trieuse de diapositives",
+    "Le mode Lecture",
+    "Le mode Plan",
+    "Le masque"
+   ]
+  },
+  {
+   "d": "env",
+   "q": "Où écrit-on ce que l’on veut dire à l’oral, sans que le public le voie ?",
+   "o": [
+    "Dans la zone de notes",
+    "Dans le titre",
+    "Dans un commentaire",
+    "Dans le pied de page"
+   ]
+  },
+  {
+   "d": "env",
+   "q": "Quel raccourci ajoute une nouvelle diapositive ?",
+   "o": [
+    "Ctrl + M",
+    "Ctrl + N",
+    "Ctrl + D",
+    "Ctrl + T"
+   ]
+  },
+  {
+   "d": "texte",
+   "q": "Dans une liste à puces, quelle touche descend d’un niveau ?",
+   "o": [
+    "Tab",
+    "Entrée",
+    "Échap",
+    "Suppr"
+   ]
+  },
+  {
+   "d": "texte",
+   "q": "Quel affichage montre uniquement le texte de toutes les diapositives ?",
+   "o": [
+    "Le mode Plan",
+    "La trieuse",
+    "Le mode Lecture",
+    "Le mode Normal"
+   ]
+  },
+  {
+   "d": "texte",
+   "q": "Quelle touche lance la vérification de l’orthographe ?",
+   "o": [
+    "F7",
+    "F5",
+    "F1",
+    "F12"
+   ]
+  },
+  {
+   "d": "texte",
+   "q": "Pour que le texte reste organisé (et visible dans le mode Plan), on écrit…",
+   "o": [
+    "dans les espaces réservés de la disposition",
+    "dans des zones de texte ajoutées",
+    "dans les notes",
+    "dans les commentaires"
+   ]
+  },
+  {
+   "d": "texte",
+   "q": "Pour remplacer un mot dans toute la présentation, on utilise…",
+   "o": [
+    "Accueil › Remplacer (Ctrl + H)",
+    "Révision › Commentaire",
+    "Insertion › Symbole",
+    "Création › Variantes"
+   ]
+  },
+  {
+   "d": "obj",
+   "q": "Pour transformer une liste à puces en schéma, on utilise…",
+   "o": [
+    "Convertir en SmartArt",
+    "WordArt",
+    "Une zone de texte",
+    "Une transition"
+   ]
+  },
+  {
+   "d": "obj",
+   "q": "Pour mettre trois formes exactement à la même hauteur, on utilise…",
+   "o": [
+    "Aligner › Aligner en haut",
+    "Grouper",
+    "Rogner",
+    "Mettre au premier plan"
+   ]
+  },
+  {
+   "d": "obj",
+   "q": "Quel raccourci groupe les objets sélectionnés ?",
+   "o": [
+    "Ctrl + G",
+    "Ctrl + D",
+    "Ctrl + A",
+    "Ctrl + Maj + C"
+   ]
+  },
+  {
+   "d": "obj",
+   "q": "Pour faire apparaître une liste ligne par ligne, on applique…",
+   "o": [
+    "une animation d’entrée « par paragraphe »",
+    "une transition",
+    "un thème",
+    "un masque"
+   ]
+  },
+  {
+   "d": "obj",
+   "q": "Pour enlever le fond blanc autour d’un logo, on utilise…",
+   "o": [
+    "Format de l’image › Supprimer l’arrière-plan",
+    "Rogner",
+    "Couleur de remplissage",
+    "Compresser les images"
+   ]
+  },
+  {
+   "d": "theme",
+   "q": "Pour modifier en une seule fois la police des titres de toutes les diapositives, on utilise…",
+   "o": [
+    "le masque des diapositives",
+    "le pinceau sur chaque titre",
+    "le mode Plan",
+    "les animations"
+   ]
+  },
+  {
+   "d": "theme",
+   "q": "Une « disposition », c’est…",
+   "o": [
+    "l’organisation des espaces réservés d’une diapositive",
+    "un effet de passage",
+    "un jeu de couleurs",
+    "une animation"
+   ]
+  },
+  {
+   "d": "theme",
+   "q": "Où choisit-on un thème ?",
+   "o": [
+    "Dans l’onglet Création",
+    "Dans l’onglet Insertion",
+    "Dans l’onglet Diaporama",
+    "Dans l’onglet Révision"
+   ]
+  },
+  {
+   "d": "theme",
+   "q": "Pour afficher le numéro sur toutes les diapositives sauf la première, on utilise…",
+   "o": [
+    "Insertion › En-tête et pied de page, « Ne pas afficher sur la diapositive titre »",
+    "une zone de texte sur chaque diapositive",
+    "le mode Plan",
+    "Création › Variantes"
+   ]
+  },
+  {
+   "d": "theme",
+   "q": "Quelle est l’extension d’un modèle PowerPoint ?",
+   "o": [
+    ".potx",
+    ".pptx",
+    ".ppsx",
+    ".docx"
+   ]
+  }
+ ],
+ "profil": [],
+ "niveaux": [
+  [
+   88,
+   "Expert (estimation TOSA)"
+  ],
+  [
+   72,
+   "Avancé (estimation TOSA)"
+  ],
+  [
+   55,
+   "Opérationnel (estimation TOSA)"
+  ],
+  [
+   35,
+   "Basique (estimation TOSA)"
+  ],
+  [
+   0,
+   "Initial, non certifiable (estimation TOSA)"
+  ]
+ ],
+ "doneText": "Vous pouvez fermer cette page. Votre formateur analysera vos résultats avec vous pour préparer vos révisions.",
+ "introNsp": "Examen blanc : répondez seul, sans aide. Si vous ne savez pas, choisissez <b>« Je ne sais pas »</b> : cela aide à cibler vos révisions."
+};
+</script>
+<script src="assets/aefti-test.js"></script>
+</body>
+</html>
